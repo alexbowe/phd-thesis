@@ -1,0 +1,48 @@
+\documentclass{letter}
+
+\makeatletter
+\renewcommand{\closing}[1]{\par\nobreak\vspace{\parskip}%
+  \stopbreaks
+  \noindent
+  \ifx\@empty\fromaddress\else
+  \hspace*{\longindentation}\fi
+  \parbox{\indentedwidth}{\raggedright
+       \ignorespaces #1\\[3\medskipamount]%
+       \ifx\@empty\fromsig
+           \fromname
+       \else \fromsig \fi\strut}%
+   \par}
+\makeatother
+
+\signature{Alex Bowe}
+%PhD candidate, Department of Informatics \\
+%National Institute of Informatics \\
+%2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo, 101-8430 \\
+%+81-3-4212-2000 \\
+%alex@nii.ac.jp \\
+\begin{document}
+\begin{letter}{} %{Dr. Ying Xu \\ Editor-in-Chief \\ IEEE Transactions on Computational Biology and Bioinformatics}
+\opening{To whom it may concern,}
+
+We are submitting this manuscript entitled \textit{Variable-Order de Bruijn Graphs}
+for publication as a short paper in IEEE Transactions on Computational Biology
+and Bioinformatics.
+
+Part of this manuscript was previously published in Proceedings of the Data Compression
+Conference, IEEE, 2015. We have extended it by describing a new external memory construction
+algorithm, and implemented it to allow us to demonstrate the scalability of
+our approach on much larger data sets.
+
+The previous version only provided data for experiments on a $1.5$ GB {\em E.~coli} data set,
+and a $6.9$ GB Human chromosome 14 data set. In this version, we repeat the experiments for
+the original data sets with our new construction method, and add two new data sets: a $26.7$ GB
+Human genome data set, and a $70.3$ GB Parrot data set. The new data sets exceed the RAM of
+our test machine, and produce graphs which entirely fill the RAM of our test machine.
+
+We have also reported data for larger increases in order, and reported the peak RAM and disk usage
+during construction.
+
+\closing{Sincerely,}
+\end{letter}
+\end{document}
+

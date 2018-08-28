@@ -1,0 +1,64 @@
+>> /home/alex/projects/cosmo/cosmo-build32 /home/alex/data/dsk_runs/chrom14_k16_t1_nocount.solid_kmers_binary -k 16 -m 2048 -d -o /home/alex/data/ssd/
+[STXXL-MSG] STXXL v1.4.99 (prerelease/Release) (git 052d8b31f26e77cea290d72da0b1e358f53a54dd) + gnu parallel(20151204)
+[STXXL-MSG] Disk '/dev/sda' is allocated, space: 238475 MiB, I/O implementation: linuxaio autogrow=no devid=0 raw_device
+[STXXL-MSG] Disk '/dev/sdb' is allocated, space: 238475 MiB, I/O implementation: linuxaio autogrow=no devid=1 raw_device
+[STXXL-MSG] Disk '/dev/sdd' is allocated, space: 238475 MiB, I/O implementation: linuxaio autogrow=no devid=2 raw_device
+[STXXL-MSG] Disk '/dev/sde' is allocated, space: 238475 MiB, I/O implementation: linuxaio autogrow=no devid=3 raw_device
+[STXXL-MSG] In total 4 disks are allocated, space: 953900 MiB
+[2016-06-26 16:10:16.759142] [0xb4d1d800] [info]    /home/alex/data/dsk_runs/chrom14_k16_t1_nocount.solid_kmers_binary looks like a DSK1 file.
+[2016-06-26 16:10:16.948405] [0xb4d1d800] [trace]   Reading input and creating runs...
+[STXXL-MSG] Set up an linuxaio queue with 64 entries.
+[2016-06-26 16:11:34.722704] [0xb4d1d800] [info]    Building from 1122868000 edges...
+[2016-06-26 16:11:34.722734] [0xb4d1d800] [trace]   Merging runs...
+[2016-06-26 16:11:37.807904] [0xb0c19700] [trace]   Materializing table B...
+[2016-06-26 16:11:39.466567] [0xb141a700] [trace]   Materializing table A...
+[2016-06-26 16:12:23.089898] [0xb4d1d800] [trace]   Searching for nodes requiring dummy edges...
+[2016-06-26 16:13:29.994993] [0xb4d1d800] [info]    # out dummies      : 2822521
+[2016-06-26 16:13:29.995023] [0xb4d1d800] [info]    # inc dummies      : 2822521
+[2016-06-26 16:13:29.995032] [0xb4d1d800] [info]    # inc dummy shifts : 14198234
+[2016-06-26 16:13:29.995039] [0xb4d1d800] [trace]   Sorting dummies...
+[2016-06-26 16:13:30.888436] [0xb4d1d800] [trace]   Materializing dummies...
+[2016-06-26 16:13:31.614519] [0xb4d1d800] [trace]   Merging in dummies...
+[2016-06-26 16:16:21.369625] [0xb4d1d800] [trace]   Building dBG...
+[2016-06-26 16:17:07.338809] [0xb4d1d800] [trace]   Done!
+[2016-06-26 16:17:07.338888] [0xb4d1d800] [info]    
+STXXL I/O statistics
+ total number of reads                      : 23784 (23.227 Ki) 
+ average block size (read)                  : 2097152 (2.000 MiB) 
+ number of bytes read from disks            : 49878663168 (46.453 GiB) 
+ time spent in serving all read requests    : 662.14 s @ 71.8398 MiB/s
+ time spent in reading (parallel read time) : 146.226 s @ 325.304 MiB/s
+ total number of writes                     : 17910 (17.490 Ki) 
+ average block size (write)                 : 2097152 (2.000 MiB) 
+ number of bytes written to disks           : 37559992320 (34.980 GiB) 
+ time spent in serving all write requests   : 1880.62 s @ 19.0469 MiB/s
+ time spent in writing (parallel write time): 77.7536 s @ 460.686 MiB/s
+ time spent in I/O (parallel I/O time)      : 173.498 s @ 480.628 MiB/s
+ I/O wait time                              : 30.7308 s
+ I/O wait4read time                         : 5.64682 s
+ I/O wait4write time                        : 25.084 s
+ Time since the last reset                  : 410.654 s
+ Peak disk allocs                           : 34272 MB
+	Command being timed: "/home/alex/projects/cosmo/cosmo-build32 /home/alex/data/dsk_runs/chrom14_k16_t1_nocount.solid_kmers_binary -k 16 -m 2048 -d -o /home/alex/data/ssd/"
+	User time (seconds): 699.89
+	System time (seconds): 21.86
+	Percent of CPU this job got: 175%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 6:50.72
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2915224
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 26
+	Minor (reclaiming a frame) page faults: 93247
+	Voluntary context switches: 89245
+	Involuntary context switches: 70315
+	Swaps: 0
+	File system inputs: 99637176
+	File system outputs: 76782968
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

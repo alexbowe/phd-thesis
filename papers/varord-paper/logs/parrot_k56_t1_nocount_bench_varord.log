@@ -1,0 +1,52 @@
+[2016-05-19 21:28:57.946661] [0x7c2cf780] [debug]   /home/alex/data/ssd/parrot_k56_t1_nocount
+k             : 56
+num_nodes()   : 16155138013
+num_edges()   : 16402889702
+W size        : 4044.35 MB
+L size        : 253.231 MB
+DBG size      : 4297.58 MB
+Bits per edge : 2.19783 Bits
+LCS size      : 9619.64 MB
+LCS bits/edge : 4.91958 Bits
+Total size    : 13917.2 MB
+Generating 20000 random queries
+backward  : 63868.2 ns
+forward   : 19387.3 ns
+lastchar  : 13.1166 ns
+shorter_1 : 19840.2 ns
+shorter_2 : 19977.9 ns
+shorter_4 : 20201.3 ns
+shorter_8 : 20640.3 ns
+longer_1  : 20570.9 ns
+per node  : 12993.3 ns (31664)
+longer_2  : 47066.4 ns
+per node  : 11020.1 ns (85419)
+longer_4  : 428966 ns
+per node  : 9953.83 ns (861912)
+longer_8  : 2.48448e+07 ns
+per node  : 9484.85 ns (52388377)
+maxlen    : 7488.51 ns
+maxlen*   : 2455.87 ns
+	Command being timed: "/home/alex/projects/cosmo/cosmo-benchmark-varord /home/alex/data/ssd//parrot_k56_t1_nocount.dbg"
+	User time (seconds): 515.78
+	System time (seconds): 13.90
+	Percent of CPU this job got: 95%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 9:13.07
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 14290236
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 45
+	Minor (reclaiming a frame) page faults: 871860
+	Voluntary context switches: 108904
+	Involuntary context switches: 49405
+	Swaps: 0
+	File system inputs: 28537096
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

@@ -1,0 +1,36 @@
+
+\section{Varying order}
+\label{sec:changing}
+
+If we delete the first column of the matrix in Figure~\ref{fig:matrix}, the result is {\em almost} the BOSS matrix for a 2nd-order de Bruijn graph whose nodes
+\[[1, 1], [2, 2], [3, 3], [4, 6], [7, 7], [8, 10], [11, 11], [12, 12], [13, 13]\]
+have labels
+\[\mathrm{\$\$, GA, TA, AC, TC, CG, \$T, CT, GT}\,,\]
+respectively.  Similarly, if we delete the first two columns of the original matrix, the result is almost the BOSS matrix for a 1st-order graph whose nodes
+\[[1, 1], [2, 3], [4, 7], [8, 10], [11, 13]\]
+have labels
+\[\mathrm{\$, A, C, G, T}\,,\]
+respectively.  If we delete the first three columns, the result is almost the BOSS graph for the 0th-order graph whose single node \([1, 13]\) has an empty label.  Notice we allow the same node to appear in different graphs, with labels of different lengths.  If readers find this confusing, they can imagine that nodes are triples instead of pairs, with the additional component storing the label's length.
+
+The truncated form of a higher order BOSS differs from the BOSS of a lower order in that
+%The problem is that 
+some rows are repeated, which could prevent the BOSS representation from working properly.  Suppose that, instead of trying to apply $\forward$, $\backward$ and $\lastchar$ directly to nodes in the new graphs, we augment the BOSS representation of the original graph to support the following three queries:
+\begin{itemize}
+\item $\shorter(v, k)$ returns the node whose label is the last $k$ characters of $v$'s label;
+\item $\longer(v, k)$ lists nodes whose labels have length \(k \leq K\) and end with $v$'s label;
+\item $\maxlen(v, a)$ returns some node in the original graph whose label ends with $v$'s label, and that has an outgoing edge labelled $a$, or NULL otherwise. %if there is no such node.
+\end{itemize}
+If we want a node in the original graph whose label ends with $v$'s label but we do not care about its outgoing edges, then we write \(\maxlen(v, *)\).  Notice $\shorter$ and $\longer$ are symmetric, in the sense that if $v$'s label has length $k_v$ and \(x \in \longer(v, k_v)\), then \(\shorter(x, k_v) = v\).  In our example, \(\shorter([4, 5], 2) = [4, 6]\) while \(\longer([4, 6], 3) = [4, 5], [6, 6]\) and \(\maxlen ([4, 6], \mathrm{G})\) could return either \([4, 5]\) or \([6, 6]\), while \(\maxlen([4, 6], \mathrm{T}) = [4, 5]\) and \(\maxlen([4, 6], \mathrm{A}) = \mathrm{NULL}\).
+
+If $v$ is a node in the original graph --- e.g., $v$ is returned by $\maxlen$ --- then we can use the BOSS implementations of $\forward$, $\backward$ and $\lastchar$.  Otherwise, if $v$'s label has length $k_v$ then
+\begin{eqnarray*}
+\forward(v, a) & = & \shorter(\forward(\maxlen(v, a), a), k_v)\\
+\lastchar(v) & = & \lastchar(\maxlen(v, *))\,.
+\end{eqnarray*}
+Assuming queries can be applied to lists of nodes, we can compute \(\backward(v)\) as %by computing
+\[\shorter(\backward(\maxlen(\longer(v, k_v + 1), *)), k_v),\]
+removing any duplicates.
+
+To see why we can compute $\backward$ like this, suppose $v$'s label is \(\alpha a\), so \(\longer(v, \allowbreak k_v + 1)\) returns a list of all \(d \leq \sigma\) nodes whose labels have the form \(b \alpha a\).  Applying $\maxlen$ to this list returns a second list of $d$ nodes, with labels \(\beta_1 b_1 \alpha a, \ldots, \beta_d b_d \alpha a\) of length $K$.  Applying $\backward$ to this second list returns yet a third list, of all the at most \(\sigma d\) nodes whose labels have the form \(c \beta_i b_i \alpha\).  We need only one node returned calling $\backward$ on each node in the second list, so we can discard all but at most $d$ nodes in the third list.  Finally, applying $\shorter$ to the third list returns a fourth list, of all $d$ nodes whose labels have the form \(b_i \alpha\), each of which may be repeated at most $\sigma$ times in the list.
+
+

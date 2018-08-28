@@ -1,0 +1,52 @@
+[2016-05-12 05:07:05.404325] [0xb9896780] [debug]   /home/alex/data/ssd/chrom14_k56_t1_nocount
+k             : 56
+num_nodes()   : 1624442199
+num_edges()   : 1651477288
+W size        : 385.679 MB
+L size        : 28.2605 MB
+DBG size      : 413.94 MB
+Bits per edge : 2.10259 Bits
+LCS size      : 1001.6 MB
+LCS bits/edge : 5.08757 Bits
+Total size    : 1415.54 MB
+Generating 20000 random queries
+backward  : 55632.1 ns
+forward   : 16172.5 ns
+lastchar  : 13.1499 ns
+shorter_1 : 17715.4 ns
+shorter_2 : 17785.6 ns
+shorter_4 : 18018.2 ns
+shorter_8 : 18392.7 ns
+longer_1  : 18609 ns
+per node  : 12382.1 ns (30058)
+longer_2  : 41079.7 ns
+per node  : 11238.2 ns (73107)
+longer_4  : 323496 ns
+per node  : 10593 ns (610772)
+longer_8  : 5.33838e+06 ns
+per node  : 9029.7 ns (11824036)
+maxlen    : 5978.07 ns
+maxlen*   : 1564.1 ns
+	Command being timed: "/home/alex/projects/cosmo/cosmo-benchmark-varord /home/alex/data/ssd//chrom14_k56_t1_nocount.dbg"
+	User time (seconds): 120.88
+	System time (seconds): 0.50
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:01.37
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2492968
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 27903
+	Voluntary context switches: 2
+	Involuntary context switches: 10219
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

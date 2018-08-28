@@ -1,0 +1,157 @@
+\IEEEraisesectionheading{\section{Introduction}\label{sec:introduction}}
+% Computer Society journal (but not conference!) papers do something unusual
+% with the very first section heading (almost always called "Introduction").
+% They place it ABOVE the main text! IEEEtran.cls does not automatically do
+% this for you, but you can achieve this effect with the provided
+% \IEEEraisesectionheading{} command. Note the need to keep any \label that
+% is to refer to the section immediately after \section in the above as
+% \IEEEraisesectionheading puts \section within a raised box.
+
+
+% The very first letter is a 2 line initial drop letter followed
+% by the rest of the first word in caps (small caps for compsoc).
+% 
+% form to use if the first word consists of a single letter:
+% \IEEEPARstart{A}{demo} file is ....
+% 
+% form to use if you need the single drop letter followed by
+% normal text (unknown if ever used by the IEEE):
+% \IEEEPARstart{A}{}demo file is ....
+% 
+% Some journals put the first two words in caps:
+% \IEEEPARstart{T}{his demo} file is ....
+% 
+
+\IEEEPARstart{A}{ccurate} assembly of genomes is a fundamental problem in
+bioinformatics and is vital to several ambitious scientific projects, including
+the 10,000 vertebrate genomes (Genome 10K)~\cite{Haussler09}, \emph{Arabidopsis}
+variations (1001 genomes)~\cite{Ossowski08}, human variations (1000
+genomes)~\cite{Abecasis12}, and the Human Microbiome~\cite{hmp} projects. The
+genome assembly process builds long contiguous DNA sequences, called {\em
+contigs}, from shorter DNA fragments, called {\em reads}, typically 100-150
+(DNA) symbols in length.
+
+
+In Eulerian sequence assembly \cite{IW95,PTW}, a {\em de Bruijn graph} is
+constructed with a vertex $v$ for every $K$-mer (substring of length $K$)
+present in an input set of reads, and an edge $(v, v')$ for every observed $(K +
+1)$-mer in the reads with $K$-mer prefix $v$ and $K$-mer suffix $v'$.  Contigs
+are then extracted from this graph.  Most state-of-the-art assemblers use this
+paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008}, 
+%including SPAdes \cite{bankevich2012spades}, IDBA \cite{peng2010idba}, Euler-SR
+%\cite{Chaisson:2008}, Velvet \cite{Zerbino:2008}, SOAPdenovo \cite{Li:2010},
+%ABySS \cite{Simpson:2009} and ALLPATHS \cite{Butler:2008}.  De Bruijn graph
+%based assemblers 
+and follow the same general outline: extract $(K + 1)$-mers from the reads;
+construct the de Bruijn graph on the set of $(K +1)$-mers; simplify the graph; 
+%resolve the repeated regions by using mate-pair information, 
+and construct the contigs (simple paths in the graph). The value of $K$ can be,
+and is often required to be, specified by the user.
+
+Determining an appropriate value of $K$ is important and has a direct impact on
+assembly quality. Stated very briefly, when $K$ is too small the resulting graph
+is complicated by spurious edges and nodes, and when $K$ is too large the graph
+becomes too sparse and possibly disconnected.
+%; see Figure~\ref{}.  Repetitive regions in the underlying genome are
+%especially problematic since they give rise to spurious edges and nodes in the
+%de Bruijn graph \cite{alkan2011limitations} and are very sensitive to the
+%choice of $K$.
+
+%A perhaps obvious combinatorial approach for building a simplified de Bruijn
+%graph would be to allow the value of $K$ to vary; having a larger value of $K$
+%where the graph is more complex and a smaller value of $K$ where the graph
+%would likely contain fewer spurious edges and f.  
+%%A major difficulty in implementing this approach is determining a practical method that makes this idea feasible when assembling large genomes.  
+In an attempt to circumvent the need to choose a single, ideal value of $K$,
+SPAdes~\cite{bankevich2012spades} and IDBA~\cite{peng2010idba} use a number of
+different $K$ values.
+%Peng et al.~\cite{peng2010idba} and Bankevich et al.~\cite{bankevich2012spades}
+%both introduced assemblers that use a number of different $k$ values. 
+IDBA~\cite{peng2010idba} builds a number of de Bruijn graphs for each a fixed
+set of $K$ values.  At a given iteration of the algorithm, the de Bruin graph
+for the current value of $K$ is built from the reads and the contigs for that
+  graph are constructed, then all the reads that align to at least one of those
+  contigs are removed from the current set of reads. In the next iteration the
+  graph is built by converting every edge from the previous graph to a vertex
+  while treating contigs as edges. SPAdes \cite{bankevich2012spades} uses a
+    similar approach but uses all the reads at each iteration.  
+
+\subsection{Our Contribution} SPAdes~\cite{bankevich2012spades} and
+IDBA~\cite{peng2010idba} represent the state-of-the-art for genome assemblers,
+producing assemblies of greatly improved quality compared to previous
+approaches. However, their need to construct several de Bruijn graphs of
+different orders over the assembly process makes them extremely slow on large
+genomes.
+
+In this paper we address this problem by describing a succinct data
+structure that, for a given $K$, efficiently represents {\em all} the de Bruijn
+graphs for $k \le K$ and allows navigation within and between each graph. In addition
+also describe an alternative representation which is smaller but slower.
+
+We have implemented the faster version of our data structure and shown that in practice
+it requires around $3.5$ times the space of a graph for a single $K$, and incurs a
+modest slow down in construction time and on navigation operations. Compared
+with the conference version of this paper~\cite{varorder-dcc}, we have implemented an
+external memory construction algorithm, and demonstrated the scalability of our
+structure on much larger data sets.
+
+%While this method has been shown to greatly improve assembly quality
+%\cite{bankevich2012spades,peng2010idba}, there currently are not any space
+%efficient data structures for multiple de Bruijn graphs of different orders
+%(i.e. different values of $K$).  This is the problem we address in this paper.  
+
+\subsection{Related Work} There are several succinct data structures for the de
+Bruijn graph of a single order (i.e.~value of $K$).  One of the first approaches
+was introduced by Simpson et al.~\cite{Simpson:2009} as part of the development
+of the ABySS assembler.  Their method stores the graph as a distributed hash
+table and thus requires 336 GB to store the graph corresponding to a set of
+reads from a human genome (HapMap: NA18507).  In 2011, Conway and
+Bromage~\cite{conway} reduced space requirements by using a sparse bitvector (by
+Okanohara and Sadakane~\cite{bitvector}) to represent the $(K + 1)$-mers (the
+edges), and used rank and select operations (to be described shortly) to
+traverse it. As a result, their representation took 32 GB for the same data set.
+Minia, by Chikhi and Rizk~\cite{wabi}, uses a Bloom filter to store edges.
+%(with additional structures to avoid false positive edges that would affect the
+%assembly). 
+They traverse the graph by generating all possible outgoing edges at each node
+and testing their membership in the Bloom filter. Using this approach, the graph
+was reduced to 5.7 GB on the same dataset.  Contemporaneously, Bowe, Onodera,
+Sadakane and Shibuya~\cite{bowe} developed a different succinct data structure
+based on the Burrows-Wheeler transform~\cite{bw1994} that requires 2.5 GB.
+Their representation, which henceforth we refer to as BOSS from the authors'
+initials, is a starting point for our methods and we will discuss it in detail
+below.  Very recently Chikhi {et al.}~\cite{paul} implemented the de Bruijn
+graph using an FM-index and {\em minimizers}.  Their method uses 1.5 GB on the
+same NA18507 data.  
+
+The data structure of Bowe et al.~\cite{bowe}
+%and BWT construction of short reads of Liu et al.~\cite{liu_et_al} --- are 
+is combined with ideas from IDBA-UD~\cite{idbaud} in a metagenomics assembler
+called MEGAHIT~\cite{megahit}.  In practice MEGAHIT requires more memory than
+competing methods 
+%(345G in comparison to 287G and 29G on one dataset) 
+but produces significantly better assemblies.
+%on metagenomics data.
+
+Lastly, Lin and Pevzner~\cite{mdbg} recently introduced the {\em manifold de
+Bruijn graph}, which 
+%is a generalization of the traditional de Bruijn graph that effectively allows
+%$K$ to vary by 
+associates arbitrary substrings with nodes (the substrings are fixed during
+preprocessing), rather than $K$-mers. Lin and Pevzner's structure is mainly of
+theoretical interest since it has not yet been implemented.
+%; there's no implementation of the manifold de Bruijn graph and cannot handle
+%errors within the data.  The succinct data structure we present may lead to
+%insights as to how to construct the manifold de Bruijn graph in a space and
+%time efficient manner.
+
+\subsection{Roadmap} Section \ref{sec:preliminaries} sets notation, and formally
+lays down the problem and auxiliary data structures we use.
+Section~\ref{sec:BOSS} gives details of the BOSS representation~\cite{bowe}.
+Sections~\ref{sec:changing} and~\ref{sec:implementing} then describes our
+variable-order de Bruijn graph structure. In Section~\ref{sec:experiments} we
+report on experiments comparing the practical performance of our data structure
+to that of a single-order de Bruijn graph. Section~\ref{sec:conclusion} offers
+directions for future work.
+%areas of research that warrant investigation.
+

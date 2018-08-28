@@ -1,0 +1,35 @@
+[2016-05-12 03:04:08.981610] [0x7a456780] [debug]   /home/alex/data/ssd/ecoli_k28_t1_nocount
+k             : 28
+num_nodes()   : 528581516
+num_edges()   : 548545545
+W size        : 142.878 MB
+L size        : 19.774 MB
+DBG size      : 162.652 MB
+Bits per edge : 2.48735 Bits
+Generating 20000 random queries
+backward : 8228.72 ns
+forward : 5997.49 ns
+lastchar : 11.8922 ns
+	Command being timed: "/home/alex/projects/cosmo/cosmo-benchmark /home/alex/data/ssd//ecoli_k28_t1_nocount.dbg"
+	User time (seconds): 0.38
+	System time (seconds): 0.06
+	Percent of CPU this job got: 96%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.45
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 174012
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 4763
+	Voluntary context switches: 5
+	Involuntary context switches: 40
+	Swaps: 0
+	File system inputs: 624
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

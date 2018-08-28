@@ -1,0 +1,52 @@
+[2016-05-12 03:15:11.276732] [0x26ea7780] [debug]   /home/alex/data/ssd/ecoli_k28_t1_nocount
+k             : 28
+num_nodes()   : 528581516
+num_edges()   : 548545545
+W size        : 142.878 MB
+L size        : 19.774 MB
+DBG size      : 162.652 MB
+Bits per edge : 2.48735 Bits
+LCS size      : 257.484 MB
+LCS bits/edge : 3.93756 Bits
+Total size    : 420.136 MB
+Generating 20000 random queries
+backward  : 59773 ns
+forward   : 17025.7 ns
+lastchar  : 12.8665 ns
+shorter_1 : 14647.6 ns
+shorter_2 : 14825.5 ns
+shorter_4 : 15107.4 ns
+shorter_8 : 15734.6 ns
+longer_1  : 21527.3 ns
+per node  : 10818 ns (39799)
+longer_2  : 56959.1 ns
+per node  : 8741.55 ns (130318)
+longer_4  : 503598 ns
+per node  : 7975.62 ns (1262843)
+longer_8  : 6.44133e+06 ns
+per node  : 6438.06 ns (20010153)
+maxlen    : 5412.73 ns
+maxlen*   : 1430.44 ns
+	Command being timed: "/home/alex/projects/cosmo/cosmo-benchmark-varord /home/alex/data/ssd//ecoli_k28_t1_nocount.dbg"
+	User time (seconds): 146.02
+	System time (seconds): 0.18
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:26.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 709352
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 19619
+	Voluntary context switches: 4
+	Involuntary context switches: 12312
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

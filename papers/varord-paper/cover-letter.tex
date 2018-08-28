@@ -1,0 +1,57 @@
+\documentclass{letter}
+
+\makeatletter
+\renewcommand{\closing}[1]{\par\nobreak\vspace{\parskip}%
+  \stopbreaks
+  \noindent
+  \ifx\@empty\fromaddress\else
+  \hspace*{\longindentation}\fi
+  \parbox{\indentedwidth}{\raggedright
+       \ignorespaces #1\\[3\medskipamount]%
+       \ifx\@empty\fromsig
+           \fromname
+       \else \fromsig \fi\strut}%
+   \par}
+\makeatother
+
+\signature{Alex Bowe}
+%PhD candidate, Department of Informatics \\
+%National Institute of Informatics \\
+%2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo, 101-8430 \\
+%+81-3-4212-2000 \\
+%alex@nii.ac.jp \\
+\begin{document}
+\begin{letter}{Dr. Ying Xu \\ Editor-in-Chief \\ IEEE Transactions on Computational Biology and Bioinformatics}
+\opening{Dear Dr. Xu,}
+
+We are submitting this manuscript entitled \textit{Variable-Order de Bruijn Graphs}
+for publication as a short paper in IEEE Transactions on Computational Biology
+and Bioinformatics.
+
+In this manuscript, we show how to augment a succinct de Bruijn graph
+representation by Bowe et al. (Proc. WABI, 2012) to support new operations that
+let us change order on the fly, effectively representing all de Bruijn graphs up
+to some maximum order $K$ in a single data structure. Our experiments show
+our variable-order de Bruijn graph only modestly increases space usage,
+construction time, and navigation time compared to a single order graph.
+
+This research is relevant to the scope of IEEE Transactions on Computational Biology
+and Bioinformatics, as it removes the iterative construction bottleneck of
+state-of-the-art DNA assemblers, which must construct many single order
+de Bruijn graphs.
+
+This manuscript extends our previous experimental analysis (Proc. DCC, IEEE, 2015)
+by using a new external construction algorithm to demonstrate the scalability of
+our approach on much larger data sets. It is not under consideration by any other
+journal.
+
+All authors have approved this submission, and there are no conflicts of
+interest. We would like to suggest Rayan Chikhi, Gregory Kucherov, Eric Rivals,
+and Gustavo Sacomoto as suitably qualified reviewers.
+
+Thank you for your time and effort in considering our work.
+
+\closing{Sincerely,}
+\end{letter}
+\end{document}
+

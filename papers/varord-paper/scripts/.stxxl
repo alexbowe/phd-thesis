@@ -1,0 +1,4 @@
+disk=/dev/sda,250G,linuxaio unlink
+disk=/dev/sdb,250G,linuxaio unlink
+disk=/dev/sdd,250G,linuxaio unlink
+disk=/dev/sde,250G,linuxaio unlink
