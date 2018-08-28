@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper]{letter}
+%\addtolength{\topmargin}{-0.5in}
+%\addtolength{\oddsidemargin}{-0.75in}
+%\addtolength{\evensidemargin}{-0.75in}
+%\addtolength{\textwidth}{1.5in}
+%\addtolength{\textheight}{1in}
+\addtolength{\topmargin}{-0.25in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\textheight}{0.5in}
+\usepackage{pifont} \newcommand{\tick}{\ding{52}} \newcommand{\cross}{\ding{56}}
+\newcommand{\answer}[1]{\fbox{\parbox{\linewidth}{#1}}}
+\renewcommand{\answer}[2]{\fbox{\parbox{\linewidth}{#1}}\begin{itemize}\item[]#2\end{itemize}}
+%\renewcommand{\answer}[2]{\fbox{\parbox{\linewidth}{\begin{itemize}\item#1\end{itemize}}}\begin{itemize}\item[\tick]#2\end{itemize}}
+\newcommand{\pending}[2]{\fbox{\parbox{\linewidth}{\begin{itemize}\item#1\end{itemize}}}\begin{itemize}\item[\cross]#2\end{itemize}}
+%\address{Algorithms, Bioinformatics, Complexity\\
+%and Formal Methods Research Group\\
+%Technical University of Catalonia\\
+%E-08034 Barcelona\\
+%Spain}
+%\date{August 11, 2010}
+%\signature{Tetsuo Asano\\Jesper Jansson\\Kunihiko Sadakane\\Ryuhei Uehara\\Gabriel Valiente}
+%\signature{Gabriel Valiente}
+%\pagestyle{empty}
+\begin{document}
+%\begin{letter}{Editor-in-Chief \\
+%Information Sciences}
+
+%\opening{Dear W. Pedrycz,}
+
+Thank you very much for the comments.
+We have made all the corrections suggested by the reviewers. 
+The changes made to deal with the specific comments are as follows:
+
+%\textbf{Reviewer 1}
+
+%\pending{This paper is a good paper on providing theoretical proof, but lack of 
+%experiments.
+%
+%Before it is accepted, the following experiments should be done
+%
+%1. the experiments should be done to test the propose algorithm 
+%
+%2. comparison experiments  should be done to valid the time
+%complexities: $O(me)$ and $O(mn/\log(n))$.}{}
+
+\answer{%
+The first reason for the weak accept is that presentation of the
+technical parts is not very clear (sections 3 and 4), and a bit
+misleading in some points. For instance, the complexities for
+incoming/outgoing edge queries in Theorem 1 (uses static structures)
+are not the same for the de Bruijn graph constructed using the online
+algorithm stated in Theorem 2 (uses dynamic structures), there is an
+extra ($\log m$) factor in this case. Moreover, the time complexity for
+the construction of the graph using static succinct structures, and
+thus achieving the queries complexities of Theorem 1 is not presented.
+}
+{%
+It is easy to conver the dynamic data structure to the static one.
+We described this in Theorem 2.
+}
+
+\answer{%
+The second reason is the differences between the de Bruijn graph
+presented in the paper and the one actually used in practice (for
+instance, in Velvet [23]). The graph presented was build from just one
+sequence, whereas in practice the de Bruijn graph is build from a
+large set of sequences (reads). It is not obvious how to adapt this
+construction to this case, simply concatenating all reads, with or
+without a separator, would generate several spurious $k$-mers (nodes)
+and $(k+1)$-mers (edges) in the read junctions. Moreover, given that the
+DNA is double stranded, in applications the de Bruijn graph is
+modified so that each node is associated with the $k$-mer and its
+reverse complement.
+}
+{%
+Our representation can also support storing a set of reads.
+All reads are concatenated into a string with a separator \$,
+then we construct the succinct representation.  We can associate
+any information to the separators such as read ID, flag for forward or
+reverse complement, etc.
+}
+
+
+
+\answer{%
+ In section 3, description of 'search(s)'. There are references to
+ {\it last}$[i]$ and {\it Node}$[i]$ which are only defined later.}
+{%
+We moved the explanation to Section 3.4.
+}
+\answer{%
+ In section 3.1, second paragraph. The definition of 'last' is
+ wrong. It does not agree with the values of 'last' in Figure 2
+ ({\it Node}$[4]$ != {\it Node}$[3]$, but {\it last}$[4] = 0$).
+}
+{%
+Fixed.  The correct definition is ${\it last}[i] = 1$ if $i = n$ or ${\it Node}[i]$ is different from ${\it Node}[i+1]$
+}
+
+\answer{%
+ In section 3.5, last lines. It should be '$\log \log m$' instead of '$\log
+ \log n$'.}
+{%
+Fixed.
+}
+
+\answer{%
+In section 4, last paragraph. The time bounds for $t_r$ and $t_f$
+ are written as $O(\frac{\log m \log \sigma}{\log \log m} (1 + \frac{\log
+ \sigma}{\log \log m}))$, but I guess there is one extra $(\log \sigma)$
+ factor in the first fraction. It should be $O(\frac{\log m}{\log \log m}
+ (1 + \frac{\log \sigma}{\log \log m}))$
+ }
+{%
+Fixed.
+}
+
+\answer{%
+pag. 3: the graph has a directed edge from $u$ to $v$: add "labeled with $w_k$"
+}
+{%
+Done.  Precisely the label is $v_k$ in this case.
+}
+
+\answer{%
+Section 3: really do not like the names given to operations, they do not make sense (e.g. parent, since it is not a tree!!!).
+
+I propose the following change that is more consistent with the standard terminology on graphs:
+cdeg $\rightarrow$ outdegree,
+child $\rightarrow$ outgoing,
+pdeg $\rightarrow$ indegree,
+parent $\rightarrow$ incoming,
+search $\rightarrow$ index.
+
+Also, the definition of search(s) uses last[] and Node[], but they are defined later in Section 3.1.
+
+}
+{%
+We changed the notation as suggested.  The definition of search(s) is also fixed.
+We also changed the definition of incoming.
+}
+
+\answer{%
+ it is probably better to make a connection of Section 3.1 with the XBW described in Section 2.3.}
+{%
+We mentioned the similarity between ours and the XBW in the end of Section 3.1.
+}
+
+\answer{%
+All the complexities are computed in bits but the authors do not answer the padding issues (only the array \emph{last} can be considered as a bitmap). But the storages in $\log m$ complexities assume that the integers can be stored independently of the machine words. If it is not the case the authors should explain how they address this issue.
+}
+{%
+Integers are stored in a packed form.  Therefore the space does not depend on
+the length of machine words.  We can unpack an integer in constant time
+by bit operations.  We described this in Section 2.2.
+}
+
+\answer{%
+It would be very helpful to be convinced of their approach if they could compare the memory uses of their approach and classical ones in practice (big O is nice but does not says all and o() is stronger)). More specifically, it is unclear if the 
+$O(\sigma \log(m))$ term does reduce to an o(m) term. Would it be possible that a hidden term in the bigO term does not reduce to a small o term ?
+}
+{%
+Because $\sigma$ and $m$ are independent, it seems difficult to reduce the term
+into $o(m)$.  However $\sigma$ is the alphabet size and usually small ($4$ for DNA)
+and therefore the space is negligible. Other bigO terms in the space complexity
+are actually $o(m)$.
+}
+
+\answer{%
+I see there is a piece of code but there is no practical evaluation (and direct measure of the space used in the implementation) this together with a comparison with existing representation of the de Bruijn graphs would make the paper stronger.
+}
+{%
+We agree, but experimental comparisons will be reported in the full paper.
+}
+
+\answer{%
+Page 2, line -6 the author should detail the claim ``This is much smaller than exisiting ones''
+}
+{%
+We added a sentence about the estimated size of our representation and
+comparison with the one by Conway and Bromage.
+}
+
+\answer{%
+page 3, line -2, the author should explain why the assumption $t_r(N, \sigma) = t_s(N, \sigma) = t_a(N, \sigma)$.
+}
+{%
+The reason is just for simplicity of description.  We changed so that
+we use a parameter $t_b$ which is the maximum of the three values.
+}
+
+\answer{%
+Page 5, line 19, the condition is $Node[i] \neq Node[i - 1] $ ? (Or $Node[i] \neq =Node[i + 1] $ ?)
+}
+{%
+You are right.  Fixed.
+}
+
+\answer{%
+Page 6 it would be very helpful to give an example where a $k$-mer is preceded by three different letters (and hence explain why an alphabet of size $2\sigma$ is enough (and that it is not necessary to consider an alphabet of size $\sigma^2$).
+}
+{%
+It is difficult to make a small example graph having a node with three incoming
+edges.  However the alphabet size $2\sigma$ is not related to in-degree, and
+to make one-to-one correspondence between {\it Node} and $W$.
+}
+
+\answer{%
+Page 6, line -4, the labels of outgoing edges are stored. Is this storage included in the $4m$ space complexity?
+}
+{%
+Yes.  We use $m$ bits for {\it last}, and $3m$ bits for $W$.
+The alphabet size of $W$ is $2\sigma = 8$, so $W$ is stored in $m \log_2 (2\sigma) = 3m$
+bits.  We also need $o(m)$ bits for computing rank/select on {\it last} and $W$.
+In total, we use less than $5m$ bits.
+}
+
+\end{document}
