@@ -1,0 +1,111 @@
+\documentclass[12pt,a4paper,twoside]{report}
+
+%%%%%%%% PACKAGES %%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[numbers,sort]{natbib}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+
+%\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmic,subfigure}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{epsfig}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{tabularx,booktabs}
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%% MACROS %%%%%%%%%
+% This LaTeX file contains some macros for the CC license page.
+%\input{aux/creativecommons}
+
+% My self defined commands
+%\input{aux/commands}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%% SETTINGS %%%%%%%%
+% The paths to the graphics files:
+\graphicspath{{images/}{generated/}}
+
+% Section counting
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{
+  {Succinct de Bruijn Graphs} \\
+  {\large National Institute of Informatics} \\
+\author{Alex Bowe\\
+\texttt{alex@nii.ac.jp} \\ \\
+Ph.D. Thesis Draft\\ \\
+\textbf{Supervisor:} Takeaki Uno\\ \\
+School of Multidisciplinary Sciences \\
+Department of Informatics \\
+National Institute of Informatics \\
+Chiyoda-ku, Tokyo, Japan}
+
+\date{\today}
+
+\maketitle
+
+%\begin{abstract}
+%\input{chapters/abstract} \\ \\
+%\textbf{Keywords:} de Bruijn graphs, succinct data structures, DNA assembly, pan-genomics
+%\end{abstract}
+
+
+%\include{chapters/LicenseDisclaimer}
+
+
+%\include{chapters/original}
+
+\setcounter{tocdepth}{1}
+\newpage
+\tableofcontents
+\newpage
+
+%\include{chapters/introduction}
+
+%\include{chapters/preliminaries}
+
+%\include{chapters/succinct-dbg}
+
+%\include{chapters/variable-order-dbg}
+
+%\include{chapters/colour-dbg}
+
+%\include{chapters/experiments}
+
+%\include{chapters/conclusion}
+
+%\include{chapters/declaration}
+
+%\include{chapters/acknowledgements}
+
+%\appendix
+%\include{chapters/appendix}
+
+%\bibliographystyle{abbrv}
+%\bibliography{bibliography}
+
+\end{document}
