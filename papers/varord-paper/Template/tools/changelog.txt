@@ -71,7 +71,7 @@
  7) Removed support for legacy IED list commands.
     IEEEtrantools no longer defines or references \labelindent so as to
     avoid namespace problems with list packages that define it.
-    Thanks to Sven Köhler for reporting the problem with enumitem.sty.
+    Thanks to Sven Kï¿½hler for reporting the problem with enumitem.sty.
 
 
 *******
