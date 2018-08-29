@@ -24,7 +24,7 @@ Changelog history of the IEEEtran BibTeX class.
      Thanks to Oscar Gustafsson for reporting this problem.
 
   5. Corrected IEEE_J_MTT journal name string in IEEEabrv.bib.
-     Thanks to Nicolás Barabino, Chuanren Wu and Santiago Cogollos Borras
+     Thanks to Nicolï¿½s Barabino, Chuanren Wu and Santiago Cogollos Borras
      for suggesting this change.
 
   6. Corrected IEEE_J_STARS journal name string in IEEEabrv.bib.
