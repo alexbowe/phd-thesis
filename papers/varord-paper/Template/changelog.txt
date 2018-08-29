@@ -111,7 +111,7 @@
     commands and the legacy biography and biographynophoto environments.
     IEEEtran no longer defines or references \labelindent so as to
     avoid namespace problems with list packages that define it.
-    Thanks to Sven Köhler for reporting the problem with enumitem.sty.
+    Thanks to Sven Kï¿½hler for reporting the problem with enumitem.sty.
 
 
 *******
