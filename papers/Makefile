@@ -6,23 +6,23 @@ TEMP=temp
 all: $(SDBG).pdf $(VODBG).pdf $(CDBG).pdf
 
 $(SDBG).pdf:
-	pushd $(SDBG); \
+	cd $(SDBG); \
 	latexmk -pdf wabi12camera.tex -outdir=../$(TEMP)/$(SDBG); \
 	cp ../$(TEMP)/$(SDBG)/wabi12camera.pdf ../$@; \
-	popd
 
 $(VODBG).pdf:
-	pushd $(VODBG); \
+	cd $(VODBG); \
 	latexmk -pdf varord-dbg.tex -outdir=../$(TEMP)/$(VODBG); \
 	cp ../$(TEMP)/$(VODBG)/varord-dbg.pdf ../$@; \
-	popd
 
 $(CDBG).pdf:
-	pushd $(CDBG); \
+	cd $(CDBG); \
 	latexmk -pdf document.tex -outdir=../$(TEMP)/$(CDBG); \
 	cp ../$(TEMP)/$(CDBG)/document.pdf ../$@; \
-	popd
 
 clean:
 	rm -rf $(TEMP)
+
+clean-pdfs:
+	rm -f $(SDBG).pdf $(VODBG).pdf $(CDBG).pdf
 
