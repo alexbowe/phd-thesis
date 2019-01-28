@@ -1,0 +1,215 @@
+\chapter{Experimental Analysis}
+\label{sec:experiments}
+
+\section{Implementation}
+SDSL-lite, STXXL for the implementation of on disk sorting, which also lets the user specify the work to be done in memory.
+
+%\section{Primary vs Secondary memory construction}
+%In memory, single IDE disk, single SSD, 2 SSDs, 4 SSDs.
+%Cost effective? SSD vs memory cost.
+
+\section{BOSS vs Competing methods}
+Construction time, bits per edge, and traversal time for 2 small genomes.
+(would have to implement simple traversal for this)
+
+\section{Variable-order vs fixed-order}
+%\input{chapters/experiments-varord.tex}
+\input{experiments-varord-30lis16.tex}
+
+
+%%%%%%%%%%%%%%  PS
+\section{Cortex vs Vari}
+%Measure full runtime of both.
+%Test w/ on disk colour matrix? (sort indices after traversal)
+\pyt{Remove the initial 2 sentences? I.e. Measure full runtime of both...}
+
+
+We evaluated $\ours$ on five different datasets, described below.  For performance evaluation, we compare peak memory, which was measured as the maximum resident set size, and runtime, measured as the user process time as our metrics.  In addition to evaluating performance, we also validated $\ours$ by the ability to correctly call bubbles and to accurately identify the origin of $k$-mers in a simulated metagenomics sample.  Finally, we present observations computed by $\ours$ on a collection of metagenomic samples taken from commercial beef production facilities.
+
+
+
+\subsection{Datasets} \label{data}
+
+Five different datasets were chosen in order to test and evaluate $\ours$ on a variety of diverse yet realistic data types that are likely to be used as input into $\ours$.  The first dataset contained six sub-strains of the {\em E. coli} K-12 strain reference genomes from NCBI.  The accession and substrains are 	AP009048 -- W3110,  
+	CP009789 -- ER3413, 
+	CP010441 -- ER3445, 
+	CP010442 -- ER3466, 
+	CP010445 -- ER3435, and 
+	U00096   -- MG1655. 
+    Each of the genomes contained approximately 4.6 million base pairs and had a median GC content of 49.9\%.
+
+% (\ref{tbl-ecoli}).
+
+
+    
+%% \begin{table}[h!]
+%%   \small
+%%   \centering
+%%   \begin{tabular}{c|c|c}
+%% 		{\bf Accession Number}		& {\bf Sub-strain}	& {\bf Genome Size} 	 \\
+%% 	\hline
+%% 	\hline
+%% 	AP009048 & W3110  & 4,646,332 bp \\
+%% 	CP009789 & ER3413 & 4,558,660 bp \\
+%% 	CP010441 & ER3445 & 4,607,634 bp \\
+%% 	CP010442 & ER3466 & 4,660,432 bp \\
+%% 	CP010445 & ER3435 & 4,682,086 bp \\ 
+%% 	U00096   & MG1655 & 4,641,652 bp\\
+%%  	\end{tabular}
+%%       \caption{Characteristics of the substrains of \emph{E. coli} K-12 used to test the performance and accuracy of $\ours$}.
+%%  \label{tbl-ecoli}
+%% \end{table}
+
+Our second dataset was composed of reference genomes for four different plant species: \emph{Oryza sativa Japonica} (rice, NCBI Accession numbers: NC\_008394 to NC\_008405), \emph{Solanum lycopersicum} (tomato, NCBI Accession numbers: NC\_015438 to NC\_015449),  \emph{Zea mays} (corn, NCBI Accession numbers: NC\_024459 to NC\_024468), and  \emph{Arabidopsis thaliana} (Arabidopsis, [NCBI Accession numbers: NC\_003070 to NC\_003076).  The genome sizes and GC content were 430 Mbp and 43.42\% \citep{rice}, 950 Mbp and 43.42\% \citep{tomato1,tomato2}, 2.07 Gbp and 35.70\% \citep{corn}, and 135 Mbp and 47.4\% \citep{swarbreck}, respectively.  Hence, this represents a significantly larger dataset with more varied GC content than the {\em E. coli} dataset, and therefore placed more demands on both the performance and accuracy of $\ours$.  
+
+
+%% \begin{table}[h!]
+%%   \small
+%%   \centering
+%%   \begin{tabular}{c|c|c}
+%% 		{\bf AMR Gene}&{\bf Resistance Type}&{\bf Accession Number} 	 \\
+%% 	\hline
+%% 	\hline
+%% 	AmpH & beta-lactamase & AFQ67211 \\
+%% 	OKP-B-4 & beta-lactamase & CAJ19612 \\
+%% 	NDM-6 & beta-lactamase  & AEX08599 \\
+%% 	MAL-1 & beta-lactamase & CAC33434  \\
+%% 	MOX-2 & beta-lactamase  & CAB82578  \\
+%% 	TLA-1 & beta-lactamase & ADM26831   \\
+%% 	SED-1 & beta-lactamase  & AAK63223   \\
+%% 	TEM-1& beta-lactamase  & AFI61435   \\
+%% 	TET-X & Tetracycline & AAA27471   \\
+%% 	TET-X(1) & Tetracycline  & ADD83116 \\
+%% 	TET-C & Tetracycline  & NP\_387454  \\
+%% 	TETR-G & Tetracycline & AAB24797 \\
+%%  	\end{tabular}
+%%       \caption{List of AMR genes used to generate the simulated sample. The first seven genes were included in the the 54 beta-lactamase genes we considered for this experiment, and the remaining four were tetracycline genes. Each of the genes were approximately 1,000 bp in length and had varied GC content.}
+%%  \label{tbl-amr}
+%% \end{table}
+
+
+
+
+
+
+
+
+Our third dataset consists of the set of all 3,765  NCBI GenBank assemblies having the organism\_name field equal to ``Escherichia coli'' as of March 22, 2016.  The union of all assemblies contains 155,449,228 31-mers.  The minimum, maximum, and average assembly lengths are 2,911,360 bp, 7,687,202 bp, and 5,156,744 bp, respectively.  The average GC content is 50.5\%. 
+
+As previously described, our fourth dataset contains 54 beta-lactamase genes from a custom database and a simulated metagenomics sample.  We first compiled a database of known AMR genes based on sequences in the databases CARD \citep{mcarthur}, Resfinder \citep{zankari} and ARG-ANNOT \citep{gupta}---each of these AMR-specific databases are actively curated and contain the genetic sequences for a large variety of AMR genes.  This database contains all known AMR genes, their drug resistance, and mechanism conferring resistance.  We selected 54 beta-lactamase genes from this database that are known to have very high clinical and public health importance, and simulated 26,516,559 paired-end 120 bp reads from seven of the 54 beta-lactamase genes (Accession numbers AFQ67211, CAJ19612, AEX08599, CAC33434, CAB82578, ADM26831, AAK63223, and AFI61435), as well as four additional AMR genes that were not included in this set of 54 genes (Accession numbers AAA27471, ADD83116, NP\_387454, and AAB24797).  These latter four genes were tetracycline-resistant genes.  Tetracyclines are a group of broad-spectrum antibiotics and hence, their resistance is also clinically important.   This AMR dataset was used not only in the memory and time performance but also used to test the ability of $\ours$ in identifying beta-lactamase genes from a typical metagenomic sample containing a variety of AMR genes.  %Table \ref{tbl-amr} contains the gene name, resistance type (beta-lactamase or  tetracycline), and accession number of 11 genes that were used in simulation of the sample. 
+
+
+Our fifth dataset consists of 87 metagenomic samples taken from various locations along the production process for eight pens of cattle in two beef production facilities by \cite{noyes2016resistome}.  These locations were feedlot arrival, feedlot exit, transport truck, slaughter holding (arrival), and slaughter trimmings and sponges (exit).  Samples were arranged into groups based on these locations. These samples were collected to explore the hypothesis that widespread use of antimicrobial drugs (administered with livestock feed for these samples) introduce selective pressure on microbial communities and thus foster the evolution of antimicrobial resistant bacteria.  These antimicrobial resistant bacterial are important because they present a public health risk.  In addition to the metagenomic samples, we included 4,062 AMR genes from the previously mentioned gene databases.  23 genes in the databases containing IUPAC codes other than the four bases were filtered out as KMC2 and the succinct de Bruijn graph were configured with a four symbol alphabet.  The union of all samples and genes contains 40,995,794,366 32-mers and the GC content is 44.3\%.
+
+
+
+
+
+% software configuration
+We ran our experiments with the following configuration and environment.  On the {\it E. coli} reference, plant, and simulated metagenomic datasets we ran $\ours$ with RRR encoding, without external construction, and used {\sc Cortex} as the front end to generate the uncompressed $k$-mer union and colors.  On the {\it E. coli} assembly dataset, we ran $\ours$ similarly but used the KMC2 front end and our streaming based set-union construction.  On the metagenomic sample, we ran $\ours$ with the KMC2 front end, online Elias-Fano encoding for $C$, and external BOSS construction.
+% hardware configuration
+The first, second, and fourth experiments were performed on a 2 Intel Xeon  E5-2650 v2 server with 386 GB of RAM, and both resident set size and user process time were reported by the operating system.  The third experiment was performed on an AMD Opteron  6220  with 512 GB of RAM and 32 cores.  The fifth experiment was performed on an AMD Opteron 6378  with 512 GB of RAM and 64 cores. 
+
+\subsection{Time and Memory Usage}
+
+% what is bubble calling
+To compare $\ours$ resource use with {\sc Cortex} by \cite{ICTFM12}, we constructed the colored de Bruijn graph for the {\it E. coli} reference dataset, the four plant assembly dataset, and the simulated AMR dataset, then performed {\em bubble calling} on all three data structures,  and recorded the peak memory usage and runtime.    Resource comparison with {\sc Cortex} was only possible on the smaller three datasets, as the largest two have too many $k$-mers and colors to fit in memory on our machines with {\sc Cortex}.  Based on the data structure defined in {\sc Cortex}'s source as well as the supplementry information provided by Iqbal {\it et al.}, it would have required $>$ 3 TB of RAM and $>$ 18 TB of RAM for its hash table entries alone, respectively.
+
+
+
+
+% construction statistics
+%For the {\it E. coli} assembly dataset, after $k$-mer counting with KMC2, construction took 16 hours and 387 GB of RAM for this dataset. For the beef safety samples, it took KMC2 34 hours and 12 GB of RAM to $k$-mer count the 887 GB of trimmed reads. $\ours$ required 87 hours, 218 GB of RAM, and 4.4 TB of external memory to build the succinct colored de Bruijn graph.  The uncompressed $C$ temporary file was 1.4 TB in size, which compressed to 196 GB with Elias-Fano encoding.
+
+
+
+%For the simulated metagenomic dataset, each AMR gene was assigned a separate color allowing the match-color algorithm to be applied.  Thus no graph traversal times are reported although the size of the structures are reported.  
+%We ran the bubble calling algorithm between the colors for the assemblies ``GCF\_000005845.2\_ASM584v2\_genomic'' and ``GCF\_000006665.1\_ASM666v1\_genomic''.
+
+%% On the final two datasets, the simulated metagenomic sample and beef safety samples, we are interested in detecting the presence of known AMR genes among the reads.  
+%% we explore the feasibility of using a colored de Bruijn graph for AMR gene detection among metagenomic samples.
+%% We do so by visiting $k$-mers found in AMR genes and look for those that co-occur in the metagenomic samples.
+
+%% % discussion of k-mer intersection
+%% On the final two datasets, instead of using either of {\sc Cortex}'s bubble calling algorithms, which are designed for variant detection we are interested in presence of the AMR genes in the sample.  Variants may represent read errors or largely homologous genes missing the antibiotic resistant determinant. in samples taken from a pair of individuals or individual and reference,   In this applications, instead of looking for variants, we are looking for similarity
+%% % varants -- regions that differ flanked by homologous regions, we are looking strictly for homologous regions -- as the metagenomic sample may be plagued with incomplete coverage
+%% in the presence of incomplete coverage, a mix of many individuals, thus weakening common read error correction assumptions, and significant homology among AMR genes and their possibly co-occuring ancestral variants leading to more tangled graphs which impair {\sc Cortex}'s cleaned individual oriented algorithm.  In the absence of a colored, metagenomic-aware traversal algorithm, we focus only on regions of similarity and allow unlimited sized gaps between them, where the metagenomic sample color may be highly tangled or unconnected.  
+
+%% One thing that distinguishes such datasets from pangenomic datasets, such as those targeted by the bloom filter trie, is that these datasets may have significantly smaller amounts of redundancy.  On the beef safety dataset, for example, two thirds of $k$-mers occur with multiplicity of one across the whole collection.  
+
+%% On the simulated metagenomic dataset, 
+
+%% For the $k$-mer set operation was not necessary and no time comparison is reported.
+
+%% Hence this experiment demonstrates the viability of AMR gene detection via $k$-mer set operations.
+
+%% For the 87 metagenomic sample dataset, the full data structures were loaded in memory, however only the length of each gene sequence need be traversed, resulting in the relatively fast 21 minute load and traverse time compared with bubble calling across a genome.
+
+
+%% On the 87 beef safety sample, we implemented a variant of {\sc Cortex}'s path divergence algorithm, which locates bubbles where one arm of the bubble is allowed to have branches because its path is guided by a reference sequence.  In our version, we traverese the walk specified by each AMR gene sequence and count the number of edges shared with all samples from each sample location in the beef production pipeline.  
+
+
+%% We note the benefit  of using a rank-select capable dictionary datastructure such as RRR or Elias-Fano encoded bit vector and storing the color matrix in linearized row major order.  Samples were arranged such that all samples taken from the same location within the production process were placed in consecutive columns in $C$.
+%% %To analyze colored de Bruijn graphs with {\sc Cortex}'s algorithms, we must do all pairs comparisons or at least compare every sample of interest against some reference color; both of which become a growing runtime burden as the number of colors increases.
+%% In this configuration, our data structure allows us to work on groups of samples at a time while still maintaining each sample individuality for analyses when that is of interest.  Specifically, if colors are ordered by relevant groups, such as by  the location samples were taken in the beef production pipeline.  With such grouping, we can count the number of sample colors from a group that are present in a given edge quickly.  This is computed in constant time as the difference between rank queries on the group's column interval bounds.
+
+In order to test performance characteristics, various experiments were performed on all five datasets described in the previous subsection.  Datasets varied in the number of $k$-mers in the graph from four million to over 40 billion.  As can be seen in Table \ref{tbl-cosmo}, where directly comparable, $\ours$ used less than one-fifth of the peak memory that {\sc Cortex}  required but required greater running time.  This memory and time trade-off is important in larger population level data.  %Given that {\sc Cortex} requires 100.93 GB of space for four plant species, it would be perceptibly infeasible to run it on the i5K initiative dataset that contains the genetic sequence data for 5,000 insect species.
+This is highlighted by our largest two datasets which could not be run with {\sc Cortex}.
+Hence, lowering the memory usage in exchange for higher running time deserves merit in contexts where there is data from large populations. 
+ 
+%We note that the ratios were greater for the AMR dataset, which was likely due to the greater number of colors in the AMR versus the \emph{E. coli} and plant datasets (55 versus 6 and 4, respectively).
+
+
+\begin{table*}%[h!]
+  \small
+  \centering
+  \begin{tabular}{| l | r | r | c | c | c |c |}
+   	\hline
+	\multicolumn{1}{|l}{}
+   	& \multicolumn{1}{r}{}	
+	& \multicolumn{1}{r}{} 
+	& \multicolumn{2}{c|}{{\sc Cortex}} 
+	& \multicolumn{2}{|c|}{$\ours$}  \\
+	\hline
+	 Dataset & No. of $k$-mers & Colors & Memory & Time & Memory & Time \\
+	\hline
+	\emph{E. coli} reference genomes			& 4,627,104 		& 6 	& 363.64 MB 	& 9 s 	& 72.38 MB  	& 1m 19s\\
+	Plant reference genomes					& 1,621,663,030 	& 4 	& 100.93 GB 	& 2h 18m	& 19.46 GB 	& 17h 28m\\
+    NCBI \emph{E. coli} assemblies          & 155,449,228       & 3,765 & N/A        & N/A      &  26.50 GB      & 11h \\
+	AMR genes and sample 					& 9,348,365 		& 55 	& 7.08 GB 	& 2m 55s	& 0.718 GB 	& 29m 21s \\ 
+    Beef safety                             & 40,995,794,366    & 88    & N/A        & N/A   & 245 GB     & N/A \\
+ 	\hline
+	\end{tabular}
+  \caption{Comparison between the peak memory and time usage required to store all the $k$-mers and run bubble calling on the data in {\sc Cortex} and $\ours$.
+    %$k= 31$ was used for all datasets.
+    The peak memory is given in megabytes (MB) or gigabytes (GB). The running time is reported in seconds (s), minutes (m), and hours (h).}
+ \label{tbl-cosmo}
+\end{table*}
+
+\subsection{Validation on E. coli Genomes}
+
+In order to validate our data structure and test the accuracy of the bubble calling method of $\ours$, we compared the bubbles found by running the bubble calling algorithm on the \emph{E. coli} reference dataset using {\sc Cortex} and $\ours$.  The bubbles outputted by each method were compared by identifying the flank preceding each bubble.  Both $\ours$ and {\sc Cortex} identified 465 bubbles across all six \emph{E. coli} K-12 substrains.  This number accounts for the reverse complement bubbles found by $\ours$. The methods agree on 98.5\% (458 / 465) of the bubbles. Thus, $\ours$ found seven bubbles that were not identified by {\sc Cortex}, which were shown to be valid, and {\sc Cortex} found seven bubbles not identified by $\ours$.
+% I'm commenting this next line out because it doesn't make sense; cortex stores connonical k-mers, so implicitly has revcomps too.
+% These latter bubbles were missed by $\ours$ because the addition of the reverse complement adds complexity to the graph, which changes these regions from containing a single bubble to a more complex structure.
+Nonetheless, our validation shows that 98.5\% of the variation determined by {\sc Cortex} and $\ours$ is identical.
+
+\subsection{Validation on AMR Dataset}
+
+Next, we validated the ability of $\ours$ to correctly identify the AMR genes contained in a metagenomics sample using a set of reference genes. $\ours$ constructed the colored de Bruijn graph from the set of 54 beta lactamases and the simulated metagenomics sample. Hence, there were 55 unique colors in the graph because there exists one color for the metagenomic sample and one unique color for each of the 54 beta-lactamase genes.  Next, for each of the 54 genes, the unique $k$-mers were identified and the total number of these $k$-mers that were contained in the simulated sample was determined.  
+
+%Table \ref{amr2} in the Supplement gives the total number of each unique $k$-mers for each gene, the number of these $k$-mers that were found in the simulated reads, and the {\em shared k-mer fraction} that is defined by the division of the two numbers.
+The shared $k$-mer fraction for each of the 54 genes ranged from 0.41 to 1 with a mean of 0.62.  All of the seven beta-lactamase genes that were contained in the simulated sample had a shared $k$-mer fraction of 1, whereas none of the remaining 47 genes did.  Of the 47 beta-lactamase genes that were not contained in the simulated sample, two had a shared $k$-mer fraction 0.98 and 0.95, however, these genes had 97\% and 95\% sequence similarity to one of the seven genes contained in the sample.  All the remaining 45 genes had a shared $k$-mer fraction between 0.79 and 0.41.  Hence, this demonstrates (on a small scale) that this use of the colored de Bruijn graph and our match color algorithm is a viable method to identify AMR genes in a metagenomics sample. 
+
+\subsection{Observations on Beef Safety Dataset}
+
+%While the primary purpose of this experiment is to measure the performance in terms of memory footprint, we can examine the data we collected during traversal which may be useful to biologists and spawn hypotheses for further investigation.
+Finally, we used $\ours$ to make observations about the presence of AMR genes in the beef safety dataset.  As previously described, during out path divergence derived algorithm, we compute a count of how many $k$-mers in each AMR gene are found across all samples within a sample group.  This algorithm need only traverse the AMR genes, so despite the size of the overall dataset, it only took 21 minutes to load and access the necessary parts of the data structure.  In contrast, if bubble calling were to run at the same rate for this dataset as for the {\it E. coli} assembly dataset, it would take 3,001 hours to complete, thus suggesting a need for a targeted inquiry approach on datasets of this size.  
+
+Since longer genes have more $k$-mers, the counts are likely to be larger, as are those from larger sample groups.  To make these counts comparable, we normalize by both gene length and sample group size.  We can then examine the number of genes having a disproporitionately large ($>$ 3 std. dev. above mean) shared $k$-mer count for each gene and sample group combination.  The number of such genes with disproporitionately large normalized counts in each sample group were:  feedlot arrival --- 304, feedlot exit --- 93, transport truck --- 230, slaughter holding (arrival) --- 16, and slaughter trimmings and sponges (exit) --- 0.
+%Despite biases in the sampling process that need to be taken into account for substantial biological implications, one validating property of these observations is that there were no AMR genes with disproporitionately large representation in the samples taken on exit from the slaughter location.
+This observation supports the conclusion of \cite{noyes2016resistome}, namely, that antimicrobial interventions during slaughter were effective in reducing AMR gene presence in the finished product. 
+
+%\subsection{Hypotheses}
+%\subsection{Method}
+%\subsection{Test Data}
+%\label{sec:data}

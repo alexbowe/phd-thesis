@@ -1,0 +1,78 @@
+%This thesis proposes succinct representations for the de Bruijn graph and
+%different methods of analysis required to the traditional sanger sequenced data.
+%The recent push towards ... sequencing yields longer reads at a significant cost in accuracy. So far, the new gen methods
+%have not surpassed shotgun sequencing in practicality, but rather complement it.
+
+% NOTE: I wanted to have something very to the point at the start
+% The aim is absolutely to provide scalable representations of the most important de bruijn graph based outputs
+% As well as the code to extend them even further
+This thesis proposes the first Burrows-Wheeler Transform (BWT) based
+\pyt{-'s changed to ---'s} succinct representation of the de Bruijn graph --- a data
+structure used in most modern DNA assemblers.
+The thesis also proposed a succinct representation of the variable-order de Bruijn graph --- the first formalisation of
+a de Bruijn graph which can change order on the fly, and an alternative to the iterative de Bruijn graph,
+which is used to improve accuracy in state-of-the-art metagenomic assemblers.
+Finally, the thesis proposes a succinct representation of the coloured de Bruijn graph --- used for pangenomic
+variant analyses and assembly.
+These analyses are ultimately intended for massive population level short-read data, which is already being
+generated at rates outpacing what current implementations can handle.
+Hence it is paramount that these data structures are efficiently scalable.
+
+The de Bruijn graph $G_K$ of a set of strings $S$ is a key data structure in short-read genome assembly,
+which represents overlaps between all the $K$-length substrings ($K$-mers) of $S$. Construction and navigation of the
+graph is a space and time bottleneck in practice, and the main hurdle for assembling large, eukaryote genomes.
+
+The bottleneck is compounded by the fact that state-of-the-art assemblers do not build the
+de Bruijn graph for a single order (value of $K$) but a so-called \textit{iterative} de Bruijn graph, for
+multiple values of $K$. More precisely, they build or update $d$ de Bruijn graphs, each with a specific
+order, i.e., $G_{K_1}$,  $G_{K_2}$, \ldots,  $G_{K_d}$. Although this paradigm increases the quality of the assembly produced,
+it increases the run time by roughly a factor of $d$.
+
+Furthermore, to detect genetic variants in populations, many pipelines require de Bruijn graphs
+to be built for multiple genomes. Iqbal et al. (Nature Genetics 2012) introduced the \textit{colored} de
+Bruijn graph, which exploits the similarity between organisms by storing them in a single graph, where
+each $K$-mer has associated "color" information. That is, any $K$-mer can be mapped back to the subset of
+string-sets for $C$ colors ${S_1, \ldots, S_C}$ that it appeared in.
+
+%Because they are intended to be applied to massive single and population level data, it is essential that
+%Bruijn graphs be represented efficiently.
+% TODO: metagenomics, pangenomics
+
+This thesis describes the first succinct de Bruijn graph representation based on the Burrows--Wheeler Transform
+(a linchpin in cutting edge succint data structure research), which can be stored in $4m + o(m)$ bits for $m$
+edges. This is much smaller than previous representations, while still enabling fast navigation operations:
+indegree and outdegree of a node are computed in constant time, and outgoing and incoming edges with a given
+label are computed in constant time and $\mathcal{O}(K)$ time, respectively. The data structure can be
+constructed in $\mathcal{O}(K m \log{m})$ time.
+
+Additionally, this thesis shows how to augment a succinct de Bruijn graph to support new operations which let
+us change order on the fly, effectively representing all de Bruijn graphs up to some maximum order $K$ in a single
+data structure, while only modestly increasing space usage, construction time, and navigation time compared
+to a single order graph.
+
+Finally, this thesis demonstrates how to store associated color data in a compressed format, dramatically reducing the amount
+of memory required to store and use the colored de Bruijn graph, allowing it to be applied in much larger and more ambitious
+sequence projects than was previously possible.
+
+The code is open source, and is designed to flexibly support building new kinds of de Bruijn graphs (with any associated
+edge and node data), as well as supporting use in the plethora of algorithms supplied by the Boost graph library. It makes
+use of SDSL-lite and STXXL, the current best implementations of low-level succinct data structures and external memory
+data structures respectively. It is available at: \url{http://github.com/cosmo-team/cosmo}.
+% TODO: fix citations
+% TODO: cite iterative
+% TODO: external construction a contribution?
+% TODO: mention flexible library
+% TODO: add complexity for each graph
+%We also show that it can be constructed on disk, reducing the barrier to building large dramatically.
+%External construction.
+%However, it is not without its limitations. Namely, even for a single genome, a graph can grow quite large. This necessitated
+%At the mercy of the user-supplied k parameter, which affects the shape of the graph, and is sensitve to coverage.
+%In theory, a high value of k is desired in order to capture repeat information, but in practice, due to read errors...
+%In high coverage data, if a low value is selected the graph can become too tangled.
+%In low coverage data, a high value of k can lead to broken paths.
+% read the intros to our papers
+%Complicating things, coverage is usually non-uniform within a sample. State of the art assemblers tackle this problem by
+%making use of iterative de bruijn graphs, which repeatedly assemble the de bruijn graph for increasing k values, using each
+%stages output to augment and correct the next stages input. This comes at the cost of...
+%In this thesis, we introduce the variable order dBG, which is constructed once and allows the k parameter to be altered on the fly.
+%This problem is especially evident in metagenomic analysis (where population samples are taken in e.g. soil)

@@ -1,0 +1,122 @@
+\chapter{Introduction}
+\label{chp:introduction}
+
+\section{Motivation}
+\label{sec:motivation}
+
+% Motivation - 12 paragraphs (100 words each) explaining the field and the problems
+% Our Contribution - A paragraph or two explaining each paper in the thesis.
+% the key concerns are scalability, accuracy, and recently extension to multiple genomes
+
+Genome assembly is the bedrock of bioinformatics. An essential component of Eulerian sequence assembly, which was introduced 20 years ago by Idury and Waterman~\cite{IW95}, the {\em de Bruijn} graph has become the key data structure in genome assembly, and indeed, bioinformatics. The ubiquity of the de Bruijn graph is owed largely to the historical supplantation of Sanger sequencing by next-generation sequencing (NGS) methods. Although NGS experiments are exceedingly rapid and low-cost compared with Sanger experiments, the computational phase of assembly within NGS workflows must overcome several limitations, notably the inclusion of inaccuracies inherent in sequencing machine output, and poor computational scalability of the classic de Bruijn data structure. As such, numerous research efforts have aimed to increase representation efficiency of de Bruijn graphs, and to improve the accuracy of genomic assembly from reads. Further, recent work has focused on extending the de Bruijn graph for use with multiple genomes, such as in the case of pan-genome research, which requires representing cross-individual genetic variants within a single concise data structure.
+
+\subsection{Eulerian sequence assembly and the de Bruijn graph in de novo short read reassembly}
+
+The advent of NGS machines has promoted whole genome re-sequencing as a
+vital workflow in modern genomics--one that is integral to ambitious scientific projects aiming to sequence large numbers of whole genomes. Notable examples of such initiatives include
+the {\em Genome 10K} project targeting vertebrate genomes~%\cite{Haussler09}, 
+\cite{Haussler:2009},
+the 1001 \emph{Arabidopsis}
+project~\cite{Ossowski08}, the 1000 genomes project aiming to catalog human genetic variations~\cite{Abecasis12}, the I5k project sequencing 5000 arthropod genomes~%\cite{robinson2011creating}, 
+\cite{Robinson11},
+the 150 Tomato ReSequencing project~\cite{tomato1,tomato2}, and the Human Microbiome~\cite{hmp} project.
+
+In genome reassembly, strings of DNA letters 100-150 symbols long, or {\em reads}, output from sequencing machines must subsequently be
+{\em assembled} into longer, overlapping DNA sequences called {\em contigs}.
+While the problem of finding the best overlap is NP-hard~\cite{Mye95}, many practical approaches
+have been proposed (see surveys~\cite{KasMor06,MilKor10,Pop09}).
+In the case of the longer and less abundant Sanger reads, it was sufficient to construct an
+overlap graph from pairs of reads overlapping by enough symbols~\cite{BatJaf02,HuaYan05,MyeSut00}.
+However, because NGS machines yield much shorter reads (typically 100-200 symbols in length),
+vastly more reads are required to reach the same coverage. As a result, it is computationally difficult to use the overlap graph technique to assemble NGS reads.
+
+Eulerian sequence assembly~\cite{IW95,PTW} replaces the overlap graph data structure with a de Bruijn graph. In this mathematical construction, reads are considered strings of characters. The de Bruijn graph is constructed with a vertex
+$v$ for every unique substring of length $K-1$ ($(K-1)$-mer; where $K$ is a user-selected parameter)  present in the input set of strings,
+and a directed edge $(u, v)$ for every observed $K$-mer in the input strings with the $(K-1)$-mer prefix $u$ and $(K-1)$-mer
+suffix $v$. The contigs then correspond to the non-branching paths through this graph. Most modern
+assembler programs use this paradigm~%\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,Zerbino:2008,SahShi12,MacPrz09}. 
+		\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,ZerBir08,SahShi12,MacPrz09}. 
+See~%\citep{how} 
+\cite{Compeau11}
+for a more thorough explanation of de Bruijn graphs and their use in assembly.
+
+\subsection{Scalability}
+However, while the de Bruijn graph can be constructed more efficiently than the overlap graph, it remains a bottleneck in assembly, both in terms of speed and size, thus hindering scalability.
+Storing a basic implementation of a de Bruijn graph requires huge amounts of memory, even after applying graph
+cleaning and contraction algorithms~\cite{ZerBir08}%\cite{Zerbino:2008}. 
+
+The near-ubiquity of de Bruijn graphs has prompted a number of attempts at
+improving scalability of this assembly paradigm.
+
+The first approach, by Simpson and colleagues, forwent compression, instead focusing on increasing sequencing efficiency through use of parallelized computing implementing a distributed hash table representation of the de Bruijn graph~\cite{SimWon09}.
+More recent approaches have focused instead on succinct representations, which aim to reduce the memory required to store a de Bruijn graph,
+while maintaining query efficiency. In 2011, Conway and Bromage introduced the first succinct de Bruijn graph~\cite{conway},
+which used the sparse bitvector (by Okanohara and Sadakane~\cite{OkaSad07}%{bitvector}) 
+ to represent the edges (or $K$-mers). This solution
+used rank and select operations (to be described in Chapter~\ref{chp:preliminaries}) followed by
+bloom filter approaches, which avoid false negatives through use of auxiliary structures. A major drawback of these early succinct de Bruijn graph representations lies in the slow speed of navigation with bloom filter approaches. %Bloom filter approaches are slower to
+%navigate, and difficult to efficiently store associated node and edge data with, so there are a number of
+%implementations based on the Burrows-Wheeler transform.
+
+
+\subsection{Accuracy}
+Another shortcoming of NGS sequencing data is that the reads are error-prone; DNA symbols may be read incorrectly. Also affecting accuracy, coverage of the genome is non-uniform.
+Hence, the shape of the de Bruijn graph is sensitive to the user-specified $K$ parameter, and parameter choice directly
+impacts assembly quality: $K$ values that are too small result in graphs containing spurious edges and nodes; conversely, $K$ values that are too large result in graphs that are too sparse, and in some cases, disconnected.
+
+In attempts to circumvent the need to choose a single ideal value of $K$, researchers have developed iterative de Bruijn graphs, such as IDBA~\cite{peng2010idba} and SPAdes~\cite{bankevich2012spades}, that
+use multiple different $K$ values. IDBA iteratively builds de Bruijn graphs for increasing $K$ values;
+at each iteration, the de Bruijn graph for the current value of $K$ is built from the reads, the contigs
+are output, and any reads that align to at least one of those contigs are removed from the current set of reads.
+The next iteration proceeds with the edges of the previous graph as the nodes for the current graph, and the contigs and
+unused reads provide the edges. SPAdes uses a similar approach, but without discarding any reads.
+
+Megahit, introduced in Paper I of this thesis, uses a succinct de Bruijn graph to construct assemblies that are superior to those created through competing methods, in combination with ideas from IDBA~\cite{megahit}.
+
+Finally, Lin and Pevzner~\cite{mdbg} %{lin2014manifold} 
+developed a {\em manifold de Bruijn graph}, a structure proposed to associate arbitrary substrings (fixed during preprocessing), rather than $K$-mers, with nodes, ultimately resulting in a representation that considers a range of $K$ values in a single iteration. This approach has never been implemented, and thus remains only a theoretical possibility as yet.
+
+The iterative de Bruijn graphs represent the state-of-the-art for genome assemblers, and produce assemblies of greatly
+improved quality. However, their need to construct several de Bruijn graphs of different orders makes them
+extremely slow on large genomes.
+
+\subsection{Multiple-Genome Representation and the Colored de Bruijn Graph}
+In recent years, the proliferation of population-level genomic data awaiting analysis has led to a paradigm shift in genomics toward pan-genomics, where references are represented as graphs rather than sequences from a single organism. Iqbal introduced the colored de Bruijn graph for use in this new paradigm~\cite{ICTFM12}. %{iqbal2012novo}. 
+A colored de Bruijn graph can be constructed from multiple reference genomes, multiple samples, or a combination of both.
+
+Unfortunately, the aforementioned scalability problem is also exacerbated in the case of colored de Bruijn graphs for use in pan-genomics, making it all the more crucial to develop techniques to reduce computational bandwidth needed to construct and traverse de Bruijn graph representations.
+
+\section{Original Papers and Contributions}
+% Conclusion:
+% We have a flexible data structure and address three of the most important problems in DNA assembly today.
+
+\begin{description}
+\item [Paper I]. Succinct de Bruijn graphs.
+
+A flexible data structure was desired, allowing augmentation via auxiliary data structures, as is the case
+with fm-index and Burrows-Wheeler transforms. This paper proposed a novel de Bruijn graph representation that is succinct, only requiring $m(2+\log{\sigma})$ bits of memory to store, where $\sigma$ is alphabet size ($\sigma=4$ in the case of DNA). The proposed representation is highly scalable by virtue of being unaffected by $K$-mer length. We also presented an algorithmic approach to online construction of this data structure in $O(Nk\log{m}/\log{\log{m}})$ time. The representation presented here has subsequently become known as the BOSS representation.
+\item [Paper II]. Variable order de Bruijn graphs.
+
+In this paper we present a method for augmenting our succinct BOSS de Bruijn graph representation (proposed in Paper I) to include all de Bruijn graphs for $k<=K$, eliminating the need to build $d$ de Bruijn graphs up to the chosen order $K$ as is necessary in iterative de Bruijn graph approaches such as SPAdes~\cite{bankevich2012spades} and IDBA~\cite{peng2010idba}. This data structure also allows navigation between and within each graph. The paper proceeds to experimentally demonstrate the scalability of our structure.
+\item [Paper III]. Succinct colored de Bruijn graphs.
+
+The colored de Bruijn graphs introduced by Iqbal et al.~\cite{ICTFM12} %{iqbal2012novo} 
+use colors to represent genomic variations within individuals or populations; however, the CORTEX implementation is memory-intensive. In this paper, we augmented our previously described succinct BOSS de Bruijn representation for use with multiple genomes, creating an implementation of colored de Bruijn graphs that can be stored and traversed efficiently.
+\end{description}
+
+\section{Outline}
+
+The remainder of this thesis is organized as follows:
+
+Chapter 2 presents essential definitions and notation necessary to understand the novel contributions. 
+
+Chapter 3 introduces th BOSS matrix that is at the core of the novel succinct de Bruijn graph representation. 
+
+Chapter 4 details augmentation of the BOSS representation to allow order-changing; it is primarily derived from the work originally presented in Paper II. 
+
+Chapter 5 describes how colored de Bruijn graphs may be stored by building a BOSS representation for the union of multiple individual de Bruijn graphs and an auxiliary binary two-dimentional binary array. 
+
+In Chapter 6, I presents experimental analysis, including comparisons of BOSS with competing methods, variable-order with fixed-order methods, and Iqbal's CORTEX~\cite{ICTFM12}  %{iqbal2012novo} 
+with Vari.
+
+Finally, the thesis draws to a close with Chapter 7, which presents conclusions, limitations, and suggestions for future research.
