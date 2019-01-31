@@ -1,0 +1,37 @@
+
+
+\section{The Maximal  Sequence Landscape} \label{sec:landscape}
+
+We formally define the maximal sequence landscape in this section.  Clift \emph{et al.} \cite{mcconnell86} introduced the concept of a sequence landscape, which is a data structure that stores the occurrences of any substring from a source string $s$ in a target string $t$.  In set representation, the sequence landscape $L_{t|s}$ of a target string $t$ with respect to a source string $s$ is defined as a set of tuples $\{m_1, m_2, \ldots, m_l\}$, where $m_i = (b_i, e_i, f_i)$ corresponds to the occurrence of substring $s_{b_ie_i}=s_{b_i}s_{b_i+1}\cdots s_{e_i}$ from $s$ in  $t$ with frequency $f_i$. If $s$ and $t$ are equal then the sequence landscape categorizes all repeated substrings in the source string $s$.  We refer to this special case where $s = t$ as the {\em self sequence landscape}.  Fig. \ref{fig:land} illustrates an example of a self sequence landscape and a sequence landscape.  Given a position $i$ of the input string $s$, all the repeated substrings containing $s_i$ can be recovered from the self sequence landscape in linear-time in the number of repetitions.  %For example, the self sequence landscape for the input string GTAGTAGTAGTA will store the repetitions for GTA, GTAGTA for 12$th$ position.  
+
+The occurrences of the substrings in the source string are referred to as {\em mountains}.  This terminology reflects the visual representation that was first introduced by Clift \emph{et al.} \cite{mcconnell86} that illustrates each occurrence as a mountain having height equal to the length of the substring, i.e. the height of mountain $m_i$ of $L_{t|s}$ is denoted as $h(m_i)$ and equal to $e_i - b_i + 1$. The {\em peak} of each mountain is labelled with the frequency of the substring corresponding to it.  In Fig. \ref{fig:land} (left), the substring CAT is represented as two mountains each of which has a height equal to three and frequency equal to two. 
+
+
+
+We say that a \emph{mountain} $m_j = (b_j, e_j, f_j)$ in a landscape $L_{t|s}$ \emph{covers} index $i$ and denote it by $m_j \bigtriangleup i$ if and only if $i \in \{b_j, \ldots, e_j\}$. Hence, the \emph{cover set} of a specific index $i$ of the sequence landscape $L_{t|s}$ is the set of all the mountains that covers $i$.  We denote the cover set as $C_{L_{t|s}}(i)$ and define it as follows:
+\begin{equation}
+C_{L_{t|s}}(i) := \{m_j|m_j \bigtriangleup i,h(m_j)>1,f_j>1\}.
+\end{equation}
+Lastly, we define the \emph{summit of index} $i$ as the highest mountain in its cover set.   We denote the summit of $i$ by $S_{L_{t|s}}(i)$ and define it as follows: 
+\begin{equation}
+S_{L_{t|s}}(i) :=  \{ m_j \, | \,h(m_j) \geq h(m_k) \,\, \forall \, m_k \in C_{L_{t|s}}(i)\}.
+\end{equation}
+
+
+\noindent We are now ready to define the data structure that is used by HyDA-Vista for assigning values of $k$ to each read.  
+
+\begin{definition} The \emph{maximal sequence landscape}, which we denote as $L^*_{t|s}$, is the set of the summits of all positions in $s$ that have frequency greater than one.  $L^*_{t|s}$ can be formally defined as follows: $L^*_{t|s} = \{ S_{L_{t|s}}(i) | i=1,\ldots, n\}$. The maximal sequence landscape is highlighted in yellow in Fig. \ref{fig:land}. \end{definition}
+
+\vspace{-5mm}
+\begin{SCfigure}
+\label{fig:land}
+\includegraphics[scale=0.25]{./figures/Landscape.pdf}
+\caption{(left) The self sequence landscape for CATCATTTG, and (right) the sequence landscape of GGCATCATTGGGTATAACC with respect to CATCATTTG. The maximal sequence landscape is highlighted in yellow, and the red arrows demonstrate the ascent and descent of the landscapes.}
+\end{SCfigure}
+\vspace{-5mm}
+
+The maximal sequence landscape can be obtained from the sequence landscape by removing all mountains except those that are highest and have frequency greater than one at each position.  In the case of the maximal sequence landscape constructed from a self sequence landscape, the result is the longest repeats in the input string.  Given a position $i$ in $s$, we can determine the length of the longest repeat in $s$ containing that position in constant time.  This is our idea based on which we determine the optimal value of $k$ for each read.  Therefore, for the remainder of this paper, we consider the maximal sequence landscape constructed from the self sequence landscape since it is what is used by HyDA-Vista.
+
+
+
+

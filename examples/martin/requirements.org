@@ -1,0 +1,30 @@
+* MOTIVATION for pursuing the research
+** Colored de Bruijn graph method is powerful
+** Would like to make it available for "realtime" screening
+*** but is too slow to construct
+** genomes vary in a variety of ways
+** these variations are used like a fingerprint to track source
+** would like to enable complex variants
+
+** dearth of tools for complex variants that scale
+
+** there may be a chicken-and-egg problem: nobody has looked at statistical techniques based on complex variants because there are no/few tools to deliver them
+
+** discover techniques useful for GCSA and XBW
+
+** establish (through citation) that complex variants happen and CDBG can find them, and that there is a high likelihood they would be useful.
+*** poke holes in reference based methods https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-S4-S10
+
+* precise STATEMENT OF THE PROBLEM to be solved,
+** validate method against CORTEX
+** demonstrate scalability/performance on GenomeTrakr
+** compare bubble based calls with k-mer based correlation with the limited metadata
+
+* reflect an extensive critical LITERATURE SURVEY, and contain an accurate assessment of the state-of-the-art in the area of research,
+
+* evidence to the effect that there is a good likelihood the PROBLEM IS SOLVABLE with reasonable effort.
+** preliminary results
+** why my publications?
+*** proves technology can do it
+**** convince the reader it will work by applying to reasoning about the underlying method
+*** demonstrate that I have the skills and moderates the reasonable effort claim

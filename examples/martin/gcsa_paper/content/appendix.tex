@@ -1,0 +1,14 @@
+
+\section{Practical Indexing Considerations}
+
+\paragraph{Pruning Queries.}
+
+One side effect of summing consecutive fragments in both the search algorithm and the target data structure is that several successive search steps with agreeing fragment sizes will also have agreeing sums of those successive fragments.  In this scenario, proceeding deeper in the search space will result in wasted effort.
+To reduce this risk, we maintain a table of scores obtained when reaching a particular lexicographic range and query cursor pair. We only proceed with the search past this point when either the point has never been reached before, or has only been reached before with inferior scores.
+
+\paragraph{Wavelet Tree Cutoff.}
+The wavelet tree allows efficiently finding the set of vertex labels that are predecessors of the vertices in the current match interval intersected with the set of vertex labels that would be compatible with the next compound fragment to be matched in the query.  However, when the match interval is sufficiently small ($ < 750 $) it is faster to scan the vertices in $\BWT$ directly.
+
+\paragraph{Quantization.}
+The alphabet of fragment sizes can be large considering all the measured fragments from multiple copies of the genome.  This can cause an extremely large branching factor for the initial symbol and first few extensions in the search.  To improve the efficiency of the search, the fragment sizes are initially quantized, thus reducing the size of the effective alphabet and the number of substitution candidates under consideration at each point in the search.  Quantization also increases the number of identical path segments across the indexed graph which allows a greater amount of candidate matches to be evaluated in parallel because they all fall into the same $\BWT$ interval during the search.  This does, however, introduce some quantization error into the fragment sizes, but the bin size is chosen to keep this small in comparison to the sizing error.
+

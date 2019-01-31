@@ -1,0 +1,88 @@
+
+
+
+
+* DONE update  KOHDISTA content with latest version
+  CLOSED: [2018-10-14 Sun 20:09]
+* TODO Change L_1 to EBWT(G_1) in varimerge
+* TODO make rank_c(X, #) and rank(X, c, #) consistent throughout, same for select
+* TODO s..e vs i..j, s..e is used a lot for interval already, i/j used too often, e represents edge
+* TODO change A automaton to G, since A is used 
+
+* TODO avoid duplicates in bibliography
+* TODO check for lost supplements
+* DONE fix any warnings such as: Reference `fig:example' on page 27 undefined on input line 642.
+  CLOSED: [2018-10-15 Mon 20:47]
+
+* DONE fix up in text citations to read better, eg "[54} introduced the colored de bruijn graph"
+  CLOSED: [2018-10-15 Mon 20:47]
+
+
+* TODO change missed -> false in Kohdista text
+
+* TODO acknowledgements, lisa postlewait, bahar, coauthors, family, lindsay, sara rector, anne mangiardi, basir, stacey, katie davidson, allessio, 
+
+* DONE cite publications in the proper CSU way
+  CLOSED: [2018-10-15 Mon 21:44]
+* DONE add misSEQuel reference
+  CLOSED: [2018-10-15 Mon 21:44]
+
+# ####################################
+
+* related work research
+
+* TODO TWIN background promotion
+* TODO Extend abstract into intro
+* TODO decide if keeping red-black dbg stuff
+
+
+* TODO get metadata
+* TODO describe assembly process
+* TODO decide if including bubble variants
+* TODO decide on multi-class classifier
+* TODO include cache read/write experiment
+* TODO add wavelet tree
+
+* TODO formatting
+* TODO proofread
+* DONE unify bibtex
+  CLOSED: [2017-07-18 Tue 10:43]
+
+
+* TODO review notes from discussion with Paul on serotypes, etc
+
+* TODO study introductions of others work
+
+* TODO find related work
+
+
+
+* TODO KEY AREAS
+** Specific
+
+** novel
+*** TODO strain typing related work
+*** TODO colored de Bruijn graph editing related work
+
+
+** important (motivation)
+*** VARI paper said it's too big because of space
+*** Can only handle the number of allowed file handles
+*** It is wasteful to repeat work when we only need to add a few colors
+*** Doing sort in memory is likely faster
+*** motivations for cdbg:
+**** no such things as species (reference based)
+***** large insertions missed
+**** no core genome
+
+** viable (preliminary results (see VARI))
+*** TODO include details from salmonella from past emails and Ipython notebook about core genome
+*** progress
+**** downloaded, assembled, k-mers counted
+**** one possible method already developed
+
+Hamid Chitsaz
+Paul Morley
+Ross McConnel (Christina)
+Sudipto / Laura
+

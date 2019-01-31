@@ -1,0 +1,42 @@
+* title: Enhancing space and time efficiency of bioinformatics in practice through sophisticated applications of the FM-Index.
+
+* important
+  With the advent of high throughput sequencing, biologists have gained access to massive amounts of data sampled from their subjects of interest.  While this is a boon for biologists, all this data must be processed to yield useful information and many times, state of the art computing hardware and software are a limiting factors for biological inquiry.  For example, a set of samples from 3,765 E. coli would require over 3 TB of memory to represent in a state of the art tool, far exceeding even the 1 TB of RAM in machines some labs have access to.  
+
+There are however opportunities for improvement.  Existing methods often represent data directly, thus enhancing them with compression techniques could reduce their memory footprint.  Additionally, data often contain erroneous values and existing methods reply on exhaustive search techniques to accomodate the errors.  Instead, powerful enough indexing techniques could provide lookup mechanisms instead and reduce their runtime.  A data structure known as the FM-Index can provide both indexing and compression simultaneously.
+
+We propose extending the reach of the available tool set with new  tools which apply sophisticated forms of the FM-Index.  This will enhance the efficiency on each of the runtime and space requirements over state of the art tools on existing bioinformatics problems.  Furthermore, we can then use these to aid in generating new results which would previously have been more expensive or impossible to produce, thus illustrating that these enhancements are useful in practice. Specifically to illustrate this, we propose to detecting variants among a dataset of approximately 30,000 Salmonella samples taken from food production facilities.
+
+We believe this is viable, as we have already developed and demonstrated the usefulness of tools which reduce runtime by means of sophisticated indexing.  Addtionally, we have developed a more memory efficient tool that fit the aformentioned E. coli dataset in only 43 GB of RAM.  
+
+* viable
+** We believe this is possible as 
+
+
+** lots of data
+** While offers opportunity for new discoveries
+** But all that data can require a lot of memory to store, and take a long time to process.  This is exacerbated by the errors in the data which typically requires extra processing to accomodate for the possible alternatives.
+** This extra memory and processing time makes some scientific inquiries prohibitively burdonsome or impossible.
+*** departments by TB of RAM but still insufficient for VARI
+*** valouev on rice
+
+* novel
+** But many existing inquiries rely on techniques and tools that represent data directly and iterate over possible alternatives to accomodate noise.  Using compression on the data can address the space issue while indexing the data appropriately can avoid exhaustive searches.  A data structure originally used for text retrieval known as the FM-Index can contribute both of these properties.
+
+* specific
+** We propose extending the reach of the available tool set with new applications of sophisticated forms of the FM-Index to enhance the efficiency each of the runtime and space limitations of the state of the art on existing bioinformatics problems.  Furthermore, we then use these to aid in generating new results which would previously have been more expensive or impossible to produce.
+
+* viable
+** We believe this is possible as 
+# This makes them take large amounts of memory and runtime, making them burdonsome or prohibitive for some dependent scientific inquries.
+** except volume and noise make existing resources and algorithms insufficient -- some inqueries are cumbersome or impossible
+
+   
+* novel
+** existing methods use exhaustively iterate some or all of the solution space, working not with what data is given but what might be.
+
+** Methods that already organize their data for fast access may not exploit redundancy
+* specific
+We propose that sophisticated applications of a data structure known as the FM-index, with special attention applied to graphs, can be used to reduce runtime or memory requirements and thus aid in new discoveries.
+
+* viable

@@ -1,0 +1,103 @@
+\section{Background}
+\label{sec-background}
+
+%\subsection{Definitions and notation}
+\paragraph{Strings.}
+Throughout we consider a string $\X = \X[1..n] = \X[1]\X[2]\ldots
+\X[n]$ of $|\X| = n$ symbols drawn from the alphabet $[0..\sigma-1]$.
+%We assume $\X[n]$ is a special ``end of string'' symbol, \$, smaller than
+%all other symbols in the alphabet.
+For $i=1,\ldots,n$ we
+write $\X[i..n]$ to denote the {\em suffix} of $\X$ of length $n-i+1$,
+that is $\X[i..n] = \X[i]\X[i+1]\ldots \X[n]$.  
+%We will often refer to suffix $\X[i..n]$ simply as ``suffix $i$''. 
+Similarly, we write
+$\X[1..i]$ to denote the {\em prefix} of $\X$ of length $i$.
+$\X[i..j]$ is the {\em substring} $\X[i]\X[i+1]\ldots \X[j]$ of $\X$
+that starts at position $i$ and ends at $j$. 
+%By $\X[i..j)$ we
+%denote $\X[i..j-1]$.  If $j < i$ we
+%define $\X[i..j]$ to be the empty string, also denoted by
+%$\varepsilon$.
+
+\paragraph{Optical Mapping.}
+From a computational point of view, optical mapping is a process that takes two
+strings: a genome $\A[1,n]$ and a restriction sequence $\B[1,b]$, and produces
+an array (string) of integers $\M[1,m]$, such that $\M[i] = j$ if and only if 
+$\A[j..j+b] = \B$ is the $i$th occurrence of $\B$ in $\A$.
+
+For example, if we let $\B = \mbox{{\em act}}$ and 
+
+\begin{center}
+\begin{tabular}{p{0.4cm}*{22}{p{0.4cm}}}
+& $\scriptstyle 1 $& $\scriptstyle 2 $& $\scriptstyle 3$& $\scriptstyle 4 $& $\scriptstyle 5 $& 
+$\scriptstyle 6 $& $\scriptstyle 7 $& $\scriptstyle 8 $& $\scriptstyle 9 $& $\scriptstyle 10$&
+$\scriptstyle 11 $& $\scriptstyle 12 $& $\scriptstyle 13$& $\scriptstyle 14 $& $\scriptstyle 15 $& 
+$\scriptstyle 16 $& $\scriptstyle 17 $& $\scriptstyle 18 $& $\scriptstyle 19 $& $\scriptstyle 20$&
+$\scriptstyle 21 $& $\scriptstyle 22 $\\
+$\A $& $a$ & $t$ & $a$ & $c$ & $t$ & $t$ & $a$ & $c$ & $t$ & $g$ & $g$ 
+&      $a$ & $c$ & $t$ & $a$ & $c$ & $t$ & $a$ & $a$ & $a$ & $c$ & $t$ \\
+\end{tabular}
+\end{center}
+
+then we would have 
+$$\M = 3,7,12,15,20.$$
+
+It will also be convenient to view $\M$ slightly differently, as an array of fragment 
+sizes, or distances between occurrences of $\B$ in $\A$ (equivalently differences
+between adjacent values in $\M$). We denote this {\em fragment size domain} of $\M$, 
+as the array $\F[1,m]$, defined such that $\F[i] = (\M[i]-\M[i-1])$, with $\F[1] = \M[1]-1$.  
+Continuing with the example above, we have
+
+$$\F = 2,4,5,3,5.$$
+
+%TODO: 1) check the above makes sense 2) mention that in practice there are errors, 3) illustrate the alignment problem with an example.
+
+\paragraph{Suffix Arrays.}
+The suffix array~\cite{mm1993} $\SA_{\X}$ (we drop subscripts when
+they are clear
+from the context) of a string $\X$
+is an array $\SA[1..n]$ which
+contains a permutation of the integers $[1..n]$ such that $\X[\SA[1]..n]
+< \X[\SA[2]..n] < \cdots < \X[\SA[n]..n]$.  In other words, $\SA[j] =
+i$ iff $\X[i..n]$ is the $j^{\mbox{{\scriptsize th}}}$ suffix of $\X$
+in lexicographical order.
+%The inverse
+%suffix array $\ISA$ is the inverse permutation of $\SA$, that is
+%$\ISA[i] = j$ iff $\SA[j] = i$.
+%Conceptually, $\ISA[i]$ tells us the position of suffix $i$ in $\SA$. 
+
+\paragraph{SA Intervals.} 
+For a string $\Y$, the $\Y$-interval in the suffix array $\SA_{\X}$ is
+the interval $\SA[s..e]$ that contains all suffixes having $\Y$ as a
+prefix. The $\Y$-interval is a representation of the occurrences of
+$\Y$ in $\X$. For a character $c$ and a string $\Y$, the computation
+of $c\Y$-interval from $\Y$-interval is called a \emph{left extension}.
+%and the computation of $\Y$-interval from ${\Y}c$-interval is called a
+%\emph{right contraction}. \emph{Left contraction} and \emph{right
+%  extension} are defined symmetrically.
+
+\paragraph{BWT and backward search.}
+The Burrows-Wheeler Transform~\cite{bw1994} $\BWT[1..n]$ is a
+permutation of $\X$ such that $\BWT[i] = \X[\SA[i]-1]$ if $\SA[i]>1$
+and $\$$ otherwise. We also define $\LF[i] = j$ iff $\SA[j] =
+\SA[i]-1$, except when $\SA[i] = 1$, in which case $\LF[i] = I$,
+where $\SA[I] = n$.
+
+Ferragina and Manzini~\cite{fm2005} linked $\BWT$ and $\SA$ in the
+following way.  
+Let $\C[c]$, for symbol $c$, be the number of symbols
+in $\X$ lexicographically smaller than $c$.  The function
+$\rank(\X,c,i)$, for string $\X$, symbol $c$, and integer $i$, returns
+the number of occurrences of $c$ in $\X[1..i]$.  It is well known that
+$\LF[i] = \C[\BWT[i]] + \rank(\BWT,\BWT[i],i)$.  Furthermore, we can
+compute the left extension using $\C$ and $\rank$.  If $\SA[s..e]$ is
+the $\Y$-interval,
+%containing all the suffixes prefixed with string $\Y$, 
+then
+$\SA[\C[c]+\rank(\BWT,c,s),\C[c]+\rank(\BWT,c,e)]$ is
+the $c\Y$-interval.
+This is called \emph{backward search}~\cite{fm2005}, and a data
+structure supporting it is called an {\em FM-index}.
+
+%\paragraph{Wavelet Trees and approximate pattern matching.}

@@ -1,0 +1,154 @@
+\documentclass{bioinfo}
+\copyrightyear{2016}
+\pubyear{2016}
+
+
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usetikzlibrary{arrows,automata}
+
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs,url}
+
+\newcommand{\Oh}[1]
+	{\ensuremath{\mathcal{O}\!\left({#1}\right)}}
+\newcommand{\access}
+	{\ensuremath{\mathsf{access}}}
+\newcommand{\rank}
+	{\ensuremath{\mathsf{rank}}}
+\newcommand{\select}
+	{\ensuremath{\mathsf{select}}}
+\newcommand{\occ}
+	{\ensuremath{\mathsf{occ}}}
+\newcommand{\nodelabel}
+	{\ensuremath{\mathsf{label}}}
+\newcommand{\BWT}
+	{\ensuremath{\mathsf{BWT}}}
+\newcommand{\C}
+	{\ensuremath{\mathsf{C}}}
+\newcommand{\LF}
+	{\ensuremath{\mathsf{LF}}}
+\newcommand{\Psiop}
+	{\ensuremath{\mathsf{\Psi}}}
+\newcommand{\mus}[1]
+	{\SI{#1}{\micro\second}}
+	
+\newcommand{\elabel}{\ensuremath{\mathsf{label}}}
+\newcommand{\EBWT}{\ensuremath{\mathsf{EBWT}}}
+
+
+\def\ours{\mbox{\rm {\sc Vari}}}
+
+
+\begin{document}
+\firstpage{1}
+
+\title[Succinct Colored de Bruijn Graphs]{Succinct Colored de Bruijn Graphs}
+\author[Muggli, Bowe \textit{et~al}]{
+Martin D. Muggli\,$^{1,*}$, 
+Alexander Bowe\,$^{2,*}$, 
+Travis Gagie\,$^{3}$,
+Robert Raymond\,$^{1}$,
+Noelle R. Noyes\,$^{4}$,
+Paul Morley\,$^{4}$,
+Keith Belk\,$^{5}$,
+Simon J. Puglisi\,$^{3}$, and Christina Boucher\,$^1$}
+\address{$^{*}$These authors contributed equally to this work. \\
+$^{1}$Department of Computer Science,Colorado State University, Fort Collins, CO \\
+$^{2}$National Institute of Informatics, Chiyoda-ku, Tokyo, Japan \\
+$^{3}$Department of Computer Science,University of Helsinki, Finland \\
+$^{4}$Department of Clinical Sciences, Colorado State University, Fort Collins, CO \\
+$^{5}$Department of Animal Sciences, Colorado State University, Fort Collins, CO }
+
+\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+
+\editor{Associate Editor: XXXXXXX}
+
+\maketitle
+
+\begin{abstract}
+\section{Motivation:} Iqbal et al. (Nature Genetics, 2012) introduced the {\em colored de Bruijn graph}, a variant of the classic de Bruijn graph, which is aimed at ``detecting and genotyping simple and complex genetic variants in an individual or population''.
+Because they are intended to be applied to massive population level data, it is essential that the graphs be represented efficiently.
+Unfortunately, current succinct de Bruijn graph representations are not directly applicable to the colored de Bruijn graph, which require additional information to be succinctly encoded as well as support for non-standard traversal operations. 
+\section{Results:} Our data structure dramatically reduces the amount of memory required to store and use the colored de Bruijn graph, with some penalty to runtime, allowing it to be applied in much larger and more ambitious sequence projects than was previously possible.  In particular, we use our method along with a custom curated database of antimicrobial resistant genes to track changes in the resistome across food production facilities. A short video of our work is available at \url{http://cdbg.martindmuggli.com}.
+
+\end{abstract}
+
+\input{introduction_lbr}
+
+%\input{../content/background}
+
+%\begin{methods}
+%\section{Methods}
+%\input{../content/methods_part_1}
+%\input{../content/methods_part_2}
+%\end{methods}
+
+
+%\section{Discussion}
+%\input{../results}
+
+
+
+%\section{Conclusion}
+%\input{../content/discussion}\
+
+
+
+%\section*{Acknowledgement}
+%The authors would like to thank Journi Sir\'{e}n from the Wellcome Trust Sanger Institute for many insightful discussions concerning the GCSA code base.   
+%\paragraph{Funding\textcolon} MM and CB were funded by the Colorado Clinical and Translational Sciences Institute which is funded by National Institutes of Health (NIH-NCATS, UL1TR001082, TL1TR001081, KL2TR001080).  SJP was supported by the Helsinki Institute of Information Technology (HIIT) and by Academy of Finland through grants 294143 and 250345 (CoECGR).  All authors greatly appreciate the funding provided for this project.  
+
+
+%\bibliographystyle{natbib}
+%\bibliographystyle{achemnat}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{abbrv}
+%\bibliographystyle{bioinformatics}
+%
+%\bibliographystyle{plain}
+%
+%\bibliography{Document}
+
+
+\bibliographystyle{plain}
+\bibliography{../cdbg}
+
+%% \begin{thebibliography}{}
+%% \bibitem[Bofelli {\it et~al}., 2000]{Boffelli03} Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
+
+%% \bibitem[Bag {\it et~al}., 2001]{Bag01} Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
+
+%% \bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
+%% Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
+%% in nigral dopaminergic neurnol cell: correlation with the known
+%% pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
+%% Res.}, \textbf{110}(Suppl. 1), 76--84.
+
+%% \bibitem[Lehmann, 1986]{Leh86}
+%% Lehmann,E.L. (1986) Chapter title. \textit{Book Title}. Vol.~1, 2nd edn. Springer-Verlag, New York.
+
+%% \bibitem[Crenshaw and Jones, 2003]{Cre03}
+%% Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
+%% cancer management: one tumor, one chip. \textit{Bioinformatics},
+%% doi:10.1093/bioinformatics/btn000.
+
+%% \bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
+%% Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
+%% (ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
+%% ???--???.
+
+%% \bibitem[Bardet, 1920]{Bar20}
+%% Bardet, G. (1920) Sur un syndrome d'obesite infantile avec
+%% polydactylie et retinite pigmentaire (contribution a l'etude des
+%% formes cliniques de l'obesite hypophysaire). PhD Thesis, name of
+%% institution, Paris, France.
+
+%% \end{thebibliography}
+\end{document}

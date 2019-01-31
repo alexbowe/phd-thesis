@@ -1,0 +1,37 @@
+* abstract
+
+* problem introduction
+
+* background
+
+* related work
+bwt-merge
+
+* preliminary results
+
+* proposal
+
+* contingencies
+
+* timeline
+
+
+
+
+;; massive data sets, complex construction
+;; complex data and search strategy
+
+;; construction
+;; navigation
+
+* FM-index + wavelet tree and navigation
+** TWIN - 
+** misSEQuel - improved results
+
+* Graph 
+** KOHDISTA
+** VARI - introduces color matrix, introduces targeted
+* VARIMERGE
+
+* projected number of k-mers
+* core genome

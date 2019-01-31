@@ -1,0 +1,172 @@
+\section{Reference based assembly}
+
+In this section, we review tools which use some kind of whole-genome reference to aid in reconstruction of a genome.  This can be a single reference genome for a species, a collection of multiply aligned genomes, or a maturing technology known as optical mapping. 
+
+Optical mapping works by elongating large DNA molecules on a microscope slide and then cleaving them using restriction enzymes where ever the enzyme's recognition sequence occurs within the DNA molecules \cite{ORMenc}.
+The breaks are visible under a microscope, and the DNA span between them can be estimated, giving a map of where the recognition sequence occured within the molecule.
+Though this building a genome map with this system itself involves an assembly process, because of the much longer ``read'' length of the individual molecules (250-800 Kbp), near-complete automated assembly is often possible such that a map of all restriction sites across an entire genome can be produced.  Optical mapping has the potential to resolve many of the repeat resolution problems that occur with even the longest read lengths on the horizon.
+
+\subsection{Reassembly}
+
+A common task for biologists studying an individual's genome is resequencing, which uses a reference genome from a different individual in the same species.
+Reference genomes can contain structure not found in a \emph{de novo}, as contigs are refined and relationships between them are resolved through a laboratory process known as finishing.
+Resequencing works by aligning reads directly to the reference genome, under the assumption that the structure of the donor individual is the same as that of the reference.
+This biases the results toward the reference and cannot necessarily detect or resolve structural variations even if a \emph{de novo} assembly of the donor reads could reveal one.
+%fixme: move the above paragraph out of this section
+
+In contrast, the work of Parrish, et al. \cite{parrish2013genome} uses the already resolved structure in a reference genome, but only to guide the traversal of otherwise ambiguous choices in the traversal of a de Bruijn graph built from donor reads.
+The idea is that the structure of an individual's genome (referred to as the donor) will be similar to a well-chosen reference genome, and thus the donor genome's structure can be inferred using the most parsimonious traversal of the graph with the reference genome in mind.
+
+They argue that finding the truly most parsimonious traversal is hard, so they solve the easier problem of finding traversals spelling out sequences that deviate from the reference by at most $\tau$ consecutive bases.
+Finding such traversals proceeds as follows: First, they glue nodes between the donor's de Bruijn graph and that of the reference but preserve the edges.
+Then, they define parallel edges in this graph for each donor $k$-mer edge that is also found in the reference genome.
+The presence of a reference edge parallel to a donor edge is actually represented as a donor edge annotated with the reference edge's $k$-mer position in the reference genome.  
+
+This initial graph is modified to make traversal easier.
+Nonbranching paths with a consistent (i.e. reference positions incrementing/decrementing one position per edge) sequence of parallel edge positions are condensed into a single edge which is then annotated with the corresponding interval in the reference genome instead of a single position.  
+
+To aid traversal satisfying the $\tau$ limit, they add reachability annotations to non-parallel edges.% (fixme: lookup their name for these).
+Specifically, they infer what the reference position would be for adjacent edges, annotating the inferred position on them.
+This process is then repeated to propagate inferred positions onto successively further adjacent edges.
+These inferred, non-parallel, positions represent deviations from the reference which must not exceed $\tau$, so each propagation keeps track of how many non-parallel edges the inferred information has traveled past.
+The propagation terminates when this exceeds $\tau$.
+Inferred position markers are then pruned if consecutive markers are not connected (concordant).
+
+%commentary: 
+
+\paragraph{Discussion}
+
+The novelty of this approach can be expressed in terms of what relationships are used.  \emph{do novo} assembly is based exclusively on the relationship of reads to each other. Resequencing is based only on the relationship of reads to a reference genome.  This approach uses both.  This approach has clear parallels to AGORA, which uses optical maps in place of a reference gnome.   AGORA has an advantage in that it would likely be used with an optical map (which reveals to the limits of its resolution the structure) for the donor genome,  so there would be no risk of bias toward a different structure that might occur in the reference genome.  This reassembly method has an advantage in that the reference genome captures the structure down to the nucleotide level resolution, where as optical maps minimum resolution is about 1 Kbp.  This work could be extended to include both the donor's optical map and the refernce genome.
+
+The quality of the resulting structure could potentially be enhanced by bayesian inference.  A collection of known structural variations for a population (discussed again in our section on GCSA) and their frequency could be used as our prior belief about the structure of a donor's genome, then a posterior probability of a given structural variation could be calculated based on the observed sequence reads and their assembly.
+
+\subsection{GCSA}
+
+The Generalized Compressed Suffix Array (GCSA) is a data structure that stores a compressed index of a finite state automata \cite{siren2014indexing}.
+Among other uses, such automata can represent a collection of known structural variations across a population.
+There is an advantage of having auxiliary data source be as similar as possible to the data of an individual's genome being assembled.  By representing a large sample of structural variations in a way that allows them to be independently combined, there is a greater chance some combination will match a particular individual.
+Consider a simple directed graph representing a canonical individual from some population as a linear alternation of labeled vertices and edges connecting them.
+This simple graph forms the basis for a more complicated one and the single original path through this initial graph, after the graph is expanded, is called the \emph{backbone}.
+Then, any variation relative to this graph can be represented by adding additional paths: those that skip backbone nodes for deletions, those that add additional nodes for insertions, and those that provide an alternative subpath around backbone nodes for substitution.  
+
+This graph can be treated as an automaton for path matching, where a string of symbols spells a path of node labels.
+The initial automaton is reverse determinized and prefix sorted such that it can form an automaton represented by a compressed suffix array (FM-index) and auxiliary bit vectors encoding the forking and joining of paths.  This structure allow paths to be matched in reverse without backtracking.
+
+To help understand how an FM-index can represent a graph, consider a FM-index of a string as a special case under this generalization.
+It is equivalent to the backbone path alone.
+Since any node in such a graph can only be followed by the one path to the terminal node, such nodes represent complete suffixes.
+The FM-Index procedure \emph{backward search} finds successive, possibly smaller intervals in a BWT which exactly match successively longer suffixes of a query string. It allows stepping backward through this graph one edge at a time (though actually doing all matching suffixes in parallel, so following multiple edges, one for each match `in flight'). %fixme: move to FM-index section, part of it
+For a traditional FM-index, backward search maintains the invariant that all suffixes in the interval exactly and completely match the suffix of the query matched so far.
+In contrast, in GCSA, there may be multiple paths forward from a given node, so a node represents only the shared prefix which is guaranteed among all paths forward from that node.
+Thus, for an FM-index backward search  the invariant is that the set of nodes in the backward search interval are each consistent with the portion of the query string matched up to that point.  
+
+Some of these nodes may denote prefixes longer than the matched suffix of the query, or the matched query suffix may be longer than the definite prefix denoted by a node.
+It might help to think of a query as having an infinite string of N's following it and each node as well having an infinite string of N's following its label (n.b. not all nodes that would match will necessarily be in an interval late in the search, as previously matched query symbols may restrict the nodes in the interval to just those with outgoing edges that would lead to the longer suffix than just the portion definitely matched by that node.) 
+
+Up till this point, we've only considered exact matching, but just as with traditional FM-index backward search, this can be extended with backtracking search to allow insertions, deletions, and substitutions so inexact path matches can be found.
+Their implementation provides this option, using the BWA algorithm.% \cite{durbin}
+%commentary
+
+\paragraph{Discussion}
+
+This approach helps resolve some of the problem of bias toward a single reference genome mentioned for reassembly and resequencing, as with a sufficiently large population, most of the variations present in the whole population may have already been resolved.  It does leave two important issues: First, the true structure of each individual in the reference set has to be determined correctly, and second it needs to be multiply aligned somehow.  
+
+It would be interesting if this could be used online, such that a new individual aligned against the set but with new structural variations would modify the reference set to include the new paths.  
+
+Again, this task would require good enough \emph{do novo} information to reveal a novel structural variation in the first place.  Given the smaller read set in resequencing, the less abundant information might not be enough to unambiguously resolve the structure of all possibilities in the read set, but still be enough to constrain to one possible variation from the set of all known SVs.  
+
+GCSA may have some limitations: Supposing half of a population has a particular translocation, but one individual has novel a duplication; GCSA has no constraints to identify this and would match the new individual despite the presence of a potentially important structural variation. This is of course a limitation of the finite languages an automaton can represent, and might be addressed with a context free grammar of genomic structures.  This work could be extended by capturing the observed combinations of structural variations, possibly in a machine learning model given that we don't know exactly what the rules are, such that particularly deviant ones (such as in a disease population) might be flagged as anomalous.  This has parallels in the natural language world where grammatical sentence structure can be learned and subsequently used for identifying ungrammatical sentences.
+
+%Resequencing problem of no-place-to-put-novel-structure should be moot if all SVs are captured in the population.  
+
+\subsection{SOMA}
+
+SOMA is a tool developed  by Nagarajan \emph{et al.} \cite{nagarajan2008}. They focus on the problem of scaffolding and validating contigs for bacterial genomes.
+Both of these tasks require first finding alignments between contigs and an optical map.
+These alignments can be found by \emph{in silico} digesting contigs, that is, locating the restriction enzyme's recognition sequence within the contigs and counting bases between occurrences, where these counts become the \emph{in silico} fragment sizes.
+Then alignments can be found using dynamic programming, using an appropriate error model and recurrance function. 
+
+They model the error in estimating the enzyme cleaved fragments' sizes as a normal distribution and use a $\chi^2$ scoring function for one component of the alignment score between two sequences of fragment sizes.
+They discuss the possibility that sequencing errors could cause missing cut sites in the \emph{in silico} digested contigs, but their preliminary experiments indicate that considering all occurrences of near matches with the enzyme’s recognition sequence produces too many false positives.
+Instead, they include this possibility in their scoring function.
+
+Their scoring function has two primary components: Alignments with more matching restriction sites are considered better, and between alignments with the same number of matching restriction sites, a smaller χ score is better.
+
+Their dynamic programming algorithm is formulated from three components, the previous best matching cut site score, a function of the putative false or missing cuts between the previous best score cell and the current cell, and the degree of agreement between the sizes of the region that spans these two cells.
+The number of false or missing cut sites is penalized by a constant factor.
+The degree of agreement is the difference in the sums of the fragment sizes for each region divided by the sum of the squared standard deviations of the optical map.
+Unlike other approaches, they do not limit the search for the previous match site to just a small number of missed cut sites, but search back to the beginning of the dynamic programming table.
+This means the algorithm has complexity O($m^2n^2$).
+They suggest that this search could be pruned using the fact that they expect the sum of the sizes of fragments to agree well.
+
+They mentioned that there are several other considerations for the alignment problem which they addressed in their software.
+First, fragments smaller than 700 bases are typically not captured in the optical mapping process.
+Second, the ends of fragment sequences are usually not the result of restriction enzyme digestion.
+Finally, bacterial chromosomes can have a circular map, so care must be taken to allow alignments that span the ends of a linearized map.
+Their dynamic programming algorithm will find an optimal alignment score for any contig, even those that do not belong to the genome.
+They suggest that a threshold value could be used to discriminate between alignments considered valid or otherwise, but that this value would likely depend on the length of the sequences being matched.
+They propose comparing the match score to the match scores of random permutations of the \emph{in silico} digested contig’s fragments.
+Then they can use a P-value from this permutation test (the probability that a random match has a higher score) instead of a constant threshold.
+As they are concerned with scaffolding and placement, they also filter the possible alignments for contigs to those that are among the best of those that are good enough to be considered possible.
+They then cast the assignment of loci to the contigs as an operations research problem called interval scheduling.
+In this way, they are able to find placements for all correctly assembled contigs such that contigs are placed in one of the alignments where they score well, and no two contigs are placed in an overlapping fashion.
+This problem is NP-complete, so they use a greedy heuristic and demonstrate that on small genomes this works well in practice.
+%They test their algorithm on both simulated data where the correct results are known as well as on real data.
+
+
+%commentary
+
+\paragraph{Discussion}
+
+SOMA's biggest limitation is that it runs after assembly has already taken place, so while it can detect some misassembled contigs, had the same structural information contained in the optical map been available during assembly, it could have guided the assembler on the correct path in the assembly graph.  Also, because of the complexity of its dynamic programming algorithm it only practical for prokaryote scale genomes.
+
+%% Relevance: The SOMA tool includes alignment of contigs
+%% to an optical map, so they are in fact solving the same problem we
+%% are.
+
+%% Remaining work: While the authors have demonstrated
+%% the effectiveness of SOMA on prokaryotes, their algorithm has
+%% runtime complexity aproximately proportional to O(m4) and so like
+%% the previous work will not scale to eukaryote sized genomes.
+
+\subsection{AGORA}
+
+Another tool, AGORA by Lin et al. \cite{lin2012agora}, uses alignment of sequence data to optical maps to guide assembly.
+It works on the premise that when an assembler is traversing a de Bruijn graph in an order that “spells” the genome sequence, then an \emph{in silico} digest of the bases along that path should also align to some part of optical map.
+If a potential path through the de Bruijn graph cannot be aligned anywhere on an optical map, then it can be discarded as not genomic.
+In this way, the graph traversal is restricted to only those paths that agree with the information provided by the optical map.
+In principle, this leads to computationally intractable problems, but the authors demonstrate that heuristics can solve the problem effectively for bacterial genomes.
+
+One of the essential ideas in their traversal is the concept of a landmark.
+These are edges in the de Bruijn graph that uniquely align within the optical map.
+The search for paths through the de Bruijn graph begin with these landmarks.
+Then an attempt is made to find a path through the graph between landmarks that matches the span between them in the optical map.
+Specifically, they perform a depth first search from each landmark, checking at each step if the path thus far is consistent with the optical map.
+They note that while this can lead to multiple paths, generally the paths are similar except for small complex repeat regions.
+
+%% To test their algorithm, they used reference genomes from 369 bacterial genomes and generated simulated optical maps with three levels of error (high, medium, low).
+%% The high level was characterized based on data from a real optical map of Y. pestis KIM.
+%% They also generated error-free de Bruijn graphs from the reference genomes.
+%% Using AGORA, they were able to achieve 98\% sequence correctness on 3/4 of the genomes on all three error levels.
+%% They additionally tried using a real optical map of Y. pestis KIM on a simulated de Bruijn graph, and found that the assembly quality was slightly worse than when using their high error level simulated map, suggesting their error simulation may not have captured all of the important characteristics of real data.
+
+They implemented a simple greedy algorithm to align sequence data to optical maps because existing algorithms have prohibitive runtime complexity.
+Their alignment algorithm compares fragments between the two sequences in order and does not allow for restriction site errors (presence or absence) in the optical map.
+It does allow for different fragment sizes to account for sizing errors, and removes all fragments that are small enough to sometimes be missed completely in the optical map.
+When no landmark edges are found, they look for pairs of consecutive edges in the de Bruijn graph that have a unique alignment in the optical map.
+
+%% They also analyze the affect of enzyme choice.
+%% They found enzymes that cut frequently, combined with low error rate allowed AGORA to produce the best assemblies.
+%% This did not hold for higher error rates, and the authors conclude the is due to small fragment loss.
+
+%commentary
+
+\paragraph{Discussion}
+
+Though their work is promising, there are a few areas for caution.  They acknowledge that their heuristics may not be effective on real data. Since they use a greedy algorithm to match \emph{in silico} digested sequence data to an optical map, the real-world sources of error would cause their matching algorithm to miss correct alignments. Additionally, as with SOMA, optical maps have limited resolution (typically no finer than 1 Kbp) and the inherent optical map fragment sizing error means many spurious paths may also align, particularly with larger genomes which will more densely populate the possible fragment size patterns.
+
+%Also, while some portions of contigs will certainly align to an optical map, this only holds for those containing sequences that align to only one locus in an optical map. This means their contigs may still have regions where their construction was not guided by the optical map and may disagree, hence indicating a possible misassembly.
+%todocommentary:agora
+%Relevance: The AGORA tool includes alignment of sequence data to optical maps. They attempt to produces assemblies where contigs are generated in such a way that they match an optical map. One would expect such contigs to always align to an optical map since they were generated this way. In this way, they are also concerned with misassembly and potentially produce fewer misassembled contigs when the optical map is able to guide the de Bruijn graph traversal so as not to produce them. Additionally, we explore matches accounting only for sizing errors, so this is another similarity to our work.
+
+%Remaining work: They acknowledge that their herustics may not be effective on real data. Since they use a greedy algorithm to match \emph{in silico} digested sequence data to an optical map, the real-world sources of error would cause their matching algorithm to miss correct alignments. Also, while some portions of contigs will certainly align to an optical map, this only holds for those containing sequences that align to only one loci in an optical map. This means their contigs may still have regions where their construction was not guided by the optical map and may disagree, hence indicating a possible misassembly.

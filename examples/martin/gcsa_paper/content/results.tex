@@ -1,0 +1,168 @@
+%\section{Results}
+\label{sec-results}
+
+% FIXME: maybe we can find a sensible way to run SOMA?
+
+We evaluated $\dopp$ against the other available nonproprietary optical map alignment software.
+%Pairwise Rmap alignment is the most difficult of the alignment tasks because both query and target Rmaps are succeptible to the same high uncorrected error rate and the volume of data is larger.  Only the software from Valouev et al.~\cite{Valouev06} was designed for this purpose.  In contrast, all other software was designed to use some kind of refined version of optical map format data (either a previously assembled consensus optical map or \emph{in silico} digested sequence data).We used simulated Rmap data for {\em E. coli} and real Rmap data for plum.  Our experiments measured runtime (as user process time), peak memory usage (as maximum resident set size), and the number of alignments found by all tools on {\em E. coli} and the successful of those on plum.  All experiments were performed on Intel x86-64 Xeon workstations with 16GB RAM running 64-bit Linux.
+Our experiments measured runtime, peak memory, and  alignment count on simulated {\em E. coli} Rmaps and experimentally generated plum Rmaps.  All experiments were performed on Intel Xeon workstations with $\ge$ 16 GB RAM running 64-bit Linux.
+
+$\dopp$ was configured to run using 100 bp bins for quantization, a minimum match length parameter of 15 compound fragments, a $\chi^2$ CDF threshold of 0.05, a binomial CDF threshold of 0.45 and two orders of skip nodes.
+%(We have observed that no alignment produced by the software from Valouev et al.~\cite{Valouev06} contained less than ten compound fragments, hence we adopt a similar minimum length.)
+%CB: don't need this: Additionally, the automata were built with the option to omit edges between skip vertices, leaving only the edges connecting skip vertices to backbone vertices.
+The software of Valouev et al., the only package designed for pairwise Rmap alignment, was run with default parameters except we reduced the maximum compound fragment length (their $\delta$ parameter) from 6 fragments to 3. We observed the software of Valouev et al. rarely included alignments containing more than two missed restriction sites in a compound fragment, hence we compare all tools, where adjustable, with this compound fragment size limit.
+
+Other tools were designed for less noisy data, but in theory could address all the data error types required. We adjusted parameters for pairwise Rmap alignment where possible and test them as well. We tried OPTIMA with both ``p-value'' and ``score'' scoring and the allMaps option and report the higher sensitivity ``score'' setting.  We followed the OPTIMA-Overlap protocol of splitting Rmaps into $k$-mers, each containing 12 fragments as suggested in~\cite{optima}.
+OMBlast~\cite{omblast} was run with its default settings.
+MalignerDP was run with the options ``--ref-max-misses 2 --query-miss-penalty 3.0 --query-max-miss-rate 0.50''.
+
+%The experiments on the plum dataset elucidates the running time of the programs on even a moderate dataset, however, due to the possibility of mis-assemblies in the draft genome, any verification scheme using it to comparing the actual alignments for quality is problematic.  Therefore, we chose to verify alignment quality using simulated {\em E. coli} data where we can keep track of which Rmaps have overlapping genomic origin.
+%The experiments on {\it E. coli} were performed on a 64-bit AMD Opteron processor, also running Linux.
+
+% mm: it's not entirely clear to me how the draft genome would be useful at all.  you could align rmaps to an in-silico digested reference genome, and then assert that those that align to overlapping regions of the genome should align to each other, but how would you know this rmap->genome alignment was any better or worse than your pairwise alignment.  
+
+Gentig~\cite{Anantharaman01} and BACop~\cite{Zhou09} were not available for download so could not be tested. SOMA~\cite{Nagarajan08} could potentially align Rmap data, but implements a dynamic programming algorithm similar in spirit to that of Valouev et al. and allows an unbounded number of consecutive missed sites and is thus computationally even more expensive (see~\cite{wabi2014}).  MalignerIX indexes nodes in a DAG akin to ours and uses them as initial seed matches before reverting to exhaustive search.  However, it only allows missing site errors in the target Rmaps.  $\twin$~\cite{wabi2014} assumes consensus optical map inputs (with no missing restriction sites), so was not included.
+
+%FIXME: We have results now, include them
+% We tried to run MalignerDP on the plum data but the process stopped making visible progress for over a day after 300 hours of runtime.   
+
+
+
+%% \begin{table}[h!]
+%%   \small
+%%   \centering
+%%   \begin{tabular}{l|l|l|l}
+%% 	{\bf Species}	& {\bf Genome Size}		& {\bf No. of Reads} 	& {\bf Depth} \\
+%% 	\hline
+%% 	\hline
+%% 	%ostrich ({\em Struthio camelus})  & 1.23 Gb 		& 32 Million & 500x \\
+%%    	 Plum           	 	& ~280 Mbp 		& 140,000 	& 135x \\
+%% 	{\em E. coli} 		& 4.639 Mbp 	& 272		& 34x \\
+%% 	\end{tabular}
+%%       \caption{Description of the datasets used for our experiments. The genome of plum was only recently assembled and thus, the genome size is an estimation based on the assembly \cite{plum}.}
+%%  \label{tbl-data}
+%% \end{table}
+
+\subsection{Performance on Simulated E.coli Rmap Data.} \label{sec:ecoli}
+
+To verify the correctness of our method, we simulated a read set from the 4.6 Mbp \emph{E. coli} reference genome as follows:  we started with 1,400 copies of the genome, and then generated 40 random loci within each. These loci form the ends of molecules that would undergo digestion.  Molecules smaller than 250 Kbp were discarded leaving 272 molecules with a combined length equating to 35x coverage depth.  The cleavage sites for the XhoI enzyme were then identified within each of these simulated molecules. We removed 20\% of these at random from each simulated molecule to model partial digestion.  Finally, normally distributed noise was added to each fragment with a standard deviation of .58 kb per 1 kb of the fragment.  Simulated molecule pairs having 16 common conserved digestion sites become the ``ground truth''\footnote{Due to repeats in the restriction map, and apparent repeats at the resolution attainable through optical measurement, some alignments beyond these are expected.} data for testing our method with the others.  This method of simulation was based on the \emph{E. coli} statistics given by Valouev et al.~\cite{valouev2006algorithm} and resulting in a molecule length distribution as observed in publicly available Rmap data from OpGen, Inc.
+%272 Rmaps, alignment methods are still challenged with finding the 4,305 overlapping pairs from the $272 \choose 2$ possible pairs from this dataset. 
+Our  alignment results on simulated data are summarized in Table~\ref{tbl-ecoli}.  % and described as follows.  %The software of Valouev et al. required 155 seconds and 4.0 MB of memory to find 699 of the 4,305 (16\%) ground truth alignments.  $\dopp$, when configured with a $\chi^2$ CDF threshold of .05 and a binomial CDF threshold of .45 ran for 14 seconds and occupied 19.0 MB of memory to find 707 of the 4,305 (27\%) ground truth alignments.
+%The two tools have 182 alignments in common at this setting.
+%Both $\dopp$ and the software from Valouev {\it et al.} favor high specificity over sensitivity.  The differences in their alignment scoring models appears as a small agreement in their alignment sets.  However, both sets consist of high quality alignments and we have no grounds for evaluating one as being better than the other.
+
+%Maligner found 1,150 of the 4,305 (27\%) ground truth alignments in 33 seconds and consumed 5.7 MB of memory in the process.
+
+OPTIMA and OMBlast were only able to find alignments between a given Rmap and itself were so not tested further on plum.  
+
+$\dopp$ uses $\chi^2$ and binomial CDF thresholds to prune the backtracking search when deciding whether to extend alignments to progressively longer alignments.  More permissive match criteria, using higher thresholds, allows  more Rmaps to be reached in the search and thus considered aligned, but it also results in less aggressive pruning in the search, thus lengthening runtime.  When $\dopp$ was configured with a CDF threshold of .5 and a binomial CDF threshold of .7, it found 4,100 of the 4,305 (91\%) ground truth alignments. 
+
+% This explains why ``false positive'' alignments as a concept doesn't make sense:
+%In interpreting alignment quality statistics, it is easy to see that Rmaps with overlapping origin should be found to have a high quality alignment.  However, owing to their lower resolution than sequence data, various types of repeats can also introduce high quality alignments between Rmaps which do not have overlapping origins.  These are not faults of the alignment method but intrinsic to the data itself and, to some degree, the choice of enzyme.  These repeats in the data occur because of (1) ordinary genomic repeats; (2) repeats in the optical map that have differing sequence between restriction sites; and (3) sizing error.  Expanding on the last point, experimentally derived optical maps are not precise to base-pair resolution and thus disparate regions in an error-free restriction map may be indistinguishable at the precision of optical experimental measurement techniques.
+
+%While Sarkar et al.~\cite{sarkar} have done some work to evaluate the quality of alignment metrics, the field is still in its infancy, and there is not yet a gold standard of discrimination ability.  We wish to emphasize that our contribution is not focused on alignment quality; we have adopted a simple but capable model and our contribution is primarily that of effectively overcoming the unique challenges in adapting index based methods to optical mapping data.  Indeed, our method and software can be easily fit with any alignment scoring method that effectively evaluates candidate partial alignments while full alignment are incrementally extended from them.  
+% OPEN QUESTION (for me or anyone): should we include ``The real test of alignment quality is in the effectiveness of downstream tools that use them, of which there is a dearth, only Valouev's assembler.''  I'm hesitant to include this as I don't want to plant the idea in reviewers' minds of ``why didn't you run the downstream tool available?''  Though maybe this could be one of those things we leave in as broken specifically so reviewers have something to criticize but is fixable.
+
+% As shown in CITE-GENTIG-TECH-REPORT-HERE, it is not necessary to detect all alignments and applications of alignment data may favor high specificity over sensitivity to decrease the confounding affects of these non-common-origin alignment phenomena.  The data presented in this section is based on simulation, such that bookkeeping through the simulation process allows the common origin to be known, however the excess alignments should not be considered a problem with a particular tool.  How well these alignments correlate with sequence based alignments reflects on the optical mapping process overall.  How often there are genomic restriction map repeats in addition to genome sequence repeats reflects on the quality of the enzyme selection.  How often there are genomically distinct  but observationally indistinguishable regions is a combination of the quality of the available measurement technology and fitness of alignment model and parameters.
+
+% FIXME: formulate this from the data we are presenting here, if useful in the overall story: 
+% These same limits of distinguishability can also be understood from an information theoretic point of view; A 100 bp Illumina read with a 1\% error rate has approximately 198 bits of information.  BACK-OF-ENVOLOPE: Trial experiments with the Valouev software have shown that quantizing fragment sizes to 100 bp boundaries, thus introducing up to 50 bp of roundoff error, negligably effect the ability to resolve alignments, given their noise tollerance, suggesting that any precision in the data in the $1/100$ths and $1/1000$ths of kb is mostly noise.  The Goat genome has approximately 16,000 distinct fragment sizes in the raw data, so with quantization to 100bp, would give approximately 160 distinct values.  Each fragment can be encoded in 8 bits, and a typical Rmap has 30 fragments, giving 240 bits.  In essence, the lack of resolution given all the genomic material between sites is offset by the much longer length of the Rmaps.
+
+% maybe TODOs to strengthen arguments above
+% TODO: run experiment to measure correlation with sequence based alignment
+% TODO: ROC plots for the two tools?
+% TODO: use our alignments with valouev assembler to assemble simulated reads into a whole genome map
+
+\begin{table*}[htb]
+  \small
+  \centering
+  \begin{tabular}{l|l|l|l|l}
+	{\bf Method}	& {\bf Time}		& {\bf Memory} 	& {\bf Alignments } & {\bf Fraction of Ground Truth}\\
+	\hline
+	\hline
+	%ostrich ({\em Struthio camelus})  & 1.23 Gb 		& 32 Million & 500x \\
+%   	 $\dopp$ ($\chi^2$  $<$ .05, Binom. $<$ .45)    	 	& 14 s.		& 19.0 MB & 923 & 707 / 4,305  (16\%)\\
+   	 $\dopp$ ($\chi^2$  $<$ .02, Binom. $<$ .5)    	 	& 20 s.		& 19.0 MB & 907 & 702 / 4,305  (16\%)\\
+   	 $\dopp$ ($\chi^2$  $<$ .5, Binom. $<$ .6)    	 	& 373 s. 		& 18.3 MB & 8,545	& 3,925 / 4,305 (91\%) \\
+	Valouev et al. 		& 148 s. 	& 4.0 MB		&  742 & 699 / 4,305 (16\%) \\
+    MalignerDP          & 19 s.     & 5.7 MB        & 2,134 & 1,150 / 4,305 (27\%) \\
+    OMBlast              & 10 s.     & 45.0 MB       & 272  & 0 / 4,305 (0\%) \\
+    OPTIMA              & 455 s.     & 10,756.5 MB       & 272  & 0 / 4,305 (0\%) \\    
+	\end{tabular}
+      \caption{Performance on simulated {\it E. coli} dataset.}
+ \label{tbl-ecoli}
+\end{table*}
+
+%% 206.0
+%% 0.025 15 0.45 => 820 216 -- 2017-04-07T12:31:13.765481
+%% 2017-04-07T12:31:13.773416
+%% CPU times: user 181 ms, sys: 19 ms, total: 200 ms
+%% Wall time: 21.1 s
+
+%% 172.0
+%% 0.02 15 0.5 => 702 205 -- 2017-04-07T10:57:11.708948
+%% 2017-04-07T10:57:11.716397
+%% CPU times: user 173 ms, sys: 16.3 ms, total: 189 ms
+%% Wall time: 19.7 s
+
+%% 689.0
+%% 0.5 15 0.5 => 3624 2814 -- 2017-04-07T10:28:18.797717
+%% 2017-04-07T10:28:18.805255
+%% CPU times: user 512 ms, sys: 27.9 ms, total: 540 ms
+%% Wall time: 3min 11s
+
+%% 727.0
+%% 0.5 15 0.7 => 4100 6962 -- 2017-04-07T08:21:20.276410
+%% 2017-04-07T08:21:20.284266
+%% CPU times: user 1.12 s, sys: 93.9 ms, total: 1.22 s
+%% Wall time: 19min 24s
+
+%% 713.0
+%% 0.5 15 0.6 => 3925 4620 -- 2017-04-10T02:43:35.285913
+%% 2017-04-10T02:43:35.293594
+%% CPU times: user 676 ms, sys: 28 ms, total: 704 ms
+%% Wall time: 6min 13s
+
+\subsection{Performance on Plum Rmap Data.} \label{section:plum}
+
+The Beijing Forestry University
+%, Beijing Genome Institute, Beijing Lin Fu Ke Yuan Flowers Co., Ltd, 
+and other institutes assembled the first plum ({\em Prunus mume}) genome, of approximately 280 Mbp.  
+%The plum cultivar sequenced is known as {\em mei}. 
+This assembly is of significant agricultural importance, providing an initial understanding of the evolution of fruit trees~\cite{plum}.  For this species, several diverse datasets were generated, including short read data 
+%with various insert lengths 
+and optical mapping data generated from OpGen Inc. using the BamHI enzyme, 
+and is available in the GigaScience repository.
+%The data was assembled using Genome-Builder\textsuperscript{TM} software developed at OpGen, which itself employs the use of Gentig.  The amount of CPU time was not reported and Genome-Builder\textsuperscript{TM} and Gentig are not publicly available so we could not compare our methods against these software tools.
+We use data from June, 2011, consisting of 139,281 Rmaps having coverage depth of 135x.
+
+Our results on this plum dataset are summarized in Table~\ref{tbl-plum} and described as follows.  Although MalignerDP can cope with the high error rate, by design it only finds alignments where one Rmap aligns entirely within the bounds of another, while overlap alignments are required for assembling a whole genome map. $\dopp$, configured with a $\chi^2$ CDF threshold of .025, took 124 hours of CPU time to search for alignments across the plum Rmap data, representing an 32x speedup of the 1,001 hours taken by the Valouev et al. software.  The alignment used a peak of 7.4 GB of RAM.  Building the GCSA data structure required 11  minutes and required 13 GB of RAM.
+%Loading the GCSA structure from disk before alignment required 50 seconds.  %The alignment sets of the two tools share 3,080 in common.  
+
+\begin{table}[h!]
+  \small
+  \centering
+  \begin{tabular}{l|l|l|l}
+	{\bf Method}	& {\bf Time}		& {\bf Memory} 	& {\bf Alignments } \\
+	\hline
+	\hline
+
+%   	 $\dopp$    	 	& 67 hours		& 7.4 GB  & 146,142,508 \\
+%   	 $\dopp$    	 	& 48 hours		& 7.6 GB  & 22,029,938 \\
+   	 $\dopp$    	 	& 31 hours		& 7.4 GB  & 16,109,151 \\
+	Valouev et al. 		& 1,001 hours 	& 61 MB		&  6,387  \\
+    MalignerDP          & 222 hours     & 772 MB    & 1,309,640 \\
+	\end{tabular}
+      \caption{Performance on Plum.}
+ \label{tbl-plum}
+\end{table}
+
+We note that our indexing method can find any alignment pattern that a dynamic program method can, with differing results only arising from different scoring functions.  Even with our simplistic one, our results from \emph{E. coli} simulation demonstrate comparable capability in finding alignments to Valouev {\it et al.}'s software.  Additionally, these results show that for these same parameter settings our method yields significant speedup on eukaryote scale Rmap data.  
+%We further note that while the number of alignments for plum is large, these can be filtered with more sophisticated and accurate scoring models in linear time.  We suggest future work could include more sophisticated incremental scoring models to more precisely prune the search space, yielding both faster performance and more precise alignments. 
+
+%% Boucher: moved from Methods
+%Throughout the development of our tool, we characterized alignments reported by the software from Valouev et al.  Although the this software by default allows up to six consecutive missed restriction sites, almost no alignments we observed it reporting contained more than two, so we only consider compound fragments containing up to two consecutive missed cut sites. (We adjusted this parameter in the Valouev software as well for the reported experiments, as this is the primary option for trading off runtime and quality availible in their software and we wanted to ensure our performance gain was not simply making a tradeoff they were already capable of).  We should note that larger compound fragments can easily be added to our method with larger skip nodes that sum more consecutive backbone nodes and further lookahead performed during our search are possible.  In practice, this would only be useful for optical mapping experiments with lower digestion rates.   Such experiments would only be favorable to the already available technology if they improved some other property of optical mapping.  Additionally we observed that all allignments reported by the software of Valouev  et al. include at least 11 conserved cleavage sites, so we report alignments when we find 10 compound fragments with sizes that agree and immediately discard Rmaps containing fewer than 10 fragments.  % C: we can kill
+
+%Our prior experiments involved species for which the reference genome may have regions that are mis-asssembled and therefore, alignments of the Rmap data cannot be verified using the reference.  The {\em E. coli} reference genome is likely to contain the fewest errors and thus, is the one we used for alignment verification. We simulated Rmap data using the reference genome for {\em E. coli} (str. K-12 substr. MG1655) since there is no publicly available one for this genome as follows:  .... We compared the alignments given by $\dopp$ and  Valouev et al. using the reference genome.... 
+
+%The 50 contigs that contained more than two restriction sites were aligned to the reference genome using BLAT~\cite{blat}.  These same contigs were then {\em in silico} digested and aligned to the optical map using $\twin$.  The resulting PSL files were then compared.  $\twin$ found alignment positions within 10\% of those found by BLAT for all 50 contigs, justifying that our method is finding correct alignments.  We repeated this verification approach with both SOMA and the software from Valouev.  

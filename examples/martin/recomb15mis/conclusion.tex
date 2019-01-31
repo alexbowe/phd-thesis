@@ -1,0 +1,31 @@
+\section{Discussion and Conclusions} \label{sec:discussion} 
+
+%To the best of our knowledge, t
+This paper describes the first non-proprietary computational method for identifying misassembly errors using short read sequence data and optical mapping data.
+% has not been previously considered using non-proprietary software.  
+ Our results demonstrate: (1) a substantial number of misassembly errors can be identified in draft genomes of prokaryote and eukaryote speices; (2) our method scales to large genomes; and (3) it can be used in combination with any
+ assembler and thus, making it a viable post-processing step for any assembly. 
+
+While $\sequel$ is capable of identifying a significant percentage of misassembly errors, it does not address 
+%the additional problem of re-assembling 
+the reassembly of those the misassembled contigs. 
+Correcting misassembly errors by segmenting the contigs at their breakpoints will remove the errors but will also 
+%have the detrimental effect of reducing 
+reduce
+the N50 
+of the assembly.  
+For this reason, we believe that creating a reassembly tool to correctly reassemble contigs using the misassembly information and data warrants future investigation.
+%Related to this problem is that of distinguishing between locally misassembled contigs and extensively misassembled contigs, which also deserves consideration.
+%Hence, since SEQuel~\cite{sequel} is capable of correcting small indels and substitution errors, and $\sequel$ has the added virtue of identifying larger misassembly errors, the remaining step is to reassemble these contigs so that N50 is not degraded
+
+While our main contributions are the computational method itself and the demonstration that optical mapping can have significant benefit for misassembly detection, optimal results are contingent upon good enzyme selection. 
+Thus, we conclude by suggesting that efficient algorithmic selection of enzymes that will yield such informative optical maps in a {\em de novo} scenario is an area for interesting and important future work.  
+
+
+%Moreover, the development of more sophisticated approaches to missassembly verification using optical mapping than just the presence or absence of alignments may further improve upon the results in this paper. Potential approaches include considering consistent estimated alignment loci in the genome across all optical maps, and determining the existence of unique, non-overlapping placement of each correctly assembled contig.
+
+% We may want to add somewhere that some applications may prefer a method that favors good TPR vs FPR or vice versa and that while we've focused on a good balance, different alignment thresholds (or delta values for sequel) and combination strategies can shift this balance.
+
+
+
+

@@ -1,0 +1,228 @@
+\documentclass[letterpaper]{gbe}
+%\usepackage{color}
+\gridframe{N}
+\public{Y}
+\journal{G}{B}{E}{}{}{}
+\copyeditor{RLX}
+\cropmark{Y}
+\pageproof{N}
+\def\blm{\begin{linenomath}}
+\def\elm{\end{linenomath}}
+\setcounter{page}{1}
+\def\fpage{1}
+\def\lpage{15}
+\volume{2}
+\issue{0}
+\aadate{Advance Access publication March 24, 2010}
+\jno{msp301}
+\rdoi{doi:xxx}
+\leftrunninghead{Muggli, et al.}
+\rightrunninghead{Kohdista: A Succinct Solution to Raw Optical Map Alignment}
+\def\x{\end{document}}
+
+\emergencystretch=1pc
+\input standard.tex
+\setlength\fboxrule{0.5pt}
+\setlength\fboxsep{0.5pt}
+
+ \setlength{\oddsidemargin}{1pt}
+ \setlength{\evensidemargin}{1pt}
+ \setlength{\topmargin}{1pt}
+ \addtolength{\voffset}{-50pt}
+ \addtolength{\hoffset}{-20pt}
+ \addtolength{\headsep}{-20pt}
+%\setlength{\textheight}{576pt}
+
+%\usepackage[letterpaper]{geometry}
+
+%% \documentclass[11pt,a4paper]{article}
+%% \usepackage[left=0.885in,top=1in]{geometry}
+%% \usepackage{graphicx,url}
+%% \setlength{\textwidth}{6.5in}
+%% \setlength{\textheight}{9in}
+%% \usepackage[font={scriptsize}]{caption}
+
+%% \documentclass{bioinfo}
+%% \copyrightyear{2016}
+%% \pubyear{2016}
+
+\usepackage{hyperref}
+
+\usepackage{pgf}
+\usepackage{tikz}
+%\usepackage{adjustbox}
+\usetikzlibrary{arrows,automata}
+
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{mathrsfs}
+
+
+\usepackage{url}
+\usepackage{algorithm}
+%\usepackage{amssymb,amsmath}
+\usepackage{algorithmicx}
+%\usepackage[noend]{algpseudocode}
+%\usepackage{sidecap}
+%\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+\usepackage{color}
+
+%\setlength{\bibsep}{0pt plus 0.3ex}
+\renewcommand{\cite}[1]{\citep{#1}}
+\newcommand{\myparagraph}[1]{{\textbf #1}}
+\def\ST{\mbox{\rm {\sf ST}}}
+%\def\ST{\mbox{\rm {\sf M}}}
+\def\SA{\mbox{\rm {\sf SA}}}
+\def\ISA{\mbox{\rm {\sf ISA}}}
+\def\LZ{\mbox{\rm {\sf LZ}}}
+\def\LF{\mbox{\rm {\sf LF}}}
+\def\FMI{\mbox{\rm {\sf FMI}}}
+\def\FM{\mbox{\rm {\sf FM}}}
+%\def\rank{\mbox{\rm {\sf rank}}}
+\def\rank{\textsf{rank}}
+\def\select{\textsf{select}}
+\def\ralpha{\textsf{ralpha}}
+\def\pathlabel{\mbox{\rm {\sf pathlabel}}}
+\def\lcp{\mbox{\rm {\sf lcp}}}
+\def\rmq{\mbox{\rm {\sf rmq}}}
+\def\x{\mbox{\rm {\sf x}}}
+%\def\X{\mbox{\rm {\sf X}}}
+\def\X{\mathsf{X}}
+\def\MS{\mbox{\rm {\sf MS}}}
+%\def\B{\mbox{\rm {\sf B}}}
+\def\B{\mathsf{B}}
+\def\ssB{\mbox{\rm {\sf {\scriptsize B}}}}
+\def\A{\mathsf{A}}
+%\def\A{\mbox{\rm {\sf A}}}
+\def\Pr{\mbox{\rm {\sf P}}}
+\def\R{\mbox{\rm {\sf R}}}
+\def\C{\mbox{\rm {\sf C}}}
+
+\def\Y{\mbox{\rm {\sf Y}}}
+\def\Y{\mathsf{Y}}
+\def\ssY{\mbox{\rm {\sf {\scriptsize Y}}}}
+%\def\Z{\mbox{\rm {\sf Z}}}
+\def\Z{\mathsf{Z}}
+\def\C{\mbox{\rm {\sf C}}}
+\def\D{\mbox{\rm {\sf D}}}
+\def\M{\mbox{\rm {\sf M}}}
+\def\F{\mbox{\rm {\sf F}}}
+\def\BWT{\mbox{\rm {\sf BWT}}}
+\def\XBWT{\mbox{\rm {\sf XBWT}}}
+
+\def\twin{\mbox{\rm {\sc Twin}}}
+\def\dopp{\mbox{\rm {\sc Kohdista}}}
+
+
+\usepackage{url}
+
+
+%\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+%\noindent\keywordname\enspace\ignorespaces#1}
+
+\usepackage{layout}
+
+\begin{document}
+%\layout{}
+%\firstpage{1}
+%
+%\title[Kohdista: A Succinct Solution to Rmap Alignment ]{Kohdista: A Succinct Solution to Rmap Alignment}
+%\author[Muggli \textit{et~al}]{Martin D. Muggli\,$^{1,*}$, Simon J. Puglisi\,$^{2}$ and Christina Boucher\,$^3$\footnote{to whom correspondence should be addressed}}
+%\address{$^{1}$Department of Computer Science, Colorado State University, Fort Collins, CO\\
+%$^{2}$Department of Computer Science, University of Helsinki, Finland \\
+%$^{3}$Department of Computer and Information Science and Engineering, University of Florida, Gainesville, FL}
+%
+%\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+%
+%\editor{Associate Editor: XXXXXXX}
+% \vspace{-4ex} removed from title
+\title{Kohdista: A Succinct Solution to Raw Optical Map Alignment}
+
+\author{Martin Muggli$^1$, Simon J.\ Puglisi$^2$ and Christina Boucher$^3$\\[1ex]
+%%   \affiliation{$^1$Sackler Institute for Comparative Genomics, American Museum of Natural History, New York, New York\\[2pt]
+%% $^2$New York Botanical Garden, Bronx, New York\\[2pt]
+%% $^3$Center for Genomics and Systems Biology, Department of Biology, New York University\\[2pt]
+%% $^4$Cold Spring Harbor Laboratory, Cold Spring Harbor, New York \\[2pt]
+%% $^\ast$Corresponding author: E-mail: acibrian@amnh.org.\\[2pt]
+%% $^\dagger$These authors contributed equally to this work.}\\[2pt]
+\affiliation{  
+\footnotesize $^1$Department of Computer Science, Colorado State University, Fort Collins, CO,\\[-0.8ex]
+\footnotesize $^2$Department of Computer Science, University of Helsinki, Finland\\[-0.8ex]
+\footnotesize $^3$Department of Computer and Information Science and Engineering, University of Florida, Gainsville, FL}}
+
+%\date{}
+
+%\maketitle
+
+%Single molecule maps, referred to as {\em Rmaps}, are the raw optical mapping data used to construct the genome-wide optical maps that are used for aiding in genome assembly.    Currently, there exists few computational methods to find pairwise alignments in Rmap data, primarily due to the algorithmic challenge of having to overcome the high number of insertions and deletions present.
+
+\begin{gbeabstract}
+  {We present $\dopp$, which is an index-based, error-tolerant alignment method for single molecule maps, referred to as {\em Rmaps}.  The novelty of our approach is the formulation of error-tolerant Rmap alignment as automaton path matching, and the application of modern index-based data structures (e.g. the GCSA index combined with the wavelet tree)---an algorithmic paradigm that overcomes the error profile of the Rmap data and could serve useful in other contexts (e.g. pairwise alignment of long (PacBio) reads). Our experiments validate the approach on {\em E. coli} data, and show $\dopp$ is at least 32x faster than existing methods for finding pairwise alignments in plum Rmap data. $\dopp$ is the only non-proprietary method that is capable of performing pairwise Rmap alignment for large eukaryote organisms in reasonable time.   $\dopp$ is available at \url{https://github.com/mmuggli/KOHDISTA/}.}
+  %{We use measures of congruence on a combined EST-genome phylogeny to identify proteins that have potential significance in the evolution of seed plants. Relevant proteins are identified based on the direction of partitioned branch and hidden support on the hypothesis obtained on a 16-species tree, constructed from 2,557 concatenated orthologous genes. We provide a general method for detecting gene partitions or groups of gene partitions that may be under selection in directions that are in agreement with the phylogenetic pattern. Gene partitioning methods and estimates of the degree and direction of support of individual gene partitions to the overall data set are used. Using this approach, we correlate positive branch support of specific genes for key branches in the seed plant phylogeny. In addition to basic metabolic functions, such as photosynthesis or hormones, genes involved in posttranscriptional regulation by small RNAs were significantly overrepresented in key nodes of the phylogeny of seed plants. Two genes in our matrix are of critical importance as they are involved in RNA-dependent regulation, essential during embryo and leaf development. These are Argonaute and the RNA-dependent RNA polymerase 6 found to be overrepresented in the angiosperm clade. By using these genes as examples of our phylogenomics approach, we suggest that identifying partitions or genes in this way might be important in explaining some of the more interesting organismal differences among taxa.}
+{Optical Mapping, Assembly, Alignment, Succinct Data Structures, Generalized Compressed Suffix Array\vspace*{15pt}}
+\end{gbeabstract}
+
+\gbestyle
+%\small
+%\noindent {\em Motivation:}
+%Single molecule maps, referred to as {\em Rmaps}, are the raw optical mapping data used to construct the genome-wide optical maps that are used for aiding in genome assembly.    Currently, there exists few computational methods to find pairwise alignments in Rmap data, primarily due to the algorithmic challenge of having to overcome the high number of insertions and deletions present. A solution to this task is imperative for the full utility of this data.  
+
+%\noindent{\em Results:}
+%We present $\dopp$, which is an index-based, fully error-tolerant alignment method for optical mapping data.  The novelty of our approach is the formulation of error-tolerant Rmap alignment as automaton path matching, and the application of modern index-based data structures (e.g. the GCSA index combined with the wavelet tree)---an algorithmic paradigm that overcomes the error profile of the Rmap data and could serve useful in other contexts (e.g. pairwise alignment of long (PacBio) reads). Our experiments validate the approach on {\em E. coli} data, and show $\dopp$ is at least 20x faster than existing methods for finding pairwise alignments in plum Rmap data. $\dopp$ is the only non-proprietary method that is capable of performing pairwise Rmap alignment for large eukaryote organisms in reasonable time.   
+
+%\noindent{\em Availability:}
+%$\dopp$ is available at \url{https://github.com/mmuggli/doppelganger/}.
+
+%\noindent{\em Contact:} {\tt muggli@CS.ColoState.EDU} %\href{muggli@CS.ColoState.EDU}{muggli@CS.ColoState.EDU}
+
+
+\section{Introduction}
+\input{../content/introduction}
+\input{../content/background}
+\input{../content/problem_definition}
+\input{../content/methods_part_1}
+\input{../content/methods_part_2}
+
+\section{Results and Discussion}
+\input{../content/results}
+
+
+
+%\section{Conclusion}
+%\input{../content/discussion}\
+
+\section{Competing Interests}
+The authors have no competing interests.
+
+
+\section{Acknowledgement}
+The authors would like to thank Journi Sir\'{e}n from the Wellcome Trust Sanger Institute for many insightful discussions concerning the GCSA code base.   
+\section{Funding}
+MM and CB were funded by the Colorado Clinical and Translational Sciences Institute which is funded by National Institutes of Health (NIH-NCATS, UL1TR001082, TL1TR001081, KL2TR001080).  SJP was supported by the Helsinki Institute of Information Technology (HIIT) and by Academy of Finland through grants 294143 and 250345 (CoECGR).  All authors greatly appreciate the funding provided for this project.  
+
+
+%\bibliographystyle{natbib}
+%\bibliographystyle{achemnat}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{abbrv}
+%\bibliographystyle{bioinformatics}
+%
+%\bibliographystyle{plain}
+%
+%\bibliography{Document}
+
+{\small
+\bibliographystyle{gberefs}
+%\bibliographystyle{plain}
+\bibliography{gcsa_paper}
+}
+\clearpage
+\appendix
+\input{../content/appendix}\
+
+\end{document}

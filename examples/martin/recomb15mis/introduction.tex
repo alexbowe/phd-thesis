@@ -1,0 +1,56 @@
+\section{Introduction} \label{sec:intro}
+Comparing genetic variation between and within a species is a fundamental activity in biological research. For example,  there is currently a major effort to sequence entire genomes of agriculturally important plant species to identify parts of the genome variable in a given breeding program and, ultimately, create superior plant varieties. Robust genome assembly methods are imperative to these large sequencing initiatives and other scientific projects~\cite{haussler2008genome,robinson2011creating,1001_arabidopsis,hmp} because scientific analyses frequently use those genomes to determine genetic variation and associated biological traits. 
+
+At present, the majority of assembly programs are based on the Eulerian assembly paradigm~\cite{IW95,PTW}, where a de Bruijn graph is constructed with a vertex $v$ for every $(k - 1)$-mer present in a set of reads, and an edge $(v, v')$ for every observed $k$-mer in the reads with $(k - 1)$-mer prefix $v$ and $(k - 1)$-mer suffix $v'$. A contig corresponds to a non-branching path through this graph. We refer the reader to Compeau et al.~\cite{compeau} for a more thorough explanation of de Bruijn graphs and their use in assembly.  The assemblers Euler-SR \cite{Chaisson:2008}, Velvet \cite{Zerbino:2008}, SOAPdenovo \cite{soap}, ABySS \cite{Simpson:2009} and ALLPATHS \cite{Butler:2008} all use this paradigm and follow the same general outline: extract $k$-mers from the reads, construct a de Bruijn graph from the set $k$-mers, simplify the graph, and construct contigs.  
+
+One crucial problem that persists in Eulerian assembly (and genome assembly, in general) is the discovery and correction of misassembly errors in draft genomes.  
+We define a {\em misassembly error} as an assembled region that contains a significantly large insertion, deletion, inversion, or rearrangment that is the result of decisions made by the assembly program.  Identification of misassembly errors is important because true biological variations manifest in similar ways and thus, these errors can be easily misconstrued as true genetic variation~\cite{salzberg}. This can mislead a range of genomic analyses.  
+We note that the exact definition of a misassembly error can vary, and adopt the standard definition used by Quast~\cite{quast} and other tools.  See section \ref{subsec:data} for this exact definition.  
+Once the existence and 
+%approximate 
+location of a misassembly 
+%error 
+is identified, 
+it
+%the error 
+can be removed by segmenting the contig at that location.
+
+   
+%Ronen et al.~ \cite{sequel} developed SEQuel, a tool that refines an initial assembly of short read data by using approximate positions of reads in contigs. It takes as input an assembled contig, the paired-end reads that align to that contig, and the approximate positions where they aligned, and returns a refined contig. SEQuel performs its refinement, referred to as {\em  positional reassembly}, through the use of the {\em positional de Bruijn graph}, which is a special type of a de Bruijn graph, where edges correspond to $k$-mers and their inferred positions on the contigs. Thus, SEQuel performs well at correcting substitution errors and small insertions and deletions ({\em indels}) ($\leq$ 50 bp) but neglects the more difficult problem of detection of misassembly errors. 
+
+We present a computational method for identifying misassembly errors using a combination of short reads and optical mapping data.   Optical mapping is a system developed in 1993~\cite{schwartz93} that can construct ordered, genome-wide, high-resolution restriction maps.  The system works as follows \cite{ORMenc,microfluidic}: an ensemble of DNA molecules adhered to a charged glass plate are elongated by fluid flow.   An enzyme is then used to cleave them into fragments at loci where the corresponding recognition sequence occurs. Next, the fragments are highlighted with fluorescent dye and imaged under a microscope. Finally, these images are analyzed to estimate the fragment sizes, producing a molecular map. Since the fragments stay relatively stationary during the aforementioned process, the images capture their relative order and size~\cite{Neely11}.   Multiple copies of the genome undergo this process, and a consensus map is formed that consists of an ordered sequence of fragment sizes, each indicating the approximate number of bases between occurrences of the recognition sequence in the genome \cite{Anantharaman01}.  
+
+Although optical mapping data has been used for discerning structural variation in the human genome  \cite{teague}, and for scaffolding and validating contigs for several large sequencing projects --- including those for various prokaryote species \cite{reslewic,zhou,zhou2}, rice~\cite{RICE}, maize \cite{Zhou09}, mouse \cite{church}, goat~\cite{GOAT}, parrot~\cite{gigadb}, and {\em Amborella trichopoda} \cite{amborella} --- there exists no publicly available tools for using this data for misassembly correction using short read and optical mapping data.
+
+Our tool, which we call $\sequel$, predicts which contigs are misassembled and the approximate locations of the errors in the contigs.  It takes as input the paired-end sequence read data, contigs, an ensemble of optical maps, and the restriction enzymes used to construct the optical maps.
+$\sequel$ first uses the paired-end read data to divide the contigs into two sets: those that are predicted to be correctly assembled and those that are not.  
+Then the set of  contigs that are candidates for containing misassembly errors are further divided into misassembled contigs and correctly assembled contigs using optical mapping data.
+Fundamental to the first step is the concept of a {\em red-black positional de Bruijn graph}, which encapsulates recurring artifacts in the alignment of the sequence read data to the contigs and their position in the contig. 
+The red vertices in this graph indicate if a contig is likely to be misassembled and also flag the location where the misassembly error occurs. These locations are called {\em  misassembly breakpoints}.
+
+%After separating contigs into ones that are conjectured to be misassembled and those conjectured not to be, optical mapping is used to discern which contigs from the conjectured missassembled set truly have been misassembled.  
+In the second stage of $\sequel$ where optical mapping data is used, the contigs conjectured to be misassembled are {\em in silico} digested with the set of input restriction enzymes and aligned to the optical map using Twin~\cite{wabi2014}.  Based on the presence or absence of alignment, a prediction of misassembly is made.  The {\em in silico} digestion process computationally mimics how each restriction enzyme would cleave the segment of DNA defined by the contig, returning ``mini-optical maps'' that can be aligned to the optical map for the whole genome. An important aspect of our work is that it highlights the need to use another source of information, which is independent of the sequence data but representative of the same genome, in order to identify misassembly errors. We show that optical mapping data can be used as this information source.   
+ 
+%In order to supplement short read alignment with optical mapping data for misassembly error detection, we align the ({\em in silico} digested) contigs that are conjectured to be misassembled to an optical map of the genome, and classify poorly aligned contigs as likely to have misassembly errors. 
+
+We give results for the {\em Francisella tularensis} and loblolly pine genomes.  Each genome was assembled using various de Bruijn graph assemblers and then misassembly errors were predicted.  Our results on {\em Francisella tularensis} show that $\sequel$ correctly identifies (on average) 86\% and 80\% of locally and extensively misassembled contigs, respectively. This is a considerable improvement on existing methods, which identified (on average)  26\% and 16\% of locally and extensively misassembled contigs, respectively, in the same assemblies. The results on the loblolly pine genome assemblies show similar improvement. Lastly, our results demonstrate we are capable of significantly decreasing the false positive rate in all assemblies of {\em Francisella tularensis} and loblolly pine by incorporating optical map data into the prediction; the reduction was between 29\% and 74\%.  
+
+\paragraph{Related Work.}  
+Both amosvalidate~\cite{amos} and REAPR~\cite{reapr} are capable of identifying and correcting misassembly errors.  
+REAPR is designed to use both short insert and long insert paired-end sequencing libraries, however, it can operate with only one of these types of sequencing data.  
+Amosvalidate, which is included as part of the AMOS assembly package~\cite{amos2}, was developed specifically for first generation sequencing libraries~\cite{amos}. 
+iMetAMOS~\cite{iMetAMOS} is an automated assembly pipeline that provides error correction and validation of the assembly.  
+It packages several open-source tools and provides annotated assemblies that result from an ensemble of tools and assemblers.  
+Currently, it uses REAPR for misassembly error correction. 
+ 
+Many optical mapping tools exist and deserve mentioning, including AGORA~\cite{agora}, SOMA~\cite{soma}, and Twin~\cite{wabi2014}. AGORA~\cite{agora} uses the optical map information to constrain de Bruijn graph construction with the aim of improving the resulting assembly.   SOMA~\cite{soma} uses dynamic programming to align {\em in silico} digested contigs to an optical map.   Twin~\cite{wabi2014} is an index-based method for aligning contigs to an optical map. Due to its use of an index data structure it is capable of aligning {\em in silico} digested contigs orders of magnitude faster than competing methods.     Xavier et al.~\cite{om_mis} demonstrated misassembly errors in bacterial genomes can be detected using proprietary software.
+
+Lastly, there are special purpose tools that have some relation to $\sequel$ in their algorithmic approach.
+Numerous assembly tools use a finishing process after assembly, including Hapsembler~\cite{Donmez2011}, LOCAS~\cite{LOCAS}, Meraculous~\cite{Chapman2011}, and the ``assisted assembly'' algorithm~\cite{Gnerre2009}. Hapsembler~\cite{Donmez2011} is a haplotype-specific genome assembly toolkit that is designed for genomes that are highly-polymorphic. Both RACA~\cite{raca}, and SCARPA~\cite{scarpa} perform paired-end alignment to the contigs as an initial step, and thus, are similar to our algorithm in that respect. 
+
+
+
+%goat ({\em Capra aegagrus hircus}) \cite{GOAT}, budgerigar ({\em Melopsittacus undulatus})  \cite{gigadb}, and {\em Amborella trichopoda} \cite{amborella} --- there exists no non-proprietary tools for using this data for misassembly correction using short read and optical mapping data.  Xavier et al.~\cite{om_mis} demonstrated misassembly errors in bacterial genomes can be detected using proprietary software.
+
+
+

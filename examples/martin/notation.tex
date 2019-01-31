@@ -1,0 +1,261 @@
+%\input{preamble}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "mysuccinct"
+%%% End:
+
+%\documentclass[landscape]{article}
+\documentclass{article}
+\input{defs}
+\usepackage{tabularx}
+\usepackage[left=0.5in, right=0.5in, top=0.25in, bottom=0.25in]{geometry} 
+\begin{document}
+
+
+
+\begin{table}
+  \centering
+  \begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    Notation & Definition  & Meaning \\ \hline
+    \hline
+    \hline
+    %%%% TWIN %%%%
+    $k$ & & Length of substring \\ \hline
+    $\X$ & $ \X[1..n] = \X[1]\X[2]\ldots \X[n]$ & String \\ \hline
+    $\Y$ & `` '' & String \\ \hline
+    $i$ & & integer \\ \hline
+    $n$ & $|\X|$ & Length of string \\ \hline
+    $\X[i..n]$ & $\X[i]\X[i+1]\ldots \X[n]$ & \emph{suffix} of $\X$ of length $n-i+1$ \\ \hline
+    $\X[1..i]$ & & \emph{prefix} of $\X$ of length $i$ \\ \hline
+    $\X[i..j]$ & $\X[i]\X[i+1]\ldots \X[j]$ & \emph{substring} of $\X$ \\ \hline
+    $\SA_{\X}$ & permutation of integers $[1..n]$ such that $\X[\SA[1]..n] < \X[\SA[2]..n] < \cdots < \X[\SA[n]..n]$ & Suffix array~\cite{mm1993} of $\X$ \\ \hline
+    $\BWT[1..n]$ & permutation of $\X$ such that $\BWT[i] = \X[\SA[i]-1]$ if $\SA[i]>1$
+    and $\$$ otherwise & Burrows-Wheeler Transform~\cite{bw1994} \\ \hline
+    $Occ$ & & a rank dictionary of $\BWT$ \\ \hline
+    $c$ & & symbol, element of alphabet $\sigma$ \\ \hline 
+    $\C[c]$ & & number of symbols in $\X$ lexicographically smaller than $c$, alternately prefix sum of sorted elements of $\X$ \\ \hline
+    $\Y$-interval in $\SA_{\X}$ & & interval $\SA[s..e]$ that contains all suffixes having $\Y$ as a prefix \\ \hline
+    $\rank(\X,c,i)$ & & number of occurrences of $c$ in $\X[1..i]$ \\ \hline
+    $\LF[i]$ & $\C[\BWT[i]] + \rank(\BWT,\BWT[i],i)$ & FM-Index last-to-first mapping \\ \hline
+    $c\Y$-interval & & left extension of $Y$-interval \\ \hline
+    \hline
+  \end{tabularx}
+  \caption{TWIN}
+\end{table}
+
+\begin{table}
+  \begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    Notation & Definition  & Meaning \\ \hline
+    \hline
+    \hline
+    %%% misSEQuel %%%
+    $k$ & & integer constant\\ \hline
+    $k-mer$ & & substring of length $k$\\ \hline
+    $v$ & & vertex \\ \hline
+    $(v, v')$ & & edge \\ \hline
+    $\Delta_L$ & $max(\{0, \mu_d - 3\sigma_d\})$ & lower acceptable read depth \\ \hline
+    $\Delta_U$ & $\mu_d + 3\sigma_d$ & upper acceptable read depth \\ \hline
+    $\Gamma$ & $\mu_i + 3\sigma_i$ & max acceptable unconventional mate-pair alignment  \\ \hline
+    $\ell$ & $\frac{1}{20}$ th of the contig length & sampling frequency \\ \hline
+    $\mu_{d}$ & & mean of the read depth\\ \hline
+    $\sigma_d$ & & standard deviation of the read depth\\ \hline
+    $\mu_{i}$ & & mean number of alignments where an unconventional mate-pair orientation is witnessed in sample \\ \hline
+    $\sigma_i$ & & standard deviation number of alignments where an unconventional mate-pair orientation is witnessed in sample \\ \hline
+    $s_k$ & & $k$-mer \\ \hline
+    $\prefix(s_k)$ & & first $k - 1$ nucleotides of $s_k$ \\ \hline
+    $\suffix(s_k)$ & &  last $k - 1$ nucleotides of $s_k$ \\ \hline
+    $p$ & & position \\ \hline
+    $(s_k, p)$ & & positional $k$-mer \\ \hline
+    $\Phi$ & & maximum distance between two positional $k$-mers to be glued \\ \hline
+    $G_{k, \Phi}$ & & positional de Bruijn graph \\ \hline
+    $\chi^2$ & & TODO \\ \hline
+    \hline
+  \end{tabularx}
+  \caption{misSEQuel}
+\end{table}
+
+\begin{table}
+  \begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    Notation & Definition  & Meaning \\ \hline
+    \hline
+    \hline
+    % KOHDISTA
+    % FIXME: updated alphabet index bounds
+    
+    $S $ & $S[1..n] = S[1]S[2]\ldots$ $S[n]$ & A string \\ \hline
+    $|S| $ & $ n$ & Length of string $S$ \\ \hline
+    $\Sigma$ & $[0..\sigma-1]$ & Alphabet \\ \hline
+    $i$ & $1,\ldots,n$ & String index \\ \hline
+    $S[i..n]$ & $ S[i]S[i+1]\ldots S[n]$&  \emph{suffix} of $S$ of length $n-i+1$ \\ \hline
+    $S[1..i]$ &  $S[i]S[i+1]\ldots S[j]$ & \emph{substring} of $S$ that starts at position $i$ and ends at $j$ \\ \hline
+    $c$ & & character drawn from $\Sigma$ \\ \hline
+    $j$ & & rank index \\ \hline
+    $\rank_c(S,i)$  & & the number of times that $c$ appears in $S[1,i]$ \\ \hline
+    $\select_c(S,j)$ & & is the position of the $j$-th occurrence of $c$ in $S$ \\ \hline
+    $\A[1,n]$ & & a genome \\ \hline
+    $\B[1,b]$ & & an enzyme's recognition sequence \\ \hline
+    $\C[1,m]$ & $\C[i] = j$ if and only if $\A[j..j+b] = \B$ is the $i$th occurrence of $\B$ in $\A$ & positions of $B$ in $A$ \\ \hline
+    $\R[i]$ & $ (\C[i]-\C[i-1])$, with $\R[1] = \C[1]-1$ & distance positions of $B$ in $A$ \\ \hline
+    $\ell$ & & length of a DNA fragment in kbp \\ \hline
+    $\sigma$ & & standard deviation of error model \\ \hline % FIXME: this is reused in the same document!
+    $\X$ & & A sequence \\ \hline % FIXME: why X and not the already introduced string S
+    $\SA_{\X}$  &  $[1..n]$ such that $\X[\SA[1]..n] < \X[\SA[2]..n] < \cdots < \X[\SA[n]..n]$ & Suffix Array of $\X$ \\ \hline
+    $\SA[1..n]$ & $\SA[j] = i$ iff $\X[i..n]$ is the $j^{\mbox{{\scriptsize th}}}$ suffix of $\X$ & Another notation and definition for suffix array of $\X$ \\ \hline
+    $s$ & & suffix array index \\ \hline
+    $e$ & & suffix array index \\ \hline
+    $Y$ & & a sequence \\ \hline
+    $\Y$-interval & &the interval $\SA[s..e]$ that contains all suffixes having $\Y$ as a prefix \\ \hline
+    $c\Y$-interval & $\SA[\C[c]+\rank(\BWT,c,s),\C[c]+\rank(\BWT,c,e)]$ &  \emph{left extension} \\ \hline
+    $\LF[i] $ &  $j$ iff $\SA[j] = \SA[i]-1$, except when $\SA[i] = 1$, in which case $\LF[i] = I$, where $\SA[I] = n$ & last to first mapping \\ \hline
+    $c$ & & a symbol \\ \hline
+    $\C[c]$ & number of symbols in $\X$ lexicographically smaller than $c$ & FM-Index C table \\ \hline
+    $\rank(\X,c,i)$ & & SAME AS TWIN  \\ \hline
+    $\R^*$ & $[f_{11},..,f_{1m_1}, \ldots, f_{n1},..,f_{nm_n}]$& concatenated sequence with delimiter symbol \\ \hline
+    $\A$ & $ (V, E)$ & automaton \\ \hline % FIXME reused
+    $v^i_1 .. v^i_m$ & & vertices \\ \hline
+    $\#$ & & starting vertex \\ \hline
+    \$ & & final vertex \\ \hline
+    $o$ & & iteration of orders of skip vertices \\ \hline
+    $\rho_{L}$ & & parameter: chi-square CDF threshold \\ \hline
+    $\rho_{U}$ & & parameter: binomial CDF threshold \\ \hline
+    $\delta$ & & parameter: maximum consecutive missed restriction site run between aligned sites \\ \hline
+    $k$ & & suffix array index \\ \hline
+    $v$ & & a vertex\\ \hline
+    $u$ & & a vertex\\ \hline
+    $p(v)$ & & common prefix of all paths from  $v$ to $v_{|V|}$ \\ \hline
+    $\ell(u)$ & & label of vertex $u$ \\ \hline
+    $r$ & & vertex rank variable \\ \hline
+    $\F$ & & bit array encoding out degree for each vertex \\ \hline
+    $\M$ & & bit array encoding in degree for each vertex \\ \hline
+    $\R_q$ & & query Rmap \\ \hline
+    $\D$ & & candidate fragment sizes \\ \hline
+    $f'$ & & a fragment size \\ \hline
+    $\chi^2$ & & standard  $\chi^2$ test statistic \\ \hline
+    \hline
+  \end{tabularx}
+  \caption{KOHDISTA}
+\end{table}
+
+\begin{table}
+  \begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    Notation & Definition  & Meaning \\ \hline
+    \hline
+    \hline
+    % VARI
+
+    $n$ & & number of colors/samples \\ \hline
+    $k$ & & length of substrings \\ \hline
+    $k$-mer & & substring of length $k$, extracted from a sliding window over a longer string\\ \hline
+    $\mathcal{C}$ & & set of colors \\ \hline
+    $c_i$ & & individual color \\ \hline
+    $i$ & & color index \\ \hline
+    
+
+    $G$ & & a graph \\ \hline
+    $V$ & & a set of vertices \\ \hline
+    $v$ & & a vertex \\ \hline
+    $E$ & & a set of edges \\ \hline
+    $e$ & & a single edge \\ \hline
+    $a$ & & a symbol in a $k$-mer \\ \hline
+    $c$ & & a single symbol \\ \hline
+    $a_{k - 1}$ & & edge label \\ \hline
+    $\sigma$ & & size of alphabet \\ \hline
+    $F$ & & list of $G$'s edges sorted co-lexicographically by their ending nodes \\ \hline
+    $L$ & & list of $G$'s edges sorted co-lexicographically by their starting nodes \\ \hline
+    $\EBWT (G) [h]$ & $\elabel (L [h])$ & edge-BWT, where $\elabel $ extracts the edge label \\ \hline
+    $p$ & & a position in $L$ \\ \hline
+    $B_F$ & &  bitvector with a 1 marking the position in $F$ of the last incoming edge of each node \\ \hline
+    $B_L$ & & bitvector with a 1 marking the position in $L$ of the last outgoing edge of each node \\ \hline
+    $P$ & & a pattern substring which may exist as a suffix in $L$ \\ \hline
+    $\$$ & & out of alphabet symbol used in dummy vertex labels \\ \hline
+    $C$ & & color matrix \\ \hline
+    $D$ & & dummy edges \\ \hline
+    \hline    
+  \end{tabularx}
+  \caption{VARI}
+\end{table}
+
+\begin{table}
+  \begin{tabularx}{\textwidth}{|l|p{2in}|X|}
+ %   \hline
+ %   Notation & Definition  & Meaning \\ \hline
+
+    \hline
+    % VARI-merge
+
+    % a whole bunch of redundant definition stuff from TWIN
+    % TODO later
+
+
+    $\X$ & $ \X[1..n] $ & a string \\ \hline
+    $n$ & $|\X|$ & length of string \\ \hline
+    $i$ & & string index \\ \hline
+    $\X[i..n]$ & $\X[i]\X[i+1]\ldots \X[n]$ & suffix  of length $n-i+1$ \\ \hline
+    $\X[1..i]$ & & prefix of $\X$ of length $i$ \\ \hline
+    $\X[i..j]$ &  $\X[i]\X[i+1]\ldots \X[j]$ & substring of $\X$ of length $i$ \\ \hline
+    $\SA_{\X} = \SA[1..n]$ & permutation of the integers $[1..n]$ such that $\X[\SA[1]..n] \prec \X[\SA[2]..n] \prec \cdots \prec \X[\SA[n]..n]$ & suffix array \\ \hline
+    $\SA[j]$ & $i$ if and only if $\X[i..n]$ is the $j^{\mbox{{\scriptsize th}}}$ suffix of $\X$ & suffix array element\\ \hline
+    $\prec$ & & lexicographic precedence \\ \hline
+    $\Y$ & & a string \\ \hline
+    $\Y$-interval & $\SA[s..e]$ &  all suffixes of $\X$ having $\Y$ as a prefix \\ \hline
+    $c$ & & a symbol \\ \hline
+    $c\Y$-interval & & left extension \\ \hline
+    $\F$ & & $\Y$'s characters sorted lexicographically by the suffixes starting at those characters \\ \hline
+    $\L$ & & $\Y$'s characters sorted lexicographically by the suffixes starting immediately after those characters \\ \hline
+    $p$ & & position in $F$ \\ \hline
+    $\BWT$ & & Burrows Wheeler transform \\ \hline
+    $P$ & & string used as a search pattern \\ \hline
+    $h$ & & a symbol iterating $Y$ or $\BWT$ for rank/select operations in FM-Index backward search steps \\ \hline
+    %% TODO backward search step formulae are wrong
+    $\rank(\Y, c,i)$ & &  number of occurrences of $c$ in $\Y[1..i]$ \\ \hline
+    $G$ & $(V, E)$ & graph \\ \hline
+    $V$ & & vertex set \\ \hline
+    $E$ & & edge set \\ \hline
+    $e$ & & edge \\ \hline
+    $\elabel(e)$ & & $k$-mer corresponding to edge $e$ \\ \hline
+    $\EBWT$ & & edge $\BWT$ \\ \hline
+    $D$ & & FM-Index's $C$ table \\ \hline
+    $\B_F$ & &  bit vector with a 1 marking the position in $\F$ of the last incoming edge of each node \\ \hline
+    $\B_L$ & &  bit vector with a 1 marking the position in $\L$ of the last outgoing edge of each node \\ \hline
+    $v$ & & a vertex \\ \hline
+    $\$^{k - 1}$ & & lexicographically smallest vertex label \\ \hline
+    $\mathcal{G}$ & $\{G_1, \ldots, G_t\}$ & a multiset of individual de Bruijn graphs \\ \hline
+    $\C$ & & two-dimensional binary array indicating whether the $i$th edge in $G$ is present in the $j$th individual de Bruijn graph \\ \hline
+    $L_1$ & & full edge labels for graph $G_1$ \\ \hline % TODO $L$ is a character array $L_1$ is a string array, this is confusing
+    
+    $P_1 $ & $ \{[0, p^1_1],...,[p^1_i, |\L_{1}|]\}$ & merge plan \\ \hline
+    $p^1_1,..,p^1_i$ & & indices into  $\L_{1}$ \\ \hline
+    $i$ & & iteration number \\ \hline
+    $Col_1^i$ &  $Col_1^i[j] = \L_1[j][k-i]$ if $j < k$ and otherwise $Col_1^i[j] = \L_1[j][k]$ & temporary character vector  of length $|\L_1|$\\ \hline
+    $SubP_1[c]$ & & sub-intervals of $P_1$ \\ \hline
+    $Col_1^i(P_1[n])$ & & subvector of $Col_1^i$ \\ \hline
+    $\ell_1,..,\ell_n$ & &  the elements in $\L_1$ that are covered by interval $p_{i} \in P_1$\\ \hline
+    $m_1,...,m_o$ & & the  elements of $\L_2$ covered by interval $q_{j} \in P_2$ \\ \hline
+    $\sigma_1$ & & subset of alphabet used in  $\ell_1,..,\ell_n$ \\ \hline
+    $\C_1$ & & color matrix \\ \hline
+    $t$ & & number of colors (columns) in $\C_M$ \\ \hline
+    $q$ & & integer index into an edge label string \\ \hline
+    $e_{pred}$ &  $ (s_{pred}, t_{pred})$ & predecessor edge \\ \hline
+    $t_{pred}$ & & a vertex \\ \hline % TODO this conflicts with previous definition of t
+    $s_{pred}$ & & a vertex \\ \hline
+    $r$ & & rank of  $e_{pred}$ \\ \hline
+    $S_{k-1}$ & & snapshot of merge plan when $i=k-1$ \\ \hline
+    $\sigma$ & & alphabet \\ \hline
+    
+
+    
+    
+   
+  \end{tabularx}
+  \caption{VARI-MERGE}
+\end{table}
+
+
+
+
+\end{document}
+%\input{postamble}

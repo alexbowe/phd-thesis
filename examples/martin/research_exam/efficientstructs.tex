@@ -1,0 +1,58 @@
+\section{Memory/Time Efficient Data Structures}
+
+In this section, we review modern data structures which facilitate accomplishing tasks already shown to produce valuable results but with fewer resources used.  This class of research is valuable because it allows state of the art existing solutions to be employed by biologists with modest only computing resources, as well as extending the reach to ever larger genomes and tasks for large labs with vast computing resources.
+
+\subsection{KMC 2}
+
+Deorowicz \emph{et al.} \cite{deorowicz2015kmc} introduce a new tool which extends previous work with minimizers (explained shortly).
+This paper addresses the problem of how to efficiently count $k$-mers in a read set.
+$k$-mer counting is important as only high frequency $k$-mers are likely to be genomic, and those that drastically exceed sequencing depth can be used as weights in a de Bruijn graph and indicate genomic repeats.  The extent of the deviation, for example, can convey copy number for tandem repeats.
+
+This work improves upon the memory and CPU consumption of an earlier work which is also a minimizer based $k$-mer counter.
+A minimizer is the lowest ranking m-mers ($m < k$) of all m-mers within a $k$-mer, according to some ranking system (e.g. lexicographic).  Many consecutive $k$-mers share the same minimizer, and it can be expected that all occurrences of any of those $k$-mers across the whole read set will have the same m-mer.
+Thus, by distributing these consecutive $k$-mers (or more efficiently, the covering span of bases across all such $k$-mers with the same minimizer as one contiguous unit called a \emph{super $k$-mer}) into different bins, identical k-mers can be grouped.  In this scenario each bin is associated with a subset of all minimizers, all $k$-mers across the read set will be stored in the same bin as all of other copies of identical $k$-mers.
+Each bin can be processed independently using a subset of the memory required for for the complete set, and the union of all counts constructed at the end.
+
+This method improves on the aforementioned process in two ways:
+
+First, the peak memory will occur with the largest bin, and a lexicographic ordering does not yield a uniform distribution, so they provide a new ranking scheme such that certain problematic m-mers, particularly prefixes of consecutive 'A's do not skew the distribution (a problem observed by several researchers).
+They dub m-mers chosen under this scheme \emph{signatures}, which are still minimizers under the original definition, but which favor some specific desirable properties such as producing more uniform bins and reducing disk I/O.
+
+
+Second, after being split into bins and a given bin loaded from disk, super $k$-mers are not entirely split into $k$-mers as with previous approaches, but instead into varying length substrings known as (k,x)-mers.
+These vary in size $k$..$k+x$ which eliminate some of the redundancy of extracting all $k$-mers, since the longer strings contain multiple overlapping $k$-mers.
+These ($k,x$)-mers are then sorted, and multiple cursors iterate through to count the $k$-mers.
+Note that the $k$ sized suffixes of the sorted ($k,x$)-mers which share the same prefix will be stored consecutively, but will be found in $\sigma^{[0..x]}$ different places in the sorted sequence in addition to the one run where they exist as a prefixes.
+%todocomentary:kmc 2
+
+%Commentary: 
+
+\paragraph{Discussion}
+
+There is some similarity between the kmer counting work done here for minimizers and that done by DALIGN's sorting and SGA's index building; In each case, the large set is divided into (possibly similar, \emph{independent} smaller chunks which are processed either one at a time (due to memory constraints) or concurrently (where independence entails the useful property of being synchronization free) and are later merged.
+
+\subsection{Variable Order de Bruijn Graphs}
+
+Two state-of-the-art assemblers, SPAdes and IDBA, consume significant time building de Bruijn graphs of different orders as part of their operation.
+The work of \cite{boucher2014variable} attempts to address this burdon.
+This approach introduces a data structure which is both succinct and can represent all orders of de Bruijn graphs up to some maximum size in a single structure.
+It is an extension of a previous succinct de Bruijn graph representation called BOSS (for the authors' initials) and works as follows: Given a set of 2-tuples, each of the $k-1$ symbol prefix and the 1 symbol suffix of each $k$-mer (representing a vertex and an outgoing edge, respectively) the structure stores a fixed order de Bruijn graph as a sequence of these tuples, sorted first in right to left order of the prefix and then by suffix.
+As each node may have up to $\sigma$ outgoing edges, nodes are represented by an interval of all such tuples.
+Three operations are provided: forward (taking a node and an edge symbol to follow and returning a node), backward (returning all preceding nodes of a given node), and lastchar (taking a node and returning a symbol).
+A node's complete label can be determined by successive calls to backward and lastchar.  
+
+The authors then discuss extensions to this representation, supporting smaller values of $k$.
+They point out that if the first column of the prefixes were removed, the data structure would be quite similar to the BOSS of order but one degree smaller (though it would have some repeated rows).
+The original operations will not work correctly all the time on this reduced order \emph{view} of the BOSS so additional operations are provided: shorter, longer, and maxlen.
+The functionality of the original operations can be expressed in terms of this new set, by mapping a smaller order node to an equivalent maximum order node, calling the original operation, then mapping the result(s) back to the appropriate small order node.
+%commentary
+
+\paragraph{Discussion}
+
+Much like KMC 2, this approach reduces redundancy by leveraging the fact that a lexicographically sorted sequence of strings also has one or more sequences of sorted subsequences within it.  If left-to-right sorted, removing a suffix elementwise leaves a sequence in sorted order with possibly new repititions.  Removing a prefix of length $l$ leaves a series of $\sigma^l$ sorted sequences.  In KMC 2, both prefix and suffix strings are of interest so the disparate sorted sequences found by ignoring a prefix must be traversed while the variable order de Bruijn graph only removes the equivalent of suffixes (actually prefixes, being right-to-left sorted.)
+
+
+%todocommentary:variable order
+%Commentary: could the out edge suffix be interposed before the rightmost optional column and the leftmost permanent column?  Then truncating columns would still be in lex order.
+
+

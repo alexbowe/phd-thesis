@@ -1,0 +1,166 @@
+%\section{Methods}
+\label{sec:methods}
+
+Our data structure for colored de Bruijn graphs is based on the succinct representation of individual de Bruijn graphs introduced by \cite{BOSS12}---which we refer to as the BOSS representation from the authors' initials---so we start by describing that representation.  We note that BOSS is itself a generalization of FM-indexes~\citep{FM05} obtained by extending the Burrows-Wheeler transform (BWT) from strings to the multisets of edge-labels of de Bruijn graphs.  We then give a general explanation of how we add colors, and finally give details of our implementation.
+
+\subsection{BOSS Representation}
+\label{subsec:boss}
+
+Consider the de Bruijn graph \(G = (V, E)\) for a set of $k$-mers, with each $k$-mer \(a_0 \cdots a_{k - 1}\) representing a directed edge from the node labelled \(a_0 \cdots a_{k - 2}\) to the node labelled \(a_1 \cdots a_{k - 1}\), with the edge itself labelled \(a_{k - 1}\).  Define the nodes' co-lexicographic order to be the lexicographic order of their reversed labels.  Let $F$ be the list of $G$'s edges sorted co-lexicographically by their ending nodes, with ties broken co-lexicographically by their starting nodes (or, equivalently, by their $k$-mers' first characters).  Let $L$ be the list of $G$'s edges sorted co-lexicographically by their starting nodes, with ties broken co-lexicographically by their ending nodes (or, equivalently, by their own labels).  If two edges $e$ and $e'$ have the same label, then they have the same relative order in both lists; otherwise, their relative order in $F$ is the same as their labels' lexicographic order.  Defining the edge-BWT (EBWT) of $G$ to be the sequence of edge labels sorted according to the edges' order in $L$, so \(\elabel (L [h]) = \EBWT (G) [h]\) for all $h$, this means that if $e$ is in position $p$ in $L$, then in $F$ it is in position
+\begin{equation*}
+|\{d\,:\,d \in E,\ \elabel (d) \prec \elabel (e)\}| + \EBWT (G).\rank_{\elabel (e)} (p) - 1\,,
+\end{equation*}
+where \(\EBWT (G).\rank_{\elabel (e)} (p)\) is the number of times $\elabel (e)$ appears in \(\EBWT (G) [1,p]\).  It follows that if we have, first, an array storing \(|\{d\,:\,d \in E,\ \elabel (d) \prec c\}|\) for each character $c$ and, second, a fast rank data structure on \(\EBWT (G)\) then, given an edge's position in $L$, we can quickly compute its position in $F$.
+
+Let $B_F$ be the bitvector with a 1 marking the position in $F$ of the last incoming edge of each node, and let $B_L$ be the bitvector with a 1 marking the position in $L$ of the last outgoing edge of each node.  Given a character $c$ and the co-lexicographic rank of a node $v$, we can use $B_L$ to find the interval in $L$ containing $v$'s outgoing edges, then we can search in \(\EBWT (G)\) to find the position of the one $e$ labelled $c$.  We can then find $e$'s position in $F$, as described above.  Finally, we can use $B_F$ to find the co-lexicographic rank of $e$'s ending node.  With the appropriate implementations of the data structures, we can store $G$ in \((1 + o (1)) |E| (\lg \sigma + 2)\) bits, where $\sigma$ is the size of the alphabet (i.e., 4 for DNA), such that when given a character $c$ and the co-lexicographic rank of a node $v$, in $\Oh{\log \log \sigma}$ time we can find the node reached from $v$ by following the directed edge labelled $c$, if such an edge exists.
+
+If we know the range \(L [i..j]\) of $k$-mers whose starting nodes end with a pattern $P$ of length less than \((k - 1)\), then we can compute the range \(F [i'..j']\) of $k$-mers whose ending nodes end with \(P c\), for any character $c$, since
+\begin{eqnarray*}
+    i' & = & |\{d\,:\,d \in E,\ \elabel (d) \prec c\}| + \EBWT (G).\rank_c (i - 1)\\ 
+    j' & = & |\{d\,:\,d \in E,\ \elabel (d) \prec c\}| + \EBWT (G).\rank_c (j) - 1\,.
+\end{eqnarray*}
+It follows that, given a node $v$'s label, we can find the interval in $L$ containing $v$'s outgoing edges in $\Oh{k \log \log \sigma}$ time, provided there is a directed path to $v$ (not necessarily simple) of length at least \(k - 1\).  In general there is no way, however, to use \(\EBWT (G)\), $B_F$ and $B_L$ alone to recover the labels of nodes with no incoming edges.
+
+To prevent information being lost and to be able to support searching for any node given its label, Bowe et al.\ add extra nodes and edges to the graph, such that there is a directed path of length at least \(k - 1\) to each original node.  Each new node's label is a \((k - 1)\)-mer that is prefixed by one or more copies of a special symbol $\$$ not in the alphabet and lexicographically strictly less than all others.  Notice that, when new nodes are added, the node labelled $\$^{k - 1}$ is always first in co-lexicographic order and has no incoming edges.  Bowe et al.\ also attach an extra outgoing edge labelled $\$$, that leads nowhere, to each node with no original outgoing edge.  The edge-BWT and bitvectors for this augmented graph are, together, the BOSS representation of $G$.
+
+\subsection{Adding Color}
+\label{subsec:color}
+
+We cannot represent the colored de Bruijn graph for a multiset \(\mathcal{G} = \{G_1, \ldots, G_t\}\) of individual de Bruijn graphs satisfactorily by simply representing each individual graph separately, for two reasons: first, the memory requirements would quickly become impractical and, second, we should be able to answer efficiently queries such as ``which individual graphs contain this edge?''  Therefore, we set $G$ to be the union of the individual graphs and build the BOSS representation only for $G$.  As long as most of the $k$-mers are common to most of the individual graphs, the memory needed to store $G$ is comparable to that need to store an individual graph.
+
+To indicate which edges of $G$ are in which individual graphs, we build and store a two-dimensional binary array $C$ in which \(C [i, j]\) indicates whether the $i$th edge in $G$ is present in the $j$th individual de Bruijn graph (i.e., whether that edge has the $j$th color). 
+(Recall from the description above of BOSS that we consider the edges in $G$ to be sorted lexicographically by the reversed labels of their starting nodes, with ties broken lexicographically by their own single-character labels.) 
+If the individual graphs are sufficiently similar, then we can compress $C$ effectively and store it in such a way that we can still access its individual bits quickly and support fast rank and select queries on the rows.  (A $\select$ query on the $i$th row takes an argument $r$ and returns the index $j$ of the $r$th individual graph that contains the $i$th edge in $G$.)  In the next subsection we give details of some relatively simple compression strategies that support fast access, rank and select.  With these data structures, we can navigate efficiently in any of the individual graphs and switch between them.  For example, we can efficiently check whether an edge has a particular color (with an access), count the number of colors it has (with a $\rank$ query) or list them (with repeated $\select$ queries).  We have not yet considered more sophisticated compression schemes that could still offer fast queries while taking advantage of, e.g., correlations among the variations or grouping of the individual graphs by subpopulation.
+
+Figure~\ref{fig:purple} shows an example of how we represent a colored de Bruijn graph consisting of two individual de Bruijn graphs.  Suppose we are at node {\tt ACG} in the graph, which is the co-lexicographically eighth node.  Since the eighth 1 in $B_L$ is \(B_L [10]\) and it is preceded by two 0s, we see that {\tt ACG}'s outgoing edges' labels are in \(\EBWT [8..10]\), so they are {\tt A}, {\tt C} and {\tt T}.  Suppose we want to follow the outgoing edge $e$ labelled {\tt C}.  We see from \(C [9, 0..1]\) (i.e., the tenth column in $C^\mathrm{T}$) that $e$ appears in the second individual graph but not the first one (i.e., it is blue but not red).    There are four edges labelled {\tt A} in the graph and three {\tt C}s in \(\EBWT (G) [0..9]\), so $e$ is \(F [6]\).  (Since edges labelled {\tt \$} have only one end, they are not included in $L$ or $F$.)  From counting the 1s in \(B_F [0..6]\), we see that $e$ arrives at the fifth node in co-lexicographic order that has incoming edges.  Since the first node, {\tt \$\$\$}, has no incoming edges, that means $e$ arrives at the sixth node in co-lexicographic order, {\tt CGC}.
+
+\begin{figure*}
+\begin{tabular}{c@{\hspace{0.03\textwidth}}c@{\hspace{0.03\textwidth}}c}
+\includegraphics[width=.31\textwidth]{purplegraph.eps} &
+\includegraphics[width=.31\textwidth]{newpurplemapping.eps} &
+\raisebox{11ex}{$\begin{array}{rr}
+   \EBWT (G) = & \mathtt{TCCGTGGGACTAAA\$C}\\[1ex]
+         B_F = & \mathtt{ 001111110111111}\\
+         B_L = & \mathtt{1110111100111111}\\[1ex]
+C^\mathrm{T} = & \mathtt{0000001001010000}\\
+               & \mathtt{0000000110101001}
+\end{array}$}
+\end{tabular}
+\caption{{\bf Left:} A colored de Bruijn graph consisting of two individual graphs, whose edges are shown in red and blue.  (We can consider all nodes to be present in both graphs, so they are shown in purple.)  {\bf Center:} The nodes sorted into co-lexicographic order, with each node's number of incoming edges shown on its left and the labels of its outgoing edges shown on its right.  The edge labels are shown in red or blue if the edges occur only in the respective graph, or purple if they occur in both.  {\bf Right:} Our representation of the colored de Bruijn graph: the edge-BWT and bitvectors for the BOSS representation for the union of the individual graphs, and the binary array $C$ (shown transposed) whose bits indicate which edges are present in which individual graphs.}
+\label{fig:purple}
+\end{figure*}
+
+\subsection{Implementation}
+\label{subsec:implementation}
+
+We now give some details of how our data structure is implemented and constructed in practice.
+
+\subsubsection{Data Structure}
+
+The arsenal of component tools available to succinct data structures designers has grown considerably in recent years~\citep{Navarro16}, with many methods now implemented in libraries. We chose to make heavy use of the succinct data structures library (SDSL)\footnote{\url{https://github.com/simongog/sdsl-lite}} 
+in our implementation.
+
+\(\EBWT (G)\), the sequence of edge labels, is encoded in a wavelet tree, which allows us to perform fast rank queries, essential to all our graph navigations. The bitvectors of the wavelet tree  and the $B$ bitvector are stored in the Raman-Raman-Rao (RRR) encoding~\citep{RRR07}.
+%[SJP: RRR will be significantly slower than a plain encoding, and I'm not sure it will reduce the size of the WT very much - this is something we need to test. We might even want to use something other than a WT].
+The rows of the color matrix, $C$, are concatenated (i.e. $C$ is stored in row-major order) and this single long bit string is then compressed.  It is either stored with RRR encoding,  or alternately Elias-Fano encoding~\citep{elias1974efficient,fano1971number,bitvector} which supports online construction.  Online construction is important for datasets where $C$ is too large to fit in memory in uncompressed form, such as our metagenomic sample dataset.  These encodings reduce the size of $C$ considerably because we expect rows to be very sparse
+%(i.e. most $k$-mers are contained in most samples),
+and both encodings exploit this sparseness. 
+%[SJP: we really should be using the access-optimised encoding that Travis and I suggested --- RRR is overkill and likely slower].
+
+\subsubsection{Construction}
+
+\input{coloreddbg/construction}
+%[SJP: The following overly detailed description is from Alex. To be refined.]
+%
+%Getting + sorting necessary kmers
+%1 read in the node, coverages and edge bitmaps
+%2 iterate over the color bitmap, then in an inner loop iterate over
+%edge symbols. I then make an inverted symbol by color bit matrix
+%3 for each symbol that has a non-zerod row in the matrix, I shift the
+%node and append the symbol to make a k-mer (edge)
+%4 I reverse the nucleotides of the kmer so it will be sorted in colex
+%order, and I also compute the reverse complement
+%5 I add (kmer, color-bitmap), (revcomp, color-bitmap) pairs to a
+%sorting container (which generates runs, then merges them on access
+%later) which drops the last symbol before sorting (table F)
+%6 I also add the kmer and revcomp (no color data) to another sorting
+%container which sorts based on the whole string (table L)
+%Note: In the old version, only 6 was done. The radix sort used two
+%tables, so by saving the buffer table we had the second-last iteration
+%as well, which meant we had table F
+%Note: 5 and 6 are sorted in parallel on different disks for my
+%version, so it is faster than a multi-pass version (tested), but also
+%uses 2x the disk space. It isnt a radix sort though, so it doesnt
+%double the table size. i.e. for both implementations, we use 2x the number 
+%of input kmers to add rev comps, then 2x again for F and L.
+%
+%Generating incoming dummy edges:
+%7. i use std::set-difference to take both tables (wrapping the
+%iterator so access return just the first k-1 syms from kmers in of F,
+%and the last k-1 syms from kmers in L, and both made to be unique - no
+%duplicates). This calculates F - L, since any node without a
+%predecessor needs an incoming dummy.
+%8. it outputs the k-1-mers from F to a provided function, which loops
+%(k-2) times to generate \$... \$\$... \$\$\$... (these extra shifts aren't
+%technically needed, except to be able to generate the labels for
+%incoming dummies again)
+%9. each of these is added to another sorter, like above, to be sorted
+%on their first k-1 symbols (with \$ sorting before any other symbols).
+%Note: before 9, even without all the shifts, the dummies are output in
+%the same order as L (colex of whole edge).
+%Note: colors dont need to be looked at here (we treat dummies as
+%having 0 color for now)
+%
+%Merging and outgoing dummies:
+%Note: You could do a L-F set difference to get outgoing dummies, but
+%they are generated in the right order for F, so I combined them into
+%one big merge step at the end.
+%10. I make a wrapped iterator to access F without the color
+%information, but to save it to a color variable that is in scope. This
+%way I can merge the color in as I'm writing the kmers out.
+%11. I take the two tables F and L, and the dummies. I merge the
+%dummies into F (although this time comparing all k symbols), but I
+%also calculate the L-F set difference as I'm going. Kind of like a
+%3-way merge. If a node is in L that isnt in F, I shift that node and
+%append a $ on the right: ....$
+%12. each of these is sent to a function, which checks all the first
+%k-1 symbols, and last k-1 symbols to generate the B and B' vectors
+%(which show the range of entries for nodes in L and F)
+%13. the last symbol is written to a file along with the bit vectors
+%(interleaved and packed into 64bit blocks)
+%14. the color (which is a variable that is now overwritten by the
+%iterator wrapper) is written to a separate file.
+%
+%
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=.5\textwidth]{New+Doc+5_1.jpg} \\[10ex]
+%\caption{Construction of the succinct colored de Bruijn graph, from input to output.}
+%\label{fig:construction}
+%\end{center}
+%\end{figure}
+
+\subsubsection{Traversal}
+We implemented two traversal methods based on those of {\sc Cortex} with a modification in light of our intention to apply $\ours$ to metagenomic reads looking for AMR gene presence.
+
+The first, {\it bubble calling}, is a simple algorithm to detect sequence variation in genomic data. It consists of iterating over a set of $k$-mers in order to find places where bubbles start and terminate.  When combined with the $k$-mer color (in a colored de Bruijn graph), this enables identification of places where genomic sequences diverge from one another.  The differing region of the two sequences will form the two arms of a bubble, each colored with only one of the two sequence's colors.  A bubble is identified when a vertex has two outgoing edges. Each edge is followed in turn to navigate a non-branching path until reaching a vertex with two incoming edges. If the terminating vertex is the same for both paths, we call this a bubble. Colors for the bubbles are determined by looking at the color assignment of the corresponding $(k)$-mers. Our implementation in $\ours$ closely follows the pseudocode given by \cite{ICTFM12}.
+%; however, it navigates the graph only in a forward direction to see if both paths converge at the same vertex, while {\sc Cortex} navigates the graph backwards and forwards to find a path of adjacent vertices.
+
+
+{\sc Cortex}'s traversal algorithms were designed for single isolates. For the beef safety experiments, which use metagenomic samples, we implemented a traversal inspired by {\sc Cortex}'s {\it path divergence} algorithm.  In the original {\sc Cortex} path divergence algorithm, bubbles are identified where a user-supplied reference sequence prescribes a walk through a (possibly tangled) sections of the graph in one arm of a bubble while the alternative arm must be branch free.  This branch free requirement on the second arm could be a problem for metagenomic data. Due to the presence of tangle inducing homologous genomes and risk of inferring erroneous, chimeric sequences (which comprise reads from a mix of genomes in the sample), variant detection in metagenomic data is more complex. % FIXME: citation required?
+In the absence of a simple metagenomic-aware traversal algorithm, we implemented a variation of the path divergence algorithm which addresses a simpler problem, primarily for the purpose of measuring performance.  This algorithm uses a reference guided approach and allows us to measure the memory footprint at traversal time as well as the time savings of not traversing the entire dataset.  For this purpose, we focus specifically on the presence of AMR genes (our reference sequence) rather than variants of those genes; in our derived algorithm we ignore sample path segments leading away from and returning to the AMR gene path.  This avoids some of the problems with tangles, incomplete coverage, or read errors.  Thus as we traverse the gene path, we simply count the number of samples in each sample group that color the current edge.   We note that keeping $C$ in row major order allows us to compute this count in constant time as the difference between two $\rank$ queries.  
+
+
+
+
+
+
+
+%% \subsubsection{{\sc\bf Cortex}'s Graph Implementation}
+
+%% Before discussing our experimental results, we give a brief description of the colored de Bruijn graph data structure that is implemented in the current {\sc Cortex} release, which we use as a baseline to measure our performance against in the next section. 
+
+%% {\sc Cortex} implements the colored de Bruijn graph using a hash table. Each entry in the hash table stores a $(k - 1)$-mer (vertex in the graph) as well as the following fields: the $(k-1)$-mer labelling this vertex, {\sf coverage} (an array, indexed by color), {\sf status}, and {\sf edges} (indicating adjacent $(k - 1)$-mers in the graph). 
+
+%% The $(k-1)$-mer part of the hashtable entry is a compile time determined length, composed of multiple 64-bit fields (sufficient to accommodate $k-1$ nucleotides, represented as two bits each).
+%% The coverage information is used for error correction prior to graph construction, e.g., to remove low-coverage $k$-mers assumed to be the result of sequence errors. Later, when processing the graph, the {\sf coverage} array is used to determine if a $k$-mer exists for a given color (coverage of 0 for a given color indicates the $(k-1)$-mer does not exist in that sample). The {\sf status} field is used at runtime to record whether the vertex has been previously visited, and to store other information specific to a given algorithm (e.g. bubble finding). Finally, an {\sf edges} field is stored for each $k$-mer and each color. It is one byte in size, and each of the eight bits indicate which bases precede and follow the $k$-mer for this color. Since there are four possible predecessors and successors, one byte is sufficient.

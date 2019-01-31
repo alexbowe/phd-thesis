@@ -1,0 +1,137 @@
+\section{Do Novo Assembly}
+
+In this section, we'll review tools that are capable of \emph{de novo} assembly, which means they attempt to reconstruct the genome using only a set of reads, as opposed to reference based tools which we'll discuss later.
+
+\subsection{Overlap Layout Consensus}
+
+\subsubsection{DALIGN}
+
+DALIGN offers a solution for efficiently aligning pairs of PacBio RS II reads, which can subsequently be used in an overlap-layout-consensus assembler \cite{myers2014efficient}.
+These reads are much longer than Illumina reads averaging 10 Kbp in length, but have a relatively high error rate at approximately 15\%  \cite{quail2012tale,myers2014efficient}.  
+This is important, as de Bruijn graph based assemblers would not work with such a high error rate.
+%** filter (seed)
+
+DALIGN follows a ``seed and extend'' approach where exact substring matches known as seeds are found and then an error tolerant process is used to extend the matches.
+Reads are divided into 14-mers.
+They show that for PacBio data, over 99\% of high quality alignments between read pairs will have at least three 14-mers conserved.
+They use this principle to build a filter, reducing the number of read pairs that must be aligned through their subsequent, more specific but computationally expensive, approach.
+They additionally improve the specificity of this filter by limiting candidates to those where the conserved $k$-mers would all exist within the same diagonal band in a dynamic programming matrix and threshold matches on the number of bases in conserved $k$-mers. %fixme: do they always use 14-mers? if so, say that
+This latter threshold is to address the issue that three consecutive conserved $k$-mers would share a run of k+2 bases which is not as specific as three non-overlapping conserved $k$-mers.
+%These shared $k$-mers become seeds which are then used in a bounded, iterative deepening, depth first search to extend these matches.
+
+DALIGN sorts these 14-mers to find seed matches using the author's own sort algorithm, carefully tuned for modern caching multicore processors, to find read pairs with shared $k$-mers.
+%** sorting
+%fixme
+%** extending
+
+DALIGN then extends matching seeds by incrementally extending promising paths from the ends of the seeds in a bounded, iterative deepening, depth first search.
+The author describes this process as follows: first, they define the furthest reaching points, which are points on diagonals with the farthest anti-diagonal that have some exact cost (given an assignment of penalties for the different edit operations), \emph{d}.
+They show how the furthest reaching point with  $d+1$ errors can be found using the furthest reaching point with $d$ errors.
+Each set of $d$ furthest reaching points forms a wavefront, and computing successive wavefronts comprising furthest reaching points with additional errors can be seen as a wave, moving diagonally through a dynamic programming matrix.
+This wave is pruned using two principles: a.) Any good alignment path will, in a dynamic programming matrix,  not have an excessive error rate over any reasonably large series of columns (the ``regional alignment quality criterion"), and b.) wavefront points that lag too far behind the leading point are also not likely to be on the optimal path.
+Paths are extended until they either reach the boundary of the D.P. matrix, or all the points would be trimmed by \emph{a}.
+In the latter case, the path is shortened to a \emph{polished point} as the criterion for allowing a path to continue growing is overly permissive.
+These polished points satisfy the criterion that every suffix of the path satisfies a certain alignment quality threshold.  %(fixme polish algorithm)
+
+Because the PacBio reads are much longer than those from the more pervasive Illumina sequencing platform, they can span longer repeats leading to more complete assembly.
+%commentary
+
+\paragraph{Discussion}
+
+One area of potential further exploration is how sequencing depth affects the assembly problem.  There is likely a tradeoff between availability of read data and necessary alignment quality cutoffs.  With higher coverage, higher quality alignments could be required by the algorithm, which would allow more aggressive pruning of the search space during extension.  Conversely, more reads would introduce more seed matches and thus more extension operations to perform even if they can be computed faster.  
+
+One way this approach might be improved upon for the purpose of assembly is to more closely couple the alignment to the assembly.  Given that 85\% of the time is spent extending alignments, speed improvements can either come from a more specific filter, or faster extension itself if all alignments are to be found.  However, perhaps not all alignments need to be found.  In our consideration of the SGA assembler (to follow), transitive edges are removed from its string graph because they don't provide any additional information.  If two reads align, and the seeds indicate a third read might align to the already covered region of the prior two, then the third read would be discarded from the graph even if the alignment posited by the seeds holds after extension.  In this way, some of the alignment work can be pruned.
+
+Additionally, keeping the focus on doing enough work for the end goal of assembly, some alignments may be extended longer than necessary.  One potential risk from pruning the alignment effort to what is absolutely required for a structurally correct assembly is that it will leave fewer aligned reads at each locus in the genome with which to form a consensus base call.  However, a structurally correct assembly with many small indels and substitutions could be refined.  It might be profitable to do so with another sequencing platform such as Illumina.  While the high error rate of the PacBio would be present in the assembly (albeit potentially lower in any cases with sufficient reads overlapping to have some consensus), the difference rate should be less than 16\% for aligning Illumina reads (with a 1\% error rate \cite{quail2012tale}) as opposed to the 30\% pairwise difference rate between PacBio reads.  Beyond the lower difference rate, an Illumina read set probably wouldn't need the same depth of coverage as is used for \emph{de novo} assembly and only needs to be aligned against the assembly which will be an order of magnitude smaller than a read set.  Also, if the correct structure can be assembled from a subset of read alignments, PacBio reads could still be used to refine it.  Again, such a strategy would benefit from the partial consensus having a lower error rate and the smaller target.  The lower error rate of the partial consensus itself might open the door to faster alignments of the remaining reads.
+
+One could imagine an extreme example of building a graph based on seed matches alone and then using a continuum of progressively more specific but more expensive alignment refinements driven by the graph connectivity and simplification.  Though in this scenario, it means the read pairs undergoing the most expensive alignments would have already undergone all of the cheaper alignments, so the reduction it times doing the expensive alignments would need to offset the cost of all the cheaper alignments done when the full alignment was needed in the end.
+
+\subsubsection{SGA}
+
+SGA is an assembler that uses an FM-index to find overlaps between reads instead of the earlier all-pairs dynamic programming based alignment approach  \cite{simpson2010efficient}.  
+
+
+The first stage consists of error correction.  The paper describes a $k$-mer frequency method, which uses an FM-index built on the reads for error correction which allows any $k$ value.% (fixme define this).
+The FM-index is built by merging many smaller FM-indexs, one for each of many blocks of reads.
+For whatever value is chosen, each $k$-mer within a read is checked to ensure there are enough other copies of the $k$-mer in the read set to support that it could be a genomic $k$-mer and not the result of a sequencing error.
+If there is insufficient support, but a base within the $k$-mer can be replaced with a single other choice to produce a new $k$-mer with such support, the replacement is done.
+Otherwise, error correction stops on this read.
+%The other error corrector is based on overlaps with other reads (fixme: elaborate?).
+
+After read errors are corrected, a new FM-index is built on the corrected reads.
+In addition to correction,  duplicatate reads are removed and certain other reads are filtered out at this stage.%fixme: which
+This can occur without rebuilding a third FM-index with a technique that allows  marking certain entries absent.
+
+It then proceeds to find overlaps between reads with the new FM-index.
+%(FIXME: talk about FM-index tricks, like hiding entries and merging FM-indexes). 
+%fixme-clean: It exploits additional features of the FM-Index such as the ability to operate on compressed form of the text where runs of repeated symbols induced by the BWT are represented succinctly and the ability to merge two FM-indexes.  
+The FM-index allows it to find exact matches in time linear to the number of reads (treating read length as bounded by a constant).
+
+Next, it builds an overlap graph and simplifies it.
+Overlapping reads can exist in a transitive relationship with each other, such that two reads that overlap each other both overlap some third read that covers the already overlapped region of the first two.
+In such cases, the third read is clearly redundant to the completely covering sequence already conveyed in the first two.
+Eliminating such redundant reads, %(FIXME-true? as well as any duplicate reads) 
+results in a simplified overlap graph known as a \emph{string graph}.
+SGA also provisions for multiple paths in the string graph that are consequence of heterozygosity (multiple different variants of the same gene, on different copies of a chromosome) and prunes down to one to further simplify the graph.
+It then attempts to find Hamiltonian paths through this simplified graph which are emitted as contigs.
+
+Finally, after contigs are formed, reads are aligned to the contigs and scaffolds are formed.
+This is based on modern sequencing platforms which provide paired end reads.
+Paired end reads are created by sequencing both ends of a larger fragment with an unsequenced DNA region in the middle of a known length.
+If the left read of a read pair aligns to one contig and the right read aligns to another contig, the two contigs can be joined together into a \emph{scaffold} with a run of `N's in between denoting the length of DNA known to be present but of unknown sequence.
+%Their results show that SGA uses less memory, takes more time, and generally produces better results than competing de Bruijn graph based assemblers.
+They indicate that the largest time consumer is the construction of the FM-index itself, though this must only be done once for a read set and allows multiple experimental runs to optimize the parameters.% (min-overlap, + FIXME what else). 
+
+% commentary
+\paragraph{Discussion}
+
+The SGA authors advocate that their approach allows parameters such as the min-overlap (which paralles to $k$-mer size in a de Bruijn graph approach) to be optimized cheaply.  Methods we will discuss later, such as the variable order de Bruijn graph (and assembly algorithms that can use it) as well as predictive methods such as $k$-mer geanie may obviate the advantage for cheap parameter tuning.
+
+This approach uses paired ends after initial assembly for scaffolding.  Given that overlap-layout-consensus assembly allows high error rate reads, an interesting question for further exploration would be if the entire fragments input to a sequencing platform be treated as reads (``fragment-reads'') with the unsequenced middle portion (runs of N's, flanked by left and right ``end-reads'' reads) be treated as a run of a combination of low penalty mismatch and insertion/deletion errors?  Thus the minimum overlap could span the unsequenced gap. Such alignments could be found either by the union of those left end-reads that have concordant right end-read alignments (each of left and right alignments found independently), or a special \emph{shortest-possible-insert} symbol added for index based alignment to reduce the time matching the long run of N's.
+
+Although this assembler uses more CPU time than de Bruijn graph based assemblers, much of it is parallelizable (much like $k$-mer counting and sorting).  The read error correction phase is a perfect fit for the map-reduce computation infrastructure enjoying widespread cloud support.
+
+
+%Critique: Can an OLC type assembler work in terms of whole fragments with variable length runs of N's in the middle (the insert)?
+
+\subsection{de Bruijn Graph Assembly} %fixme: move to de novo section
+
+%\section{Making the most of read data}
+In this section, we'll look at several methods for de Bruijn graph based assemblers.  They contribute to making the most of whatever structure is discernable from a given read length, sometimes focusing on reducing assembly running time over other alternatives giving equivalent results.  
+
+\subsubsection{Paired de Bruijn Graphs}
+
+The paired de Bruijn graph \cite{medvedev2011paired} works to reduce the tangledness of a graph.
+Tangles result when $k$-mers do not fully span repeated regions and thus $k$-mers from reads from disparate loci in the genome are glued together.
+
+They mention that some of these tangles can be resolved during traversal by limiting it to paths that agree with the mate pair, but this has problems.
+One way the tangles can be prevented is to keep track of the reads form which $k$-mers originated, and check that there is some evidence of overlap in the mate pairs before gluing.
+This is true because if both left reads were read from the same locus in the genome, then their right reads (with differences due to variances in exact insert size between a read pair) would also be read from a common locus.
+They check for this property by searching for a short path between $k$-mers drawn from the same  relative position in the right reads within a de Bruijn graph.  
+%todocommentary:paired
+
+\paragraph{Discussion}
+
+Using $k$-mers from the right reads to decide gluing of $k$-mers from the left read is a relatively cheap heuristic to determine whether the potentially glued $k$-mers are read from the same locus.  This ignores all the other bases in the read and whether they support or contradict the notion the left $k$-mers were sequenced from the same locus.  A more specific alignment criteria may detangle graphs even more.  Even if more computationally expensive, it could be applied to only those $k$-mers involved in tangled regions of the graph.
+%Commentary: Are there fast, more robust estimates to whether the left pair have concordant right pair?  What about the other bases in the read? Presumably this method is cheaper/smaller.
+
+\subsubsection{$k$-mer Genie}
+
+$k$-mer genie is a tool for predicting the $k$-mer size parameter leading to optimal assembly from a de Bruijn graph based assembler \cite{chikhi2013informed}.
+
+It notes that too small of a $k$-mer leads to an overly tangled graph, while too large of a $k$-mer leads to a disconnected graph.
+While trying all possible $k$-mer sizes is possible, a single assembly with a given $k$-mer value can take several days, so exhaustive search may be prohibitively expensive in terms of time.
+They describe two main ideas useful for selecting an optimal $k$-mer size: A $k$-mer abundance histogram (explained momentarily) which an expert may use, and the heuristic that the $k$-mer size resulting in the most diverse set of genomic $k$-mers present in reads will lead to optimal assembly.
+A $k$-mer abundance histogram can be generated from $k$-mer counts and indicates for each $k$-mer frequency, how many distinct $k$-mers had that frequency.
+As $k$-mer counting itself is computationally expensive, they give a method for sampling a fraction of all $k$-mers and inferring an abundance histogram from the samples.
+This is asymptotically the same as a full $k$-mer abundance histogram but results in lower constant factors, making it useful in practice.
+They then describe the application of a generative statistical model, whose parameters can be tuned to match the measured abundance histogram.
+These parameters then provide a maximum likelihood  estimate for which $k$-mers in the abundance histogram are genomic $k$-mers vs. the result of sequencing errors.
+The $k$-mer size with the most distinct genomic $k$-mers is believed to lead to the best assembly, because too large of $k$-mers (near the read length) will likely miss some genomic $k$-mers due to incomplete coverage, while too small of a $k$-mer size will lead to different regions of the genome having the same kmer (i.e. $k$-mers smaller than repeats of a given size will represent all occurrences of the repeat as the same $k$-mer).
+
+\paragraph{Discussion}
+
+As mentioned in our section on variable order de Bruijn graphs, some modern assemblers use multiple k-values.  The work here might might be extended to provide a set of promising \emph{k} values for such assemblers.  Though SGA authors argue their approach makes the search for optimal minimum overlap parameter cheap, it may be interesting if this approach can eliminate that search.
+%todocommentary:$k$-mer genie
+%commentary: note SGA's fast min-overlap size change. Interesting if efficient $k$-mer counters can become competitive with sampling used in $k$-mer genie.  Also, if LCP type operation with fm-index can substitue hash type kmer counts.
+

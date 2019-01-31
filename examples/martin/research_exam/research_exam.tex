@@ -1,0 +1,42 @@
+
+\documentclass{llncs} %
+\setcounter{tocdepth}{4}
+\usepackage{geometry}
+\geometry{
+  letterpaper,         % or letterpaper
+  textwidth=6.5in,  % llncs has 12.2cm
+  textheight=9in, % llncs has 19.3cm
+  heightrounded,   % integer number of lines
+  hratio=1:1,      % horizontally centered
+  vratio=2:3,      % not vertically centered
+}
+\linespread{1.6}
+
+\author{Martin D. Muggli}
+\title{A Survey of Genome Sequence Assembly Methods}
+\institute{Computer Science Department, Colorado State University}
+
+\begin{document}
+\maketitle
+
+\input{abstract}
+%\tableofcontents
+
+\input{background.tex}
+
+\input{debruijn}
+
+\input{referencebased}
+
+\input{efficientstructs}
+
+\input{conclusion}
+
+\section{Acknowledgements}
+The author would like to thank Mark Heim and Basir Shariat Razavi for editorial assistance provided in the form of annotating a draft of this document with grammatical and typesetting errors as well as highlighting areas that didn't make sense to them. The ideas expressed in the summaries are obviously those of the authors of the individual works.  The ideas in the background are long standing ones applied in the field of Bioinformatics and major ones cited.  The composition of all text was done by this author.
+
+\bibliographystyle{splncs}
+
+\bibliography{research_exam}
+
+\end{document}

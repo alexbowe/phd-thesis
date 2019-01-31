@@ -1,0 +1,55 @@
+\section{Background}
+
+
+Though scientists have been advancing the lab methods for sequencing genomes for almost four decades, no method can sequence entire chromosomes at once. Genomes still must  be sheared into fragments small enough for available technology, and then an assembly process used to reconstruct the original genome sequence by joining related fragments on their similar substrings \cite{nagarajan2013sequence,staden1980new}.
+This problem is complicated by the fact that genomes contain repeated regions, so two reads that appear to share a similar section may actually have been read from different loci in the genome.
+
+The question naturally arises for how we can find these similar regions between reads, especially in the presence of noise.  
+An alignment is a relationship between two strings and alignments are an effective measure of similarity \cite{needleman1970general}.  While alignments have many applications, we will focus our discussion on alignments as relationships between strings (representing genomic data such as reads or the genome itself).
+It can be expressed as a sequence of edits (insertions, deletions, and substitutions) to convert one string into another.
+Scores are often associated with alignments based on the sum of scores of the edit operations which compose alignments and a good scoring alignment between two strings is used as an indicator that a predominantly matching region of an alignment indicates the regions of each of the strings that were read from the same locus (possibly with some sequencing errors) .
+
+Often the scoring scheme allows penalty free runs of insertions or deletions at one or more ends of a sequence, allowing for the fact that two strings may both cover a shared region of a genome but each string also covering a portion the other did not.
+If opposing ends of the two sequences are allowed not to match in a penalty free manner, it is called semi-global alignment and is the expected case for two reads that overlap the same locus but have different start and end positions.
+If both ends of each sequence are allowed not to match, it is called a local alignment and can be used to detect genomic repeats which are fully resolvable given the read length \cite{smith1981identification}.
+Frequently in this scenario we're interested in what region of each read match each other and how well.
+
+Dynamic programming can be used to find the optimal alignment between two strings under some scoring scheme; however, this is typically formulated as an O($nm$) problem where $m$ and $n$ are the lengths of the strings, and often we're interested in all high scoring alignments between all pairs.  Computing this would entail running dynamic programming O($|R|^2$) times where $R$ is the set of all reads, making it far too time consuming for all but the smallest genomes.
+With relatively error-free strings (either because an error correction procedure has been run, or the strings are small enough to often avoid errors, or the sequencing technology is highly accurate) another alternative to dynamic programming is to use a data structure called a suffix array for predominantly exact matching.
+Conceptually, this is an array consisting of all the suffixes of a string in sorted order \cite{manber1993suffix}.
+Associated with each element in the array is the index in the original string where that element's suffix begins.
+(This can be efficiently implemented in practice. In C, for example, the suffix array can be represented as an array of pointers into the original string, avoiding the redundancy of storing each suffix separately.)
+Any string that matches the prefix of some suffix of the original string of length $n$ can then be found by binary search in time O($\log n$).  
+%fixme: organize the next three paragraphs
+%Another option is to find similar regions based on common exact substrings, which works well for reads with low error rate.
+
+In terms of using these similar regions of reads to reconstruct genomes, there are two paradigms in active use: overlap-layout-consensus based and de Bruijn graph based.
+
+Overlap layout consensus assembly works by finding alignments between pairs of reads, representing those alignments in a graph where reads form nodes and alignments for edges, then finding Hamiltonian tours \cite{myers1995toward}.  
+
+
+De Bruijn graph based assemblers chop reads up into a series of overlapping substrings of length $k$ called $k$-mers \cite{pevzner2001eulerian}.
+$k$-mers are subdivided into a (k-1)-mer prefix and (k-1)-mer suffix.
+each (k-1)-mer becomes a node in a graph, with the original $k$-mer becoming a directed edge connecting them.
+All (k-1)-mers with the same label are then glued together.  This graph is then traversed, finding Eularian tours.  
+
+In either case, repeats in the genome cause read data drawn from disparate loci to have some relation in an assembly graph (either glued together, becoming one node in the de Bruijn graph, or having an alignment edge in the overlap-layout-consensus graph) and introduce cycles.
+While the original genome sequence can dictate one specific walk through either graph, it's typically not possible to determine which of many possible walks in an assembly graph represents the genomic path, so assembly tools emit the non-branching paths which can be inferred to be contiguous regions of the genome.
+These paths spell strings known as \emph{contigs}.
+
+\subsection{FM-Index}
+
+There are various other methods that are frequently employed as components of a full assembly tool implementing one of the two aforementioned assembly paradigms.% (fixme: others? kmer counters, minimizers).
+A clever data structure known as an FM-index is often used as a memory efficient alternative to a suffix array.
+To explain this structure, we will start with a conceptual model.
+The source string has a special out-of-band symbol (eg `\$') appended to it.
+Then all possible rotations of this string are created and stored one on top of each other in a matrix.
+The rows of this matrix are then sorted, so the matrix is similar to the suffix array.
+The string comprising the last column of this matrix is a string known as the Burrows-Wheeler transform (BWT)  \cite{burrows1994block}.
+The BWT has a number of useful properties.
+If the source string has repeats, then the sorted rotations will naturally position all the repeated suffixes sharing the same prefix in a contiguous run of rows.
+All of those same suffixes without their first character will also be in a contiguous run of rows, and since each row is a rotation, all the first characters we considered initially will be found in the last column as a run of the repeated character.
+Runs of repeated characters can be compressed by encoding the character and the length of the run, thus the BWT transform of a string containing repeats can be represented in less memory than the original string.
+Furthermore, the original string can be recovered from the BWT transform.
+Additionally, by adding a couple of auxiliary data structures (Occ: a rank() capable dictionary for the last column \emph{and } C: a trivial select() capable data structure for the equivalent of the first column) to the BWT, an extended data structure known as the FM-index which can allows the BWT to act as self index into the original string \cite{ferragina2000opportunistic}.
+Note that in practice, the full BWT matrix does not need to be constructed to get the BWT of the text; one can simply sort all the suffixes and take the character that proceeds each suffix, which is equivalent to the last column (since they are rotations in the matrix).  
