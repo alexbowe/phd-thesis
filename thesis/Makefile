@@ -1,13 +1,11 @@
-TEMP=temp
-
 all: thesis.pdf
 
 thesis.pdf:
-	latexmk -pdf thesis.tex -outdir=$(TEMP)/; \
-	mv $(TEMP)/thesis.pdf ./
+	latexmk -pdf thesis.tex
 
 clean:
-	rm -rf $(TEMP)
+	latexmk -C;
+	rm -f thesis.pdf
 
 clean-pdfs:
 	rm -f *.pdf
