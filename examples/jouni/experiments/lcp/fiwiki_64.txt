@@ -1,0 +1,169 @@
+Parallel RLCSA builder
+Option '-n' specified. Partial indexes will not be merged.
+Input files: 1
+Output: fiwiki
+Threads: 1
+
+RLCSA_BLOCK_SIZE = 32
+SAMPLE_RATE = 64
+SUPPORT_DISPLAY = 1
+SUPPORT_LOCATE = 1
+WEIGHTED_SAMPLES = 0
+
+Phase 1: Building indexes for input files
+Input: fiwiki (534.732 seconds)
+Indexed 400.007 megabytes in 535.199 seconds (0.747398 MB/s).
+Memory: 5782208 kB
+
+400.007 megabytes indexed in 535.199 seconds (0.747398 MB/s).
+Memory usage:  5782208 kB
+
+PLCP builder
+PLCP: fiwiki.plcp
+Block size: 32
+
+399.987 megabytes in 210.4 seconds (1.90108 MB/s)
+PLCP size: 1.95277 MB
+Runs: 1174346
+
+LCP sampler
+LCP samples: fiwiki.lcp_samples
+Sample rate: 16
+
+Samples: 27079444 (total) / 1154470 (minimal)
+Upper bounds: 27887731 (total) / 1785790 (minimal)
+Sum of minimal samples: 273214626 (total) / 116512455 (strict)
+
+Maximum sample value: 1995040 (21 bits)
+Raw samples: 67.7905 MB
+Encoded samples: 73.6365 MB
+
+399.987 megabytes in 365.751 seconds (1.0936 MB/s)
+Sampled LCP size: 102.485 MB
+
+LCP sampler
+LCP samples: fiwiki.lcp_samples
+Sample rate: 32
+
+Samples: 14066425 (total) / 1154470 (minimal)
+Upper bounds: 14836760 (total) / 1785790 (minimal)
+Sum of minimal samples: 273214626 (total) / 116512455 (strict)
+
+Maximum sample value: 1995024 (21 bits)
+Raw samples: 35.2138 MB
+Encoded samples: 37.0919 MB
+
+399.987 megabytes in 364.223 seconds (1.09819 MB/s)
+Sampled LCP size: 54.2718 MB
+
+LCP sampler
+LCP samples: fiwiki.lcp_samples
+Sample rate: 64
+
+Samples: 7577072 (total) / 1154470 (minimal)
+Upper bounds: 8311275 (total) / 1785790 (minimal)
+Sum of minimal samples: 273214626 (total) / 116512455 (strict)
+
+Maximum sample value: 1994992 (21 bits)
+Raw samples: 18.9684 MB
+Encoded samples: 18.9233 MB
+
+399.987 megabytes in 362.435 seconds (1.10361 MB/s)
+Sampled LCP size: 29.2362 MB
+
+RLCSA LCP test
+Base name: fiwiki
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps plcp locate 
+Random seed: 3735928559
+
+Sequences:       20433
+Original size:   399.987 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           5.63343 MB
+  BWT only:      4.41443 MB
+SA samples:      46.6678 MB
+Total size:      52.3012 MB
+
+PLCP:            1.95277 MB
+
+Using PLCP:
+1000000 queries in 23.0068 seconds (43465.5 / s)
+31476753 steps (31.4768 / query)
+
+Locate:
+1000000 queries in 22.7881 seconds (43882.6 / s)
+31476753 steps (31.4768 / query)
+
+RLCSA LCP test
+Base name: fiwiki
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       20433
+Original size:   399.987 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           5.63343 MB
+  BWT only:      4.41443 MB
+SA samples:      46.6678 MB
+Total size:      52.3012 MB
+
+Sampled LCP:     102.485 MB
+
+Using Sampled LCP:
+1000000 queries in 6.72683 seconds (148658 / s)
+7454373 steps (7.45437 / query)
+
+RLCSA LCP test
+Base name: fiwiki
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       20433
+Original size:   399.987 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           5.63343 MB
+  BWT only:      4.41443 MB
+SA samples:      46.6678 MB
+Total size:      52.3012 MB
+
+Sampled LCP:     54.2718 MB
+
+Using Sampled LCP:
+1000000 queries in 12.3936 seconds (80686.9 / s)
+15349909 steps (15.3499 / query)
+
+RLCSA LCP test
+Base name: fiwiki
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       20433
+Original size:   399.987 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           5.63343 MB
+  BWT only:      4.41443 MB
+SA samples:      46.6678 MB
+Total size:      52.3012 MB
+
+Sampled LCP:     29.2362 MB
+
+Using Sampled LCP:
+1000000 queries in 23.291 seconds (42935 / s)
+31082834 steps (31.0828 / query)
+

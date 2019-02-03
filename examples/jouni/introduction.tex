@@ -1,0 +1,111 @@
+\chapter{Introduction}
+
+\section{Motivation}
+
+When one thinks of indexes, the type of index found in books is often the first one to come into mind.
+These \emph{inverted indexes} are basically a list of words,
+combined with a list of occurrences for each word. Such indexes are space-efficient, and allow fast word and phrase queries on texts with well-defined
+word boundaries, such as many natural languages.
+
+Yet many types of texts, such as DNA sequences, programming languages, and
+some natural languages such as Chinese, lack clear or meaningful word
+boundaries. Even in some natural languages, such as Finnish or German, many of
+the clearly separated words are actually concatenations of the words one might
+want to search for.
+
+\emph{Full-text indexes} overcome many of the limitations of inverted indexes.
+They allow efficient queries for any substring of the text, making them
+useful not only for texts without good word boundaries, but for natural
+language texts as well. The most common full-text indexes include the {\em
+suffix tree} and the more limited \emph{suffix array}. The \emph{$q$\nobreakdash-gram index}, basically an inverted index for all substrings of length $q$ occurring in the text, is another common full-text index.
+
+The main drawback of full-text indexes is their size. A minimal
+implementation of the suffix array requires approximately $n \log n$ bits for a
+text of length $n$.\footnote{In this thesis, all logarithms are base\nobreakdash-$2$, unless otherwise specified.} Suffix trees are several times larger. While this is
+acceptable for small texts, the index can become larger than the available
+memory in many potential applications. For example, the suffix tree for a
+human genome requires tens of gigabytes, making it much larger than the main
+memory in current desktop computers.
+
+One can try to use full-text indexes optimized for secondary memory
+\cite{Kaerkkaeinen2003} to overcome these limitations. However, these
+indexes can be slow in practice, as hard disks only allow about $10^{2}$
+random reads per second. Even the new solid-state drives with $10^{4}$ to $10^{5}$
+reads per second can be too slow for complex operations using these indexes.
+
+Another solution is to use \emph{compressed full-text indexes} \cite{Navarro2007} based on the \emph{Burrows-Wheeler transform}, such as the \emph{compressed suffix array} \cite{Grossi2005} and the \emph{FM-index} \cite{Ferragina2005a}.\footnote{In the rest of the thesis, compressed full-text indexes based on the Burrows-Wheeler transform will be called compressed suffix arrays.} Such indexes are often \emph{self-indexes} that do not require the original text to operate. They support a number of queries, with the most common being the ones required for suffix array-like functionality:
+\begin{itemize}
+
+\item \emph{counting} the number of occurrences of a pattern in the text,
+
+\item \emph{locating} the occurrences, and
+
+\item \emph{extracting} an arbitrary substring.
+
+\end{itemize}
+
+In addition to exact pattern matching, compressed suffix arrays support \emph{approximate matching}, allowing a limited number of mismatching characters, insertions, and deletions between the pattern and the text. Such queries are especially important in \emph{read alignment} that has been the most successful application of compressed suffix arrays in bioinformatics \cite{Lam2008,Langmead2009,Li2009,Li2009a,Li2010,Liu2011}. Sequencing machines produce short DNA fragments that must be mapped to their most likely positions in the reference genome. Allowing mismatches and other errors is vital, as there can be sequencing errors, and the sequenced genome will be somewhat different from the reference.
+
+The size of a compressed index is often given relative to the \emph{empirical entropy} of the text.\footnote{Empirical entropy states roughly that, given $k$ consecutive characters, how much uncertainty there is on the average over the next character in the sequence.} For many common types of compressible texts, the size of these indexes is close to the size of the text compressed using common compressors such as \emph{gzip} and \emph{bzip2}.
+
+However, this is not the case with \emph{highly repetitive collections}. Informally, a collection of texts is highly repetitive, if most of the texts are highly similar to some other text in the collection. Examples of such collections include collections of individual genomes, web archives, and version control systems storing different versions of the same documents. Highly repetitive collections usually have large amounts of redundancy that cannot be captured by any fixed-order statistical model.
+
+For such collections, empirical entropy is not a good measure of
+compressibility. For example, for a text $T$ of length $n$ with $H$ bits of
+entropy per character, the total entropy of a collection of $r$ identical
+copies of $T$ is approximately $rnH$ bits. A compressed index for such
+collection would also be roughly $rnH$ bits in size, making it $r$ times
+larger than the index for a single text.
+
+However, common compression methods based on \emph{Lempel-Ziv parsing} or the
+Burrows-Wheeler transform can utilize the large-scale redundancy in
+such collections. A good Lempel-Ziv-based compressor would compress the collection
+basically to the same size as a single text, while a Burrows-Wheeler-based
+compressor would make the collection at most $\log r$ times larger (see Lemma~\ref{lemma:runs for copies} and the analysis at the end of Section~\ref{sect:compression}).
+
+As the collections can be very large, there is a real need for indexes
+capable of compressing their large-scale redundancy. We also need new ways to
+measure the compressibility of such collections, and to analyze the size of the
+new indexes. Furthermore, as the compressed index can be much smaller than
+the original collection, it would be preferable to have fast construction algorithms,
+whose memory usage depends on the compressed size of the text instead of the original size, so that large collections can be indexed in practice.
+
+
+\section{Original papers and contributions}
+
+\paragraph{Paper~I.}
+
+We described run-length encoded variants of several compressed indexes. Compared to earlier run-length encoded proposals \cite{Sadakane2003,Maekinen2005}, these indexes offer much better compression for highly repetitive collections. This is because the earlier proposals implicitly assumed that the compressed text requires at least $n$ bits of space for a text of length $n$, and hence using $o(n)$ bits for the additional structures would not increase the total size significantly.
+
+Instead of empirical entropy, we used the number of equal letter runs in the Burrows-Wheeler transform of the collection as our complexity metric. We analyzed how various edit operations affect the number of runs, explaining the superior performance of our indexes with highly repetitive collections. Experiments on indexing the genomes of 36 strains of \emph{Saccharomyces paradoxus} confirmed the theoretical results.
+
+My contributions to the paper include one of the new indexes, which proved to be the most efficient of them in practice. I also did most of the analysis on the effect of edit operations on the number of runs, and performed most of the experiments.
+
+\paragraph{Paper~II.}
+
+I described a fast algorithm for merging the Burrows-Wheeler transforms of two text collections, and used the merging algorithm as a basis for a space-efficient construction algorithm for compressed suffix arrays. The earlier construction algorithms could not handle more than a few gigabytes in practice, as they either were slow, or used much more memory than the size of the data. By using a parallel implementation of the merging algorithm, I was able to construct compressed suffix arrays for data sets of tens of gigabytes in size.
+
+\paragraph{Paper~III.}
+
+The \emph{longest common prefix array} is one of the main building blocks in several \emph{compressed suffix tree} proposals \cite{Sadakane2007,Fischer2009a,Maekinen2010,Ohlebusch2009,Ohlebusch2010}. In this paper, I adapted an earlier longest common prefix array construction algorithm \cite{Kaerkkaeinen2009} to use the compressed suffix array instead of the text and its suffix array. The resulting algorithm is the most space-efficient one known, but also slower than the alternatives. I also proposed a new compressed representation of the longest common prefix array that is faster to use than the alternatives, but still achieves similar compression in many cases.
+
+\paragraph{Paper~IV.}
+
+In this paper, we generalized the compressed suffix arrays to index an automaton-based representation of finite languages. While the index can be exponentially larger than the automaton in the worst case, we showed that there are important cases where the growth remains minimal. An example of such cases is a finite automaton representing the genetic variation within a population, often constructed from a reference genome and a set of known variants.
+
+My contributions to the paper include the generalized index, its construction algorithm, the analysis of the effect of mutation rate on the size of the index, and most of the experiments.
+
+
+\section{Outline}
+
+The rest of the thesis is organized as follows. Chapter~\ref{chapter:background} provides basic definitions and background to the thesis. Chapter~\ref{chapter:csa} is a short survey on the most common types of compressed suffix arrays, discussing the basic techniques used and the most important results obtained with them.
+
+Chapter~\ref{chapter:rlcsa} describes the run-length compressed suffix array, a compressed suffix array intended for highly repetitive collections. The discussion is based on Papers~I and II. There is also a short description of other compressed indexes for highly repetitive collections at the end of the chapter.
+
+Chapter~\ref{chapter:construction} discusses the space-efficient compressed suffix array construction algorithm from Paper~II. As an extension to the paper, we introduce a new variant of the algorithm, based on sorting the suffixes of the new texts by their lexicographic ranks among the suffixes of already indexed texts.
+
+In Chapter~\ref{chapter:lcp}, we discuss the space-efficient construction algorithm and the sampling technique for the longest common prefix array from Paper~III. This chapter does not significantly extend the results in the original paper.
+
+Chapter~\ref{chapter:gcsa} describes the generalization of compressed suffix arrays for indexing finite automata from Paper~IV. The variant of the index discussed here is both simpler and faster than in the original paper. Included is the analysis of the effect of mutation rate on the index size, which previously appeared only in the arXiv version of the paper \cite{Siren2011a}.
+
+The thesis ends with conclusions and future directions in Chapter~\ref{chapter:conclusions}.

@@ -1,0 +1,414 @@
+\documentclass[11pt,twoside,onecolumn,final,notitlepage]{article}
+%\documentstyle[twoside]{article}
+%\usepackage{times}
+\usepackage[latin1]{inputenc}
+
+\pdfpageheight=250mm
+\pdfpagewidth=176mm
+
+%\nofiles
+%
+\def\loppu{$^{\rm\scriptsize\dag}$}
+\def\aloitus{\topsep0pt\partopsep0pt\itemsep0pt\parsep\parskip
+\rightmargin0pt\listparindent0pt\itemindent0pt
+%\leftmargin23mm\labelsep3mm\labelwidth20mm
+\leftmargin14mm\labelsep1mm\labelwidth13mm
+\def\makelabel##1{##1\hfill}}
+%
+\makeatletter
+\def\ps@headings{\let\@mkboth\@gobbletwo
+ \def\@oddfoot{} \def\@evenfoot{}
+ \def\@oddhead{\hbox{}\hfil\hbox to 0pt{\bf\enspace\scriptsize\thepage\hss}}
+% \def\@evenhead{\hbox to 0pt{\hss\bf\scriptsize\thepage\enspace}\hfil}
+ \def\@evenhead{{\bf\scriptsize\thepage\enspace}\hfil}
+}
+\def\ps@fpage{\let\@mkboth\@gobbletwo
+ \def\@oddhead{} \def\@evenhead{}
+% \def\@oddfoot{\hbox to \textwidth{\hbox to0pt{\rule[18bp]{30mm}{.3pt}\hss}
+%   $^{\rm\scriptsize\dag}$\enspace \scriptsize merkittyj\"a julkaisuja ei =
+%saatavissa
+%        \hfil$^{\rm\scriptsize\dag}$\enspace \scriptsize indicates report =
+%not available}}
+ \let\@evenfoot\@oddfoot
+}
+\makeatother
+%
+%%%\pagestyle{headings} (M. Koivisto, Dec 19, 2003)
+\pagestyle{empty} %%% (M. Koivisto, Dec 19, 2003)
+%
+% A4-koko:
+%\oddsidemargin0pt \evensidemargin-17pt
+%\textwidth6.5in \textheight10in
+%\headheight 18bp \topmargin-52bp \headsep 10bp
+%\footskip 40bp \footheight 28bp
+%\parindent0pt \parskip 7.2pt plus 3.8pt minus 1.2pt
+% B5-koko:
+%\oddsidemargin0pt \evensidemargin-17pt
+%\textwidth 140mm \textheight22cm
+%\textwidth 125mm
+%\textheight 195mm
+%\headheight 18bp \topmargin-52bp \headsep 10bp
+%\footskip 30bp % \footheight 15bp
+%\parindent0pt \parskip 5pt plus 2pt minus 1pt
+%
+
+
+\setlength{\oddsidemargin}{27mm}
+\addtolength{\oddsidemargin}{-1in}
+\setlength{\evensidemargin}{24mm}
+\addtolength{\evensidemargin}{-1in}
+\setlength{\topmargin}{21mm}
+\addtolength{\topmargin}{-1in}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{13.6pt}
+\setlength{\footskip}{22pt}
+\setlength{\textwidth}{125mm}
+\setlength{\textheight}{195mm}
+\parindent0pt \parskip 5pt plus 2pt minus 1pt
+
+\begin{document}
+%
+\pagebreak
+\thispagestyle{fpage}
+
+\scriptsize
+\tabcolsep0pt
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}l}
+TIETOJENK\"ASITTELYTIETEEN LAITOS & DEPARTMENT OF COMPUTER SCIENCE\\
+PL 68 (Gustaf H\"allstr\"omin katu 2 b) & P.O. Box 68 (Gustaf H\"allstr\"omin katu 2 b)\\
+00014 Helsingin yliopisto & FIN-00014 University of Helsinki, {\sc Finland}
+\\
+\strut & \\
+JULKAISUSARJA {\bf A} & SERIES OF PUBLICATIONS {\bf A}
+\end{tabular*}
+%\vskip18bp
+\vskip6bp
+\underline{Reports may be ordered from}: Kumpula Science Library,
+P.O. Box 64, FIN-00014 University
+of Helsinki, {\sc Finland}.
+
+\begin{list}{}{\aloitus}
+%\item[A-1972-1] J. Sajaniemi: Verkkoteoreettiset menetelm\"at
+%algoritmien analyysiss\"a. 77 s. (Laudaturtutkielma.)
+%\item[A-1972-2] S. Linnainmaa: Py\"oristysvirheitten
+%tilastollisen arvioinnin perusteita. 78 s. (Lisensiaattity\"o.)
+%\item[A-1972-3] Y. Sepp\"al\"a: New methods for solving
+%chance-constrained programming problems. 12~pp. +~app. (Ph.D.\ thesis.)
+%\item[A-1972-4] T. Alanko (toim.): Helsingin yliopiston
+%tietojenk\"asittelyopin laitos 1967-1972. 30~s.
+%\item[A-1973-1] J. Sajaniemi: Rinnakkaismenetelmien testausv\"aline
+%Moni-MIX N009. 14~+~8~s.
+%\item[A-1973-2] H. Erki\"o: An extension of Algol with=20
+%variable precision floating-point algorithm. 20~pp.
+%\item[A-1974-1] O. Maanavilja: Tietorakenteet ja talletusrakenteet
+%tiedonhallintaj\"arjestelmien yhteydess\"a. 82~s. (Laudaturtutkielma.)
+%\item[A-1974-2] J. M\"akel\"a: Optinen luku. 56~+~18~s.
+%(Laudaturtutkielma.)
+%\item[A-1974-3] T. Orpana: CHAPS-algoritmin tarkkuuteen ja
+%tehokkuuteen vaikuttavista tekij\"oist\"a. 124~s.=20
+%(Laudaturtutkielma.)
+%\item[A-1975-1] S. Linnainmaa: Statistical estimation
+%methods of rounding errors in floating-point computations.
+%29~pp.=20
+%\item[A-1975-2] S. Linnainmaa: A set of Algol procedures
+%for analyzing the numerical stability of floating-point
+%computations. 39~pp.
+%\item[A-1975-3] M. Ketonen (toim.): Tietojenk\"asittelyopin
+%kurssien sis\"alt\"o lukuvuotena 1974-1975. 61~s.=20
+%\item[A-1977-1] H. Erki\"o, J. Sajaniemi \& A. Salava:
+%An implementation of Pascal on the Burroughs B6700. 40~pp.
+%\item[A-1977-2] K.-J. R\"aih\"a, J. Sajaniemi \& E. Ukkonen:
+%Ohjelmointikielten m\"a\"arittelyn ja toteutuksen englantilais-
+%suomalainen sanasto -- English-Finnish vocabulary of the definition
+%and implementation of programming languages. 61~pp.
+%\item[A-1977-3] E. Soisalon-Soininen: Characterization of LL(k)
+%languages by restricted LR(k) grammars. 61~pp. (Ph.D.\ thesis.)
+%\item[A-1977-4] K.-J. R\"aih\"a: On attribute grammars and
+%their use in a compiler writing system. 90~pp. (Ph.D.\ thesis.)
+%\item[A-1977-5] M. Tienari (toim.): Helsingin yliopiston
+%tietojenk\"asittelyopin laitos 1972-1977, esittelytilaisuus
+%syyskuussa 1977. 31~s.
+%\item[A-1977-6] J. Sajaniemi: Describing transfer of control
+%with the help of definitional interpreters. 54~pp.
+%\item[A-1977-7] E. Ukkonen: On the effect of rounding errors
+%on the flow of control in numerical processes. 60~pp. (Ph.D.\ thesis.)
+%\item[A-1977-8] M. Tienari (ed.): The Department of Computer=20
+%Science at the University of Helsinki, activities 1972-1977. 31~pp.
+%\item[A-1977-9] K.-J. R\"aih\"a: An O(log n) insertion algorithm
+%for one-sided height-balanced binary search trees. 13~pp.
+%\item[A-1978-1] H. Erki\"o \& E. Peltola: Algorithms
+%for experimental analysis of some internal sorting methods.
+%44~+~35~pp.
+%\item[A-1978-2] K.-J. R\"aih\"a, M. Saarinen, E. Soisalon-Soininen
+%\& M. Tienari: The compiler writing system HLP (Helsinki
+%Language Processor). 113~pp.=20
+%\item[A-1978-3] S. Linnainmaa, H. Lokki, E. Ukkonen \& I. Verkamo:
+%Algol Elastic, a programming language for analyzing numerical
+%stability and its implementation.  48~pp.
+%\item[A-1978-4] R.-J. Back: On the correctness of refinement steps
+%in program development. 109~pp. (Ph.D.\ thesis.)
+%\item[A-1979-1] H. Erki\"o: On heapsort and its dependence on
+%input data. 26~pp. (Ph.Lic.~thesis.)
+%\item[A-1980-1] V-E. J. Virkkunen: A unified approach to
+%floating-point rounding with applications to mul\-tiple-\-pre\-cision
+%summation. 66~pp. (Ph.D.\ thesis.)
+%\item[A-1980-2\loppu] K. Koskimies: A study on the programming
+%language Euclid. 68~pp. (Ph.Lic.~thesis.)
+%\item[A-1980-3] H. Erki\"o: Using special instructions to speed
+%certain internal sort algorithms. 25~pp.
+%\item[A-1980-4] H. Erki\"o: Studies on the efficiency of certain
+%internal sort algorithms. 25~pp. (Ph.D.\ thesis.)
+%\item[A-1981-1] S. Sippu: Syntax error handling in compilers. 91~+~18~pp.
+%(Ph.D.\ thesis.)
+%\item[A-1981-2] O. Peitsalo \& J. Tarhio (toim./eds.):
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1980 -- Research
+%reports at the Department of Computer Science 1980. 28~pp.
+%\item[A-1981-3] J. Sajaniemi: A proposal for expressing coroutines
+%and its description by three models. 79~+~30~pp.
+%\item[A-1981-4] K.-J. R\"aih\"a: A space management technique for
+%multi-pass attribute evaluators. 61~pp. (Ph.D.\ thesis.)
+%\item[A-1982-1] O. Peitsalo \& J. Tarhio (toim./eds.):
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1981 -- Research
+%reports at the Department of Computer Science 1981. 22~pp.
+%\item[A-1982-2\loppu] K. Koskimies: An experience on language
+%implementation using attribute grammars. 50~pp.
+%\item[A-1982-3] S. Linnainmaa: Fortran implementation of the error
+%linearization method for automatic error analysis. 64~pp.
+%\item[A-1982-4] J. Tarhio: Attribute evaluation during LR parsing.
+%58~pp. (Ph.Lic.~thesis.)
+%\item[A-1982-5] I. J. Haikala \& P. H. Kutvonen: Design and
+%implementation of the Mopo minicomputer system. 43~pp.
+%\item[A-1983-1] K.-J. R\"aih\"a, M. Saarinen, M.
+%Sarjakoski, S. Sippu, E. Soisalon-Soininen \& M.=20
+%Tienari:  Revised report on the compiler
+%writing system HLP78. 132~pp.
+%\item[A-1983-2] O. Peitsalo \& J. Tarhio (toim./eds.):
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1982 -- Research
+%reports at the Department of Computer Science. 40~pp.
+%\item[A-1983-3] T. O. Alanko: Empirical studies of program behaviour
+%in virtual memory. 60~pp. (Ph.D.\ thesis.)
+%\item[A-1983-4] K. Koskimies: Extensions of one-pass attribute grammars.
+%109~pp. (Ph.D.\ thesis.)
+%\item[A-1984-1\loppu] O. Peitsalo \& J. Tarhio (toim./eds.),
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1983 -- Research
+%reports at the Department of Computer Science. 40~pp.
+%\item[A-1985-1] H. Mannila: Instance complexity for sorting and
+%NP-complete problems. 81~pp. (Ph.D.\ thesis.)
+%\item[A-1986-1] O.~Peitsalo \& J.~Tarhio~(toim./eds.),
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1984--85 -- Research
+%reports at the Department of Computer Science 1984--85. 53~pp.
+%\item[A-1986-2] I.~J.~Haikala: Program behaviour in memory hierarchies.
+%90~pp. (Ph.D.\ thesis).
+%\item[A-1986-3] P.~Orponen: The structure of polynomial complexity cores.
+%80~pp. (Ph.D.\ thesis).
+%\item[A-1986-4] K.~Koskimies, O.~Nurmi, J.~Paakki \& S.~Sippu:
+%The design of the language processor generator HLP84. 56~pp.
+%\item[A-1987-1] P.~Kilpel\"ainen, H.~Mannila, J.~Riivari
+%\& E.~Ukkonen: Helsinki Prolog language -- reference manual. 51~pp.
+%\item[A-1987-2] P.~Kilpel\"ainen, H.~Mannila, J.~Riivari, A.~Suorsa,
+%M.~Tiainen \& E.~Ukkonen: Helsinki Prolog System (HPS) -- user guide.
+%43~pp.
+%\item[A-1987-3] P.~Kilpel\"ainen, H.~Mannila, J.~Riivari, A.~Suorsa,
+%M.~Tiainen \& E.~Ukkonen: Helsinki Prolog System (HPS) -- system
+%overview. 48~pp.
+%\item[A-1988-1] A.~I.~Verkamo: Sorting in hierarchical memories. 58~pp.
+%(Ph.D.\ thesis).
+%\item[A-1988-2] K.~Koskimies, T.~Elomaa, T.~Lehtonen \& J.~Paakki:
+%TOOLS/HLP84 report and user manual. 91~+~14~pp. (Rev.~in 1989).
+%\item[A-1988-3] N.~Holsti: Incremental Matlab -- a program with an
+%incremental user interface. 63~pp.
+%\item[A-1988-4] H.~Mannila \& E.~Ukkonen: Time parameter and
+%arbitrary deunions in the set union problem. 16~pp.
+%\item[A-1988-5] M.~Tienari, K.~Aaltonen, J.~Eloranta, J.~Keskinen,
+%K.~Lehtinen, L.~Summanen, K.~Tarpila \& I.~Turunen:  PROTAN88 --
+%a software tool for verifying communication protocols specified with
+%an extended state transition model. 65~pp.
+%\item[A-1988-6] H.~Tirri~(ed.): Interoperability of heterogeneous
+%information systems: interim report of the COST 11$^{\rm ter}$
+%project. 142~pp.
+%\item[A-1988-7] O.~Peitsalo \& J.~Tarhio~(toim./eds.):
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1986--87 -- Research
+%reports at the Department of Computer Science 1986--87. 55~pp.
+%\item[A-1988-8] J.~Paakki: Generating one-pass semantic analysis for
+%a compiler. 122~pp. (Ph.Lic.~thesis).
+%\item[A-1988-9] M.~Sassa: Incremental attribute evaluation and parsing
+%based on ECLR-attributed grammars. 34~pp.
+%\item[A-1988-10] K.~Lehtinen: Experiences in using Estelle in X.411/P1
+%protocol specification. 37~+~67~pp.
+%\item[A-1988-11] J.~Tarhio: Attribute grammars for one-pass compilation.
+%68~pp. (Ph.D.\ thesis).
+%\item[A-1988-12] K.~Koskimies \& M.~Meriste: Experiences with
+%class-based implementation of programming languages. 30~pp.
+%\item[A-1988-13] E.~Hartikainen: Specification and design of
+%distributed programs that use broadcasting.
+%90~pp. (Ph.Lic.~thesis).
+%\item[A-1989-1] G.~Grahne: The problem of incomplete information in
+%relational databases. 156~+~3~pp. (Ph.D.\ thesis).
+%\item[A-1989-2] H.~Tirri~(ed.): Interoperability of heterogeneous
+%information systems: final report of the COST 11$^{\rm ter}$ project.
+%110~pp.
+%\item[A-1989-3] J.~Tarhio \& M.~Tienari~(eds.): Computer Science at
+%the University of Helsinki. 57~pp.
+%\item[A-1989-4] T.~Alanko, J.~Keskinen, P.~Kutvonen, M.~Mutka,
+%\& M.~Tienari: The AHTO project: software technology for open
+%distributed processing. 53~+~3~pp.
+%\item[A-1989-5] N.~Holsti: Script editing for recovery and reversal
+%in textual user interfaces. 126~pp.
+%(Ph.D.\ thesis).
+%\item[A-1989-6] K.E.E.~Raatikainen: Modelling and analysis techniques
+%for capacity planning. 162~+~52~pp. (Ph.D.\ thesis).
+%\item[A-1990-1] K.~Pohjonen \& J.~Tarhio~(toim./eds.):
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja 1988--89 -- Research
+%reports at the Department of Computer Science 1988--89. 27~pp.
+%\item[A-1990-2] J.~Kuittinen, O.~Nurmi, S.~Sippu \& E.
+%Soisalon-Soininen: Efficient implementation of loops in bottom-up
+%evaluation of logic queries. 14~pp.
+%\item[A-1990-3] J.~Tarhio \& E.~Ukkonen: Approximate Boyer-Moore string
+%matching. 27~pp.
+%\item[A-1990-4] E.~Ukkonen \& D.~Wood: Approximate string matching with
+%suffix automata. 14~pp.
+%\item[A-1990-5] T.~Kerola: Qsolver -- a modular environment for solving
+%queueing network models. 15~pp.
+%\item[A-1990-6] Ker-I Ko, P.~Orponen, U.~Sch\"oning \& O.~Watanabe:
+%Instance complexity. 24~pp.
+%\item[A-1991-1] J.~Paakki: Paradigms for attribute-grammar-based
+%language implementation. 71~+~146~pp. (Ph.D.\ thesis).
+%\item[A-1991-2] O.~Nurmi \& E.~Soisalon-Soininen: Uncoupling updating
+%and rebalancing in chromatic binary search trees. 12~pp.
+%\item[A-1991-3] T.~Elomaa \& J.~Kivinen: Learning decision trees from
+%noisy examples. 15~pp.
+%\item[A-1991-4] P.~Kilpel\"ainen \& H.~Mannila: Ordered and unordered
+%tree inclusion. 22~pp.
+%\item[A-1991-5] A.~Valmari: Compositional state space generation.
+%30~pp.
+%\item[A-1991-6] J.~Tarhio \& M.~Tienari~(eds.): Computer Science at the
+%University of Helsinki 1991. 66~pp.
+%\item[A-1991-7] P.~Jokinen, J.~Tarhio \& E.~Ukkonen: A comparison
+%of approximate string matching algorithms. 23~pp.
+%\item[A-1992-1] J.~Kivinen: Problems in computational learning
+%theory. 27~+~64~pp. (Ph.D.\ thesis).
+%\item[A-1992-2] K.~Pohjonen \& J.~Tarhio~(toim./eds.):
+%Tietojenk\"asittelyopin laitoksen tutkimusraportteja
+%1990--91 -- Research reports at the
+%Department of Computer Science 1990--91. 35~pp.
+%\item[A-1992-3] Th.~Eiter, P.~Kilpel\"ainen \& H.~Mannila:
+%Recognizing renamable generalized propositional Horn formulas
+%is NP-complete. 11~pp.
+%\item[A-1992-4] A.~Valmari: Alleviating state explosion during
+%verification of behavioural equivalence. 57~pp.
+%\item[A-1992-5] P.~Flor\'een: Computational complexity problems
+%in neural associative memories. 128~+~8~pp. (Ph.D.\ thesis).
+%\item[A-1992-6] P.~Kilpel\"ainen: Tree matching problems with
+%applications to structured text databases.
+%110~pp. (Ph.D.\ thesis).
+%\item[A-1993-1] E.~Ukkonen: On-line construction of suffix-trees.
+%15~pp.
+%\item[A-1993-2] Alois~P.~Heinz: Efficient implementation of a
+%neural net $\alpha$-$\beta$-evaluator. 13~pp.
+%\item[A-1994-1] J.~Eloranta: Minimal transition systems with
+%respect to divergence preserving behavioural equivalences.
+%162~pp. (Ph.D.\ thesis).
+%\item[A-1994-2] K.~Pohjonen~(toim./ed.): Tietojenk\"asittelyopin
+%laitoksen julkaisut 1992--93 -- Publications from the
+%Department of Computer Science 1992--93. 58~s./pp.
+%\item[A-1994-3] T.~Kujala \& M.~Tienari~(eds.): Computer Science at the
+%University of Helsinki 1993. 95~pp.
+%\item[A-1994-4] P.~Flor\'een \& P.~Orponen: Complexity issues in
+%discrete Hopfield networks. 54~pp.
+%\item[A-1995-1] P.~Myllym\"aki: Mapping Bayesian networks to
+%stochastic neural networks: a foundation for hybrid Bayesian-neural
+%systems. 93~pp. (Ph.D.\ thesis).
+%\item[A-1996-1] R.~Kaivola: Equivalences, preorders and compositional
+%verification for linear time temporal logic and concurrent systems.
+%185~pp. (Ph.D.\ thesis).
+%\item[A-1996-2] T.~Elomaa: Tools and techniques for decision
+%tree learning. 140~pp. (Ph.D.\ thesis).
+%\item[A-1996-3] J.~Tarhio \& M.~Tienari~(eds.): Computer Science
+%at the University of Helsinki 1996. 89~pp.
+%\item[A-1996-4] H.~Ahonen: Generating grammars for structured documents using grammatical inference methods. 107~pp (Ph.D.\thesis).
+%\item[A-1996-5] H.~Toivonen: Discovery of frequent patterns in large data collections. 116~pp. (Ph.D.\ thesis).
+%\item[A-1997-1] H. Tirri: Plausible prediction by Bayesian inference. 158 pp. (Ph.D.\ thesis).
+%\item[A-1997-2] G. Lind\'en: Structured document transformations. 122~pp. (Ph.D.\ thesis).
+%\item[A-1997-3] M. Nyk\"anen: Querying string databases with modal logic. 150~pp. (Ph.D.\ thesis).
+%\item[A-1997-4] E. Sutinen, J. Tarhio, S.-P. Lahtinen, A.-P. Tuovinen, E. Rautama \& V. Meisalo: Eliot -- an algorithm animation environment. 49~pp.
+%\item[A-1998-1] G. Lind\'en \& M. Tienari (eds.): Computer Science at the University of Helsinki 1998. 112~pp.
+%\item[A-1998-2] L. Kutvonen: Trading services in open distributed environments. 231 + 6 pp. (Ph.D.\ thesis).
+%\item[A-1998-3] E. Sutinen: Approximate pattern matching with the q-gram family. 116 pp. (Ph.D.\ thesis).
+%\item[A-1999-1] M. Klemettinen: A knowledge discovery methodology for telecommunication network alarm databases. 137 pp. (Ph.D.\ thesis).
+%\item[A-1999-2] J. Puustj\"arvi: Transactional workflows. 104 pp. (Ph.D.\ thesis).
+%\item[A-1999-3] G. Lind\'en \& E. Ukkonen (eds.): Department of Computer Science: annual report 1998. 55~pp.
+%\item[A-1999-4] J. K\"arkk\"ainen: Repetition-based text indexes. 106 pp. (Ph.D.\ thesis).
+%\item[A-2000-1] P. Moen: Attribute, event sequence, and event type similarity notions for data mining. 190+9 pp. (Ph.D. thesis).
+%\item[A-2000-2] B. Heikkinen: Generalization of document structures and document assembly. 179 pp. (Ph.D. thesis).
+%\item[A-2000-3] P. K\"ahkipuro: Performance modeling framework for CORBA based distributed systems. 151+15 pp. (Ph.D. thesis).
+%\item[A-2000-4] K. Lemstr\"om: String matching techniques for music retrieval. 56+56 pp. (Ph.D.Thesis).
+%\item[A-2000-5] T. Karvi: Partially defined Lotos specifications and their refinement relations. 157 pp. (Ph.D.Thesis).
+%\item[A-2001-1] J.~Rousu: Efficient range partitioning in classification learning. 68+74 pp. (Ph.D.\ thesis)
+%\item[A-2001-2] M.~Salmenkivi: Computational methods for intensity models. 145 pp. (Ph.D.\ thesis)
+%\item[A-2001-3] K.~Fredriksson: Rotation invariant template matching. 138 pp. (Ph.D.\ thesis)
+%\item[A-2002-1] A.-P.~Tuovinen: Object-oriented engineering of visual languages. 185 pp. (Ph.D.\ thesis)
+%\item[A-2002-2] V.~Ollikainen: Simulation techniques for disease gene localization in isolated populations. 149+5 pp. (Ph.D.\ Thesis)
+%\item[A-2002-3] J.~Vilo: Discovery from biosequences. 149 pp. (Ph.D.\ Thesis)
+%\item[A-2003-1] J.~Lindstr\"om: Optimistic concurrency control methods for real-time database systems. 111 pp. (Ph.D.\ Thesis)
+%\item[A-2003-2] H.~Helin: Supporting nomadic agent-based applications in the FIPA agent architecture. 200+17 pp. (Ph.D.\ Thesis)
+%\item[A-2003-3] S.~Campadello: Middleware infrastructure for distributed mobile applications. 164 pp. (Ph.D.\ Thesis)
+%\item[A-2003-4] J.~Taina: Design and analysis of a distributed database architecture for IN/GSM data. 130 pp. (Ph.D.\ Thesis)
+%\item[A-2003-5] J.~Kurhila: Considering individual differences in computer-supported special and elementary education. 135 pp. (Ph.D.\ Thesis)
+%\item[A-2003-6] V.~M\"akinen: Parameterized approximate string matching and local-similarity-based point-pattern matching. 144 pp. (Ph.D.\ Thesis)
+%\item[A-2003-7] M.~Luukkainen: A process algebraic reduction strategy for automata theoretic verification of untimed and timed concurrent systems. 141 pp. (Ph.D.\ Thesis)
+%\item[A-2003-8] J.~Manner: Provision of quality of service in IP-based mobile access networks. 191 pp. (Ph.D.\ Thesis)
+%\item[A-2004-1] M.~Koivisto: Sum-product algorithms for the analysis of genetic risks. 155 pp. (Ph.D.\ Thesis)
+%\item[A-2004-2] A.~Gurtov: Efficient data transport in wireless overlay networks. 141 pp. (Ph.D.\ Thesis)
+%\item[A-2004-3] K.~Vasko: Computational methods and models for paleoecology. 176 pp. (Ph.D.\ Thesis)
+%\item[A-2004-4] P.~Sevon: Algorithms for Association-Based Gene Mapping. 101 pp. (Ph.D.\ Thesis)
+%\item[A-2004-5] J.~Viljamaa: Applying Formal Concept Analysis to Extract Framework Reuse Interface %Specifications from Source Code. 206 pp. (Ph.D.\ Thesis)
+%\item[A-2004-6] J.~Ravantti: Computational Methods for Reconstructing Macromolecular Complexes from Cryo-Electron Microscopy Images. 100 pp. (Ph.D.\ Thesis)
+%\item[A-2004-7] M.~K\"a\"ari\"ainen: Learning Small Trees and Graphs that Generalize. 45+49 pp. (Ph.D.\ Thesis)
+\item[A-2004-8] T.~Kivioja: Computational Tools for a Novel Transcriptional Profiling Method. 98 pp. (Ph.D.\ Thesis)
+\item[A-2004-9] H.~Tamm: On Minimality and Size Reduction of One-Tape and Multitape Finite Automata. 80 pp. (Ph.D.\ Thesis)
+\item[A-2005-1] T.~Mielik{\"a}inen: Summarization Techniques for Pattern Collections in Data Mining. 201~pp. (Ph.D.\ Thesis)
+\item[A-2005-2] A.~Doucet: Advanced Document Description, a Sequential Approach. 161 pp. (Ph.D.\ Thesis)
+\item[A-2006-1] A.~Viljamaa: Specifying Reuse Interfaces for Task-Oriented Framework Specialization. 285 pp. (Ph.D.\ Thesis)
+\item[A-2006-2] S.~Tarkoma: Efficient Content-based Routing, Mobility-aware Topologies, and Temporal Subspace Matching. 198 pp. (Ph.D.\ Thesis)
+\item[A-2006-3] M.~Lehtonen: Indexing Heterogeneous XML for Full-Text Search. 185+3~pp. (Ph.D.\ Thesis)
+\item[A-2006-4] A.~Rantanen: Algorithms for $^{13}C$ Metabolic Flux Analysis. 92+73~pp. (Ph.D.\ Thesis)
+\item[A-2006-5] E.~Terzi: Problems and Algorithms for Sequence Segmentations. 141 pp. (Ph.D.\ Thesis)
+\item[A-2007-1] P.~Sarolahti: TCP Performance in Heterogeneous Wireless Networks. (Ph.D.\ Thesis)
+\item[A-2007-2] M.~Raento: Exploring privacy for ubiquitous computing: Tools, methods and experiments. (Ph.D.\ Thesis)
+\item[A-2007-3] L.~Aunimo: Methods for Answer Extraction in Textual Question Answering. 127+18 pp. (Ph.D.\ Thesis)
+\item[A-2007-4] T.~Roos: Statistical and Information-Theoretic Methods for Data Analysis. 82+75~pp. (Ph.D.\ Thesis)
+\item[A-2007-5] S.~Leggio: A Decentralized Session Management Framework for Heterogeneous Ad-Hoc and Fixed Networks. 230 pp. (Ph.D.\ Thesis)
+\item[A-2007-6] O.~Riva: Middleware for Mobile Sensing Applications in Urban Environments. 195 pp. (Ph.D.\ Thesis)
+\item[A-2007-7] K.~Palin: Computational Methods for Locating and Analyzing Conserved Gene Regulatory DNA Elements. 130 pp. (Ph.D.\ Thesis)
+\item[A-2008-1] I.~Autio: Modeling Efficient Classification as a Process of Confidence Assessment and Delegation. 212 pp. (Ph.D.\ Thesis)
+\item[A-2008-2] J.~Kangasharju: XML Messaging for Mobile Devices. 24+255 pp. (Ph.D.\ Thesis).
+\item[A-2008-3] N.~Haiminen: Mining Sequential Data -- in Search of Segmental Structures. 60+78~pp. (Ph.D.\ Thesis)
+\item[A-2008-4] J.~Korhonen: IP Mobility in Wireless Operator Networks. (Ph.D.\ Thesis)
+\item[A-2008-5] J.T.~Lindgren: Learning nonlinear visual processing from natural images. 100+64~pp. (Ph.D.\ Thesis)
+\item[A-2009-1] K.~H{\"a}t{\"o}nen: Data mining for telecommunications network log analysis. 153~pp. (Ph.D.\ Thesis)
+\item[A-2009-2] T.~Silander: The Most Probable Bayesian Network and Beyond. (Ph.D.\ Thesis)
+\item[A-2009-3] K.~Laasonen: Mining Cell Transition Data. 148~pp. (Ph.D.\ Thesis)
+\item[A-2009-4] P.~Miettinen: Matrix Decomposition Methods for Data Mining: Computational Complexity and Algorithms. 164+6~pp. (Ph.D.\ Thesis) 
+\item[A-2009-5] J.~Suomela: Optimisation Problems in Wireless Sensor Networks: Local Algorithms and Local Graphs. 106+96~pp. (Ph.D.\ Thesis) 
+\item[A-2009-6] U.~K{\"o}ster:  A Probabilistic Approach to the Primary Visual Cortex. 168~pp. (Ph.D.\ Thesis) 
+\item[A-2009-7] P.~Nurmi:  Identifying Meaningful Places. 83~pp. (Ph.D.\ Thesis) 
+\item[A-2009-8] J.~Makkonen: Semantic Classes in Topic Detection and Tracking. 155~pp. (Ph.D.\ Thesis) 
+\item[A-2009-9] P.~Rastas: Computational Techniques for Haplotype Inference and for Local Alignment Significance. 64+50~pp. (Ph.D.\ Thesis) 
+\item[A-2009-10] T.~Mononen: Computing the Stochastic Complexity of Simple Probabilistic Graphical Models. 60+46~pp. (Ph.D.\ Thesis) 
+\item[A-2009-11] P.~Kontkanen: Computationally Effcient Methods for MDL-Optimal Density Estimation and Data Clustering. 75+64~pp. (Ph.D.\ Thesis) 
+\item[A-2010-1] M.~Lukk: Construction of a global map of human gene expression - the process, tools and analysis. 120~pp. (Ph.D.\ Thesis) 
+\item[A-2010-2] W.~H{\"a}m{\"a}l{\"a}inen: Efficient search for statistically significant dependency rules in binary data. 163~pp. (Ph.D.\ Thesis) 
+\item[A-2010-3] J.~Kollin: Computational Methods for Detecting Large-Scale Chromosome Rearrangements in SNP Data. 197~pp. (Ph.D.\ Thesis) 
+\item[A-2010-4] E.~Pitk{\"a}nen: Computational Methods for Reconstruction and Analysis of Genome-Scale Metabolic Networks. 115+88~pp. (Ph.D.\ Thesis) 
+\item[A-2010-5] A.~Lukyanenko: Multi-User Resource-Sharing Problem for the Internet. 168~pp. (Ph.D.\ Thesis) 
+\item[A-2010-6] L.~Daniel: Cross-layer Assisted TCP Algorithms for Vertical Handoff. 84+72~pp. (Ph.D.\ Thesis) 
+\item[A-2011-1] A.~Tripathi: Data Fusion and Matching by Maximizing Statistical Dependencies.\\89+109~pp. (Ph.D.\ Thesis) 
+\item[A-2011-2] E.~Junttila: Patterns in Permuted Binary Matrices. 155~pp. (Ph.D.\ Thesis) 
+\item[A-2011-3] P.~Hintsanen: Simulation and Graph Mining Tools for Improving Gene Mapping Efficiency. 136~pp. (Ph.D.\ Thesis) 
+\item[A-2011-4] M.~Ikonen: Lean Thinking in Software Development: Impacts of Kanban on Projects. 104+90~pp. (Ph.D.\ Thesis) 
+\item[A-2012-1] P.~Parviainen: Algorithms for Exact Structure Discovery in Bayesian Networks.\\132~pp. (Ph.D.\ Thesis)
+\item[A-2012-2] J.~Wessman: Mixture Model Clustering in the Analysis of Complex Diseases. 119~pp. (Ph.D.\ Thesis)
+\item[A-2012-3] P.~P{\"o}yh{\"o}nen: Access Selection Methods in Cooperative Multi-operator Environments to Improve End-user and Operator Satisfaction. 211~pp. (Ph.D.\ Thesis)
+\item[A-2012-4] S.~Ruohomaa: The Effect of Reputation on Trust Decisions in Inter-enterprise Collaborations. 214+44~pp. (Ph.D.\ Thesis)
+\end{list}
+\end{document}

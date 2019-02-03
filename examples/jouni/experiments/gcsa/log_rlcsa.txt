@@ -1,0 +1,109 @@
+Parallel RLCSA builder
+Input files: 4
+Output: sequences
+Threads: 8
+
+RLCSA_BLOCK_SIZE = 32
+SAMPLE_RATE = 32
+SUPPORT_DISPLAY = 1
+SUPPORT_LOCATE = 1
+WEIGHTED_SAMPLES = 0
+
+Phase 1: Building indexes for input files
+Input: sequence.0 (13.1068 seconds)
+Input: sequence.1 (15.7468 seconds)
+Input: sequence.2 (13.4477 seconds)
+Input: sequence.3 (13.3616 seconds)
+Indexed 283.266 megabytes in 67.8976 seconds (4.17196 MB/s).
+Memory: 1099912 kB
+
+Phase 2: Merging the indexes
+Increment: sequence.0 (0.191064 seconds)
+Increment: sequence.1 (60.4255 seconds)
+Increment: sequence.2 (59.5326 seconds)
+Increment: sequence.3 (57.7142 seconds)
+
+Sequences:       4
+Original size:   283.266 MB
+Block size:      32 bytes
+Sample rate:     32
+
+RLCSA:           98.3395 MB
+  BWT only:      78.179 MB
+SA samples:      66.679 MB
+Total size:      165.019 MB
+
+283.266 megabytes indexed in 254.435 seconds (1.11331 MB/s).
+Build time:    55.5012 seconds
+Search time:   154.837 seconds
+Sort time:     14.2963 seconds
+Merge time:    8.0567 seconds
+Memory usage:  1099912 kB
+
+Parallel RLCSA builder
+Using fast algorithm.
+Input files: 4
+Output: sequences
+Threads: 8
+
+RLCSA_BLOCK_SIZE = 32
+SAMPLE_RATE = 32
+SUPPORT_DISPLAY = 1
+SUPPORT_LOCATE = 1
+WEIGHTED_SAMPLES = 0
+
+Increment: sequence.0 (13.458 seconds)
+Increment: sequence.1 (79.5831 seconds)
+Increment: sequence.2 (69.5323 seconds)
+Increment: sequence.3 (67.4589 seconds)
+
+Sequences:       4
+Original size:   283.266 MB
+Block size:      32 bytes
+Sample rate:     32
+
+RLCSA:           98.3395 MB
+  BWT only:      78.179 MB
+SA samples:      66.679 MB
+Total size:      165.019 MB
+
+283.266 megabytes indexed in 242.397 seconds (1.1686 MB/s).
+Build time:    49.7008 seconds
+Search time:   153.874 seconds
+Sort time:     14.3128 seconds
+Merge time:    11.9747 seconds
+Memory usage:  1648248 kB
+
+RLCSA test
+
+Options: reverse_complement
+Index: sequences
+Patterns: patterns
+
+RLCSA:           98.3395 MB
+  BWT only:      78.179 MB
+SA samples:      66.679 MB
+Total size:      165.019 MB
+
+Patterns:     10000000 (27461 / sec)
+Total size:   560 megabases (1.53781 megabases / sec)
+Found:        384400 (247817 forward, 248134 reverse complement)
+Time:         364.153 seconds
+
+RLCSA test
+
+Options: locate reverse_complement
+Index: sequences
+Patterns: patterns
+
+RLCSA:           98.3395 MB
+  BWT only:      78.179 MB
+SA samples:      66.679 MB
+Total size:      165.019 MB
+
+Patterns:     10000000 (24339 / sec)
+Total size:   560 megabases
+Found:        384400 (247817 forward, 248134 reverse complement)
+Occurrences:  19291986 (9633662 forward, 9658324 reverse complement, 46954.8 / sec)
+Time:         410.863 seconds
+

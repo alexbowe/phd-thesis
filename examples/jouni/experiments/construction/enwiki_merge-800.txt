@@ -1,0 +1,142 @@
+Parallel RLCSA builder
+Input files: 54
+Output: enwiki
+Threads: 8
+
+RLCSA_BLOCK_SIZE = 32
+SAMPLE_RATE = 128
+SUPPORT_DISPLAY = 1
+SUPPORT_LOCATE = 1
+WEIGHTED_SAMPLES = 0
+
+Phase 1: Building indexes for input files
+Input: part.1 (180.668 seconds)
+Input: part.10 (235.513 seconds)
+Input: part.11 (225.558 seconds)
+Input: part.12 (241.159 seconds)
+Input: part.13 (276.576 seconds)
+Input: part.14 (284.068 seconds)
+Input: part.15 (252.513 seconds)
+Input: part.16 (250.177 seconds)
+Input: part.17 (248.172 seconds)
+Input: part.18 (249.833 seconds)
+Input: part.19 (242.437 seconds)
+Input: part.2 (221.636 seconds)
+Input: part.20 (242.125 seconds)
+Input: part.21 (239.364 seconds)
+Input: part.22 (244.137 seconds)
+Input: part.23 (244.932 seconds)
+Input: part.24 (241.644 seconds)
+Input: part.25 (240.172 seconds)
+Input: part.26 (246.577 seconds)
+Input: part.27 (237.11 seconds)
+Input: part.28 (239.203 seconds)
+Input: part.29 (237.531 seconds)
+Input: part.3 (207.748 seconds)
+Input: part.30 (245.628 seconds)
+Input: part.31 (238.562 seconds)
+Input: part.32 (234.446 seconds)
+Input: part.33 (240.004 seconds)
+Input: part.34 (241.73 seconds)
+Input: part.35 (243.802 seconds)
+Input: part.36 (248.095 seconds)
+Input: part.37 (240.597 seconds)
+Input: part.38 (237.128 seconds)
+Input: part.39 (248.723 seconds)
+Input: part.4 (212.824 seconds)
+Input: part.40 (242.554 seconds)
+Input: part.41 (240.384 seconds)
+Input: part.42 (243.206 seconds)
+Input: part.43 (260.692 seconds)
+Input: part.44 (247.01 seconds)
+Input: part.45 (240 seconds)
+Input: part.46 (242.609 seconds)
+Input: part.47 (241.926 seconds)
+Input: part.48 (244.66 seconds)
+Input: part.49 (239.843 seconds)
+Input: part.5 (206.137 seconds)
+Input: part.50 (242.347 seconds)
+Input: part.51 (239.58 seconds)
+Input: part.52 (247.667 seconds)
+Input: part.53 (240.957 seconds)
+Input: part.54 (20.0337 seconds)
+Input: part.6 (215.563 seconds)
+Input: part.7 (222.366 seconds)
+Input: part.8 (223.464 seconds)
+Input: part.9 (218.251 seconds)
+Indexed 42471.9 megabytes in 12984.5 seconds (3.27097 MB/s).
+Memory: 12336636 kB
+
+Phase 2: Merging the indexes
+Increment: part.1 (15.1932 seconds)
+Increment: part.10 (287.161 seconds)
+Increment: part.11 (275.963 seconds)
+Increment: part.12 (277.183 seconds)
+Increment: part.13 (279.107 seconds)
+Increment: part.14 (282.156 seconds)
+Increment: part.15 (290.259 seconds)
+Increment: part.16 (297.341 seconds)
+Increment: part.17 (293.563 seconds)
+Increment: part.18 (298.401 seconds)
+Increment: part.19 (304.227 seconds)
+Increment: part.2 (303.742 seconds)
+Increment: part.20 (296.326 seconds)
+Increment: part.21 (303.025 seconds)
+Increment: part.22 (306.382 seconds)
+Increment: part.23 (312.992 seconds)
+Increment: part.24 (311.703 seconds)
+Increment: part.25 (313.992 seconds)
+Increment: part.26 (488.071 seconds)
+Increment: part.27 (313.234 seconds)
+Increment: part.28 (350.31 seconds)
+Increment: part.29 (334.715 seconds)
+Increment: part.3 (345.566 seconds)
+Increment: part.30 (339.815 seconds)
+Increment: part.31 (369.057 seconds)
+Increment: part.32 (400.953 seconds)
+Increment: part.33 (342.054 seconds)
+Increment: part.34 (346.371 seconds)
+Increment: part.35 (439.085 seconds)
+Increment: part.36 (329.345 seconds)
+Increment: part.37 (348.964 seconds)
+Increment: part.38 (354.031 seconds)
+Increment: part.39 (375.27 seconds)
+Increment: part.4 (374.403 seconds)
+Increment: part.40 (349.303 seconds)
+Increment: part.41 (342.686 seconds)
+Increment: part.42 (343.484 seconds)
+Increment: part.43 (350.683 seconds)
+Increment: part.44 (344.58 seconds)
+Increment: part.45 (353.162 seconds)
+Increment: part.46 (345.504 seconds)
+Increment: part.47 (361.565 seconds)
+Increment: part.48 (354.099 seconds)
+Increment: part.49 (349.557 seconds)
+Increment: part.5 (376.329 seconds)
+Increment: part.50 (350.249 seconds)
+Increment: part.51 (360.154 seconds)
+Increment: part.52 (363.593 seconds)
+Increment: part.53 (364.916 seconds)
+Increment: part.54 (110.722 seconds)
+Increment: part.6 (389.423 seconds)
+Increment: part.7 (384.526 seconds)
+Increment: part.8 (389.665 seconds)
+Increment: part.9 (386.739 seconds)
+
+Sequences:       16080833
+Original size:   42456.6 MB
+Block size:      32 bytes
+Sample rate:     128
+
+RLCSA:           11522.9 MB
+  BWT only:      8710.82 MB
+SA samples:      3154.2 MB
+Total size:      14677.1 MB
+
+42456.6 megabytes indexed in 31110.9 seconds (1.36469 MB/s).
+Build time:    12039.5 seconds
+Search time:   5385.77 seconds
+Sort time:     3396.08 seconds
+Merge time:    7719.6 seconds
+Memory usage:  28324940 kB
+

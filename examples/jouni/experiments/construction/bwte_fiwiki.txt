@@ -1,0 +1,4 @@
+Command line: ../bwtdisk.0.9.0/bwte -m 12288 -t1 -v fiwiki.gz 
+Using blocks of size 1610612736
+Elapsed wallclock time: 262438 seconds.
+musec x symbol: 5.786880

@@ -1,0 +1,169 @@
+Parallel RLCSA builder
+Option '-n' specified. Partial indexes will not be merged.
+Input files: 1
+Output: para
+Threads: 1
+
+RLCSA_BLOCK_SIZE = 32
+SAMPLE_RATE = 64
+SUPPORT_DISPLAY = 1
+SUPPORT_LOCATE = 1
+WEIGHTED_SAMPLES = 0
+
+Phase 1: Building indexes for input files
+Input: para (449.957 seconds)
+Indexed 409.38 megabytes in 451.237 seconds (0.907238 MB/s).
+Memory: 6731796 kB
+
+409.38 megabytes indexed in 451.237 seconds (0.907238 MB/s).
+Memory usage:  6731796 kB
+
+PLCP builder
+PLCP: para.plcp
+Block size: 32
+
+409.38 megabytes in 376.12 seconds (1.08843 MB/s)
+PLCP size: 12.8264 MB
+Runs: 10049672
+
+LCP sampler
+LCP samples: para.lcp_samples
+Sample rate: 16
+
+Samples: 35227153 (total) / 10049672 (minimal)
+Upper bounds: 41488528 (total) / 15636711 (minimal)
+Sum of minimal samples: 519521066 (total) / 299053625 (strict)
+
+Maximum sample value: 104162 (17 bits)
+Raw samples: 71.3899 MB
+Encoded samples: 69.7156 MB
+
+409.38 megabytes in 590.022 seconds (0.693838 MB/s)
+Sampled LCP size: 106.307 MB
+
+LCP sampler
+LCP samples: para.lcp_samples
+Sample rate: 32
+
+Samples: 22456635 (total) / 10049672 (minimal)
+Upper bounds: 28562619 (total) / 15636711 (minimal)
+Sum of minimal samples: 519521066 (total) / 299053625 (strict)
+
+Maximum sample value: 104146 (17 bits)
+Raw samples: 45.5097 MB
+Encoded samples: 39.9353 MB
+
+409.38 megabytes in 588.049 seconds (0.696166 MB/s)
+Sampled LCP size: 66.5012 MB
+
+LCP sampler
+LCP samples: para.lcp_samples
+Sample rate: 64
+
+Samples: 16103579 (total) / 10049672 (minimal)
+Upper bounds: 22099665 (total) / 15636711 (minimal)
+Sum of minimal samples: 519521066 (total) / 299053625 (strict)
+
+Maximum sample value: 104114 (17 bits)
+Raw samples: 32.6348 MB
+Encoded samples: 25.1042 MB
+
+409.38 megabytes in 589.215 seconds (0.694788 MB/s)
+Sampled LCP size: 45.95 MB
+
+RLCSA LCP test
+Base name: para
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps plcp locate 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   409.38 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           41.3434 MB
+  BWT only:      32.9197 MB
+SA samples:      48.1095 MB
+Total size:      89.4529 MB
+
+PLCP:            12.8264 MB
+
+Using PLCP:
+1000000 queries in 27.5561 seconds (36289.6 / s)
+31472598 steps (31.4726 / query)
+
+Locate:
+1000000 queries in 27.4522 seconds (36427 / s)
+31472598 steps (31.4726 / query)
+
+RLCSA LCP test
+Base name: para
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   409.38 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           41.3434 MB
+  BWT only:      32.9197 MB
+SA samples:      48.1095 MB
+Total size:      89.4529 MB
+
+Sampled LCP:     106.307 MB
+
+Using Sampled LCP:
+1000000 queries in 7.61086 seconds (131391 / s)
+7159173 steps (7.15917 / query)
+
+RLCSA LCP test
+Base name: para
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   409.38 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           41.3434 MB
+  BWT only:      32.9197 MB
+SA samples:      48.1095 MB
+Total size:      89.4529 MB
+
+Sampled LCP:     66.5012 MB
+
+Using Sampled LCP:
+1000000 queries in 14.4212 seconds (69342.2 / s)
+14676775 steps (14.6768 / query)
+
+RLCSA LCP test
+Base name: para
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   409.38 MB
+Block size:      32 bytes
+Sample rate:     64
+
+RLCSA:           41.3434 MB
+  BWT only:      32.9197 MB
+SA samples:      48.1095 MB
+Total size:      89.4529 MB
+
+Sampled LCP:     45.95 MB
+
+Using Sampled LCP:
+1000000 queries in 27.4504 seconds (36429.3 / s)
+29458373 steps (29.4584 / query)
+

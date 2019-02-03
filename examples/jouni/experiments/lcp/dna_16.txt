@@ -1,0 +1,131 @@
+Parallel RLCSA builder
+Option '-n' specified. Partial indexes will not be merged.
+Input files: 1
+Output: dna
+Threads: 1
+
+RLCSA_BLOCK_SIZE = 32
+SAMPLE_RATE = 16
+SUPPORT_DISPLAY = 1
+SUPPORT_LOCATE = 1
+WEIGHTED_SAMPLES = 0
+
+Phase 1: Building indexes for input files
+Input: dna (248.117 seconds)
+Indexed 385.216 megabytes in 252.888 seconds (1.52327 MB/s).
+Memory: 5843712 kB
+
+385.216 megabytes indexed in 252.888 seconds (1.52327 MB/s).
+Memory usage:  5843712 kB
+
+PLCP builder
+PLCP: dna.plcp
+Block size: 32
+
+385.216 megabytes in 2402.12 seconds (0.160365 MB/s)
+PLCP size: 118.875 MB
+Runs: 158547077
+
+LCP sampler
+LCP samples: dna.lcp_samples
+Sample rate: 8
+
+Samples: 164783972 (total) / 158547078 (minimal)
+Upper bounds: 263547226 (total) / 243492866 (minimal)
+Sum of minimal samples: 3468945419 (total) / 2215377357 (strict)
+
+Maximum sample value: 1378589 (21 bits)
+Raw samples: 412.519 MB
+Encoded samples: 187.144 MB
+
+385.216 megabytes in 2716.16 seconds (0.141824 MB/s)
+Sampled LCP size: 246.176 MB
+
+LCP sampler
+LCP samples: dna.lcp_samples
+Sample rate: 16
+
+Samples: 160424821 (total) / 158547078 (minimal)
+Upper bounds: 253520046 (total) / 243492866 (minimal)
+Sum of minimal samples: 3468945419 (total) / 2215377357 (strict)
+
+Maximum sample value: 1378581 (21 bits)
+Raw samples: 401.607 MB
+Encoded samples: 181.03 MB
+
+385.216 megabytes in 2707.13 seconds (0.142297 MB/s)
+Sampled LCP size: 240.074 MB
+
+RLCSA LCP test
+Base name: dna
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps plcp locate 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   385.216 MB
+Block size:      32 bytes
+Sample rate:     16
+
+RLCSA:           260.416 MB
+  BWT only:      206.776 MB
+SA samples:      181.736 MB
+Total size:      442.152 MB
+
+PLCP:            118.875 MB
+
+Using PLCP:
+1000000 queries in 9.79346 seconds (102109 / s)
+7499158 steps (7.49916 / query)
+
+Locate:
+1000000 queries in 9.69889 seconds (103105 / s)
+7499158 steps (7.49916 / query)
+
+RLCSA LCP test
+Base name: dna
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   385.216 MB
+Block size:      32 bytes
+Sample rate:     16
+
+RLCSA:           260.416 MB
+  BWT only:      206.776 MB
+SA samples:      181.736 MB
+Total size:      442.152 MB
+
+Sampled LCP:     246.176 MB
+
+Using Sampled LCP:
+1000000 queries in 1.21608 seconds (822315 / s)
+1349293 steps (1.34929 / query)
+
+RLCSA LCP test
+Base name: dna
+Number of queries: 1000000
+Number of test runs: 1
+Modes: steps sampled 
+Random seed: 3735928559
+
+Sequences:       1
+Original size:   385.216 MB
+Block size:      32 bytes
+Sample rate:     16
+
+RLCSA:           260.416 MB
+  BWT only:      206.776 MB
+SA samples:      181.736 MB
+Total size:      442.152 MB
+
+Sampled LCP:     240.074 MB
+
+Using Sampled LCP:
+1000000 queries in 1.58954 seconds (629113 / s)
+1822760 steps (1.82276 / query)
+
