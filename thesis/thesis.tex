@@ -3,8 +3,10 @@
 %%%%%%%% PACKAGES %%%%%%%%
 \usepackage{graphicx}
 \usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{breakurl}
+\usepackage[breaklinks]{hyperref}
 \usepackage[numbers,sort]{natbib}
-\usepackage{hyperref}
 \hypersetup{
   colorlinks,
   citecolor=black,
@@ -144,6 +146,8 @@
 \def\pyt#1{}
 \def\pyt#1{\marginpar{\tiny #1}} % comment this to remove margin comments
 
+\includeonly{chapters/introduction}
+
 \begin{document}
 
 \title{Succinct de Bruijn Graphs}
@@ -158,40 +162,38 @@ Chiyoda-ku, Tokyo, Japan}
 
 \date{\today}
 
-\maketitle
+%\maketitle
 
-\begin{abstract}
-\input{chapters/abstract} \\ \\
-\textbf{Keywords:} de Bruijn graphs, succinct data structures, DNA assembly, pan-genomics
-\end{abstract}
-
+%\begin{abstract}
+%\input{chapters/abstract} \\ \\
+%\textbf{Keywords:} de Bruijn graphs, succinct data structures, DNA assembly, pan-genomics
+%\end{abstract}
 
 %\include{chapters/LicenseDisclaimer}
 
+%\include{chapters/original}
 
-\include{chapters/original}
+%\setcounter{tocdepth}{1}
+%\newpage
+%\tableofcontents
+%\newpage
 
-\setcounter{tocdepth}{1}
-\newpage
-\tableofcontents
-\newpage
-
-\input{chapters/introduction}
+\include{chapters/introduction}
 
 
 %\include{chapters/preliminaries}
-
-\include{chapters/succinct-dbg}
-
-\include{chapters/variable-order-dbg}
-
-\include{chapters/colour-dbg}
-
-\include{chapters/experiments}
-
-\include{chapters/conclusion}
-
-\include{chapters/acknowledgements}
+%
+%\include{chapters/succinct-dbg}
+%
+%\include{chapters/variable-order-dbg}
+%
+%\include{chapters/colour-dbg}
+%
+%\include{chapters/experiments}
+%
+%\include{chapters/conclusion}
+%
+%\include{chapters/acknowledgements}
 
 %\appendix
 %\include{chapters/tables}
