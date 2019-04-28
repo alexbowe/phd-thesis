@@ -13,10 +13,27 @@ The process of combining short reads into longer sequences is called assembly, a
 
 Traditionally, assembly employed an overlap graph, where each read is a node, and an edge exists if two reads have sufficient overlap~\cite{BatJaf02,HuaYan05,MyeSut00}. Assembly then involves computing a Hamiltonian tour of all nodes. This was an acceptable drawback when dealing with Sanger reads, but is prohibitively expensive when dealing with the abundant data that NGS machines produce.
 
-Eulerian assembly~\cite{IW95, PTW} replaces the overlap graph with a de Bruijn graph, where every k-length substring of the reads is a node, and edges represent the k-1 length overlaps, where k is a user selected parameter. The contigs are then found by finding non-branching paths through this graph. Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,Zerbino:2008,SahShi12,MacPrz09}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
+\begin{figure}[!hbt]
+	\begin{center}
+		\includegraphics[scale=0.7]{images/dbg.pdf}
+		\caption{The $k=3$ de Bruijn graph of strings `TACAC', `TACTC', and
+			`GACTC'.}
+		\label{figure:dbg}
+	\end{center}
+\end{figure}
 
-\includegraphics*[width=100ex]{images/graph-nodummies.pdf}
-\includegraphics*[width=100ex]{images/cdbg.pdf}
+Eulerian assembly~\cite{IW95, PTW} replaces the overlap graph with a de Bruijn graph, where every k-length substring of the reads is a node, and edges represent the k-1 length overlaps, where k is a user selected parameter, as demonstrated in Figure \ref{figure:dbg}. The contigs are then found by finding non-branching paths through this graph. Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,Zerbino:2008,SahShi12,MacPrz09}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
+
+
+
+\begin{figure}[!hbt]
+	\begin{center}
+		\includegraphics*[scale=0.70]{images/cdbg.pdf}
+		\caption{CDBG}
+		\label{figure:cdbg}
+	\end{center}
+\end{figure}
+
 
 While the de Bruijn graph can be constructed more efficiently than the overlap graph, it remains a bottleneck in assembly, both in terms of speed and size, with a de Bruijn graph of a human genome requiring 300 GB of RAM~\cite{Simpson:2009}. Previous work has reduced this to 30 GB~\cite{Conway}. This thesis reduces this to 2 GB, bringing it in line with commodity hardware - a student or field biologist could now perform this on their laptop. Around the same time as the work done in this thesis, an alternative approach with similar performance was published~\cite{wabi}, but the Burrows-Wheeler approach taken in this thesis offers more flexibility and faster edge traversal.
 
@@ -27,7 +44,21 @@ Finally, in population genomics, biologists assemble multiple genomes in order t
 These three papers demonstrate that the burrows-wheeler approach is efficient, but can also be augmented to support extra queries that are commonplace in many modern assemblers. Due to the wealth of research on Burrows-Wheeler transforms and Suffix Arrays on which the data
 structures in this thesis are based, it is likely that the set of supported operations will continue to grow as applications are found.
 
-\section*{Original Work}
+\section*{Original Papers}
+
+This thesis is comprised of the following three published papers:
+
+\paragraph{I. Succinct de Bruijn Graphs}
+
+In this paper...
+
+\paragraph{II. Variable-order de Bruijn Graphs}
+
+In this paper...
+
+\paragraph{III. Colored de Bruijn Graphs}
+
+In this paper...
 %Sections of this thesis are repeated verbatim from these original published papers:
 %<each paper title, where it appeared, and a brief description>.
 %Succinct de Bruijn Graphs:
