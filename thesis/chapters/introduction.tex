@@ -11,7 +11,9 @@ This decline in price is in large part owed to the advent of Next Generation Seq
 
 The process of combining short reads into longer sequences is called assembly, and while finding the best overlap is NP-hard~\cite{Mye95}, many practical approaches have been proposed (see surveys \cite{KasMor06, MilKor10, Pop09}).
 
-Traditionally, assembly employed an overlap graph, where each read is a node, and an edge exists if two reads have sufficient overlap~\cite{BatJaf02,HuaYan05,MyeSut00}. Assembly then involves computing a Hamiltonian tour of all nodes. This was an acceptable drawback when dealing with Sanger reads, but is prohibitively expensive when dealing with the abundant data that NGS machines produce.
+Traditionally, assembly employed an overlap graph, where each read is a node, and an edge exists if two reads have sufficient overlap~\cite{BatJaf02,HuaYan05,MyeSut00}. Assembly then involves computing a Hamiltonian tour of all nodes. This was an acceptable drawback when dealing with Sanger reads, but is prohibitively expensive to deal with the abundant data that NGS machines produce.
+
+% TODO: Do large k diagram, and single edge diagram
 
 \begin{figure}[!hbt]
 	\begin{center}
@@ -22,7 +24,7 @@ Traditionally, assembly employed an overlap graph, where each read is a node, an
 	\end{center}
 \end{figure}
 
-Eulerian assembly~\cite{IW95, PTW} replaces the overlap graph with a de Bruijn graph, where every k-length substring of the reads is a node, and edges represent the k-1 length overlaps, where k is a user selected parameter, as demonstrated in Figure \ref{figure:dbg}. The contigs are then found by finding non-branching paths through this graph. Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,Zerbino:2008,SahShi12,MacPrz09}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
+Eulerian assembly~\cite{IW95, PTW} replaces the overlap graph with a de Bruijn graph, where every k-length substring of the reads is a node, and edges represent the k-1 length overlaps, where k is a user selected parameter, as demonstrated in Figure \ref{figure:dbg}. The contigs are then found by finding non-branching paths through this graph. Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,SahShi12,MacPrz09,ZerBir08}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
 
 
 
