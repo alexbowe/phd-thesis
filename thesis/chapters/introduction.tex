@@ -15,36 +15,57 @@ Traditionally, assembly employed an overlap graph, where each read is a node, an
 
 % TODO: Do large k diagram, and single edge diagram
 
-\begin{figure}[!hbt]
+%\begin{figure}
+%	\begin{center}
+%		\includegraphics[scale=0.7]{images/dbg-edge.pdf}
+%		\caption{An edge representing the sequence `TACG' for the $k=3$ de Bruijn graph.}
+%		\label{figure:edge}
+%	\end{center}
+%\end{figure}
+
+\begin{figure}
 	\begin{center}
 		\includegraphics[scale=0.7]{images/dbg.pdf}
-		\caption{The $k=3$ de Bruijn graph of strings `TACAC', `TACTC', and
-			`GACTC'.}
+		\caption{The $k=3$ de Bruijn graph of reads `TACGT', `TACGA', `ACGTC', `GTCGA', `CGACT', and
+			`CGACG'. The longest contig is `ACGTCGAC' ($8$ bases).}
 		\label{figure:dbg}
 	\end{center}
 \end{figure}
 
-Eulerian assembly~\cite{IW95, PTW} replaces the overlap graph with a de Bruijn graph, where every k-length substring of the reads is a node, and edges represent the k-1 length overlaps, where k is a user selected parameter, as demonstrated in Figure \ref{figure:dbg}. The contigs are then found by finding non-branching paths through this graph. Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,SahShi12,MacPrz09,ZerBir08}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
 
+% TODO: take some more time to explain this
+Eulerian assembly~\cite{IW95, PTW} replaces the overlap graph with a de Bruijn graph, where every k-length substring of the reads is a node, and edges are defined by the $k+1$ substrings, where $k$ is a user selected parameter, as demonstrated in Figure \ref{figure:dbg}. The \emph{contigs} (contiguous sequences) are then found by following non-branching paths through this graph. Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,SahShi12,MacPrz09,ZerBir08}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
 
+While the de Bruijn graph can be constructed more efficiently than the overlap graph, it remains a bottleneck in assembly, both in terms of speed and size, with a de Bruijn graph of a human genome requiring 300 GB of RAM~\cite{Simpson:2009}. Previous work has reduced this to 30 GB~\cite{Conway}. This thesis reduces this to 2 GB, bringing it in line with commodity hardware - a student or field biologist could now perform this on their laptop. Around the same time as the work done in this thesis, an alternative approach with similar performance was published~\cite{wabi}, but the Burrows-Wheeler approach taken in this thesis offers more flexibility and faster edge traversal.
 
-\begin{figure}[!hbt]
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.7]{images/altering-k.pdf}
+		\caption{$(a)$ The $k=2$ de Bruijn graph of strings `TACGT', `TACGA', `ACGTC', `GTCGA', `CGACT', and
+			`CGACG', and $(b)$ the $k=4$ de Bruijn graph of strings `TACGT', `TACGA', `ACGTC', `GTCGA', `CGACT', and
+			`CGACG'. The longest contig for $(a)$ is `CGTCG' ($5$ bases), and the longest contig for $(b)$ is `TACGTC' ($6$ bases).}
+		\label{figure:varying-k}
+	\end{center}
+\end{figure}
+
+% TODO: Take more time to explain this
+It is common for modern assemblers to build multiple de Bruijn graphs. This is because the k parameter significantly influences the topology - if k is too large, the vertices may not have edges, but if k is too small, the graph can become tangled (diagram). The perfect value of k is different for every set of reads, and in fact, due to non-uniform coverage of NGS data, different areas of the same graph may benefit from differing k values. Hence it has become common practice to build multiple graphs with increasing k, and use them in tandem~\cite{bankevich2012spades,peng2010idba}. The work in this thesis bypasses this iterative step, and introduces the first de Bruijn graph that can be built once, yet change k values on-the-fly, at only a modest increase in size over the base succinct de Bruijn graph (mention numbers).
+
+\begin{figure}
 	\begin{center}
 		\includegraphics*[scale=0.70]{images/cdbg.pdf}
-		\caption{CDBG}
+		\caption{The $k=3$ Colored de Bruijn Graph, with two sets of reads. The gray nodes and edges represent the reads `TACGT', `TACGA', `ACGTC', `GTCGA', `CGACT', and `CGACG' (the de Bruijn Graph from Figure \ref{figure:dbg}). The black nodes and edges represent the reads `TACGA', `GTCGACG', `CGACT', `CGAGGTC'.}
 		\label{figure:cdbg}
 	\end{center}
 \end{figure}
 
-
-While the de Bruijn graph can be constructed more efficiently than the overlap graph, it remains a bottleneck in assembly, both in terms of speed and size, with a de Bruijn graph of a human genome requiring 300 GB of RAM~\cite{Simpson:2009}. Previous work has reduced this to 30 GB~\cite{Conway}. This thesis reduces this to 2 GB, bringing it in line with commodity hardware - a student or field biologist could now perform this on their laptop. Around the same time as the work done in this thesis, an alternative approach with similar performance was published~\cite{wabi}, but the Burrows-Wheeler approach taken in this thesis offers more flexibility and faster edge traversal.
-
-However, it is common for modern assemblers to build multiple de Bruijn graphs. This is because the k parameter significantly influences the topology - if k is too large, the vertices may not have edges, but if k is too small, the graph can become tangled (diagram). The perfect value of k is different for every set of reads, and in fact, due to non-uniform coverage of NGS data, different areas of the same graph may benefit from differing k values. Hence it has become common practice to build multiple graphs with increasing k, and use them in tandem (cite iterative dbg paper). The work in this thesis bypasses this iterative step, and introduces the first de Bruijn graph that can be built once, yet change k values on-the-fly, at only a modest increase in size over the base succinct de Bruijn graph (mention numbers).
-
 Finally, in population genomics, biologists assemble multiple genomes in order to study the variations (give examples and cite). To avoid constructing multiple graphs, Iqbal et al. proposed the Colored de Bruijn Graph~\cite{ICTFM12}. This graph capitalizes on the fact that DNA is rarely unique to an individual. It does this by first constructing a de Bruijn Graph of the entire populations NGS reads, then, each individual is assigned a unique “color”, and the vertices and edges are annotated with the colors that they belong to. In this thesis, we further augment our succinct de Bruijn Graph to efficiently store these colors. When tested with four plant genomes, Iqbal’s structure required 101 GB RAM, while ours only requires 4 GB of RAM. Furthermore, our structure was able to store all known E. Coli genomes in 42 GB, where Iqbal’s was not able to complete, but is estimated to require 3 TB of RAM. We also demonstrate the use of our structure in creating a database of all Antimicrobial Resistance Genes, requiring 245 GB of RAM (an estimated 18 TB with Iqbal’s structure), for rapidly locating resilient bacterial outbreaks in food supply chains.
 
-These three papers demonstrate that the burrows-wheeler approach is efficient, but can also be augmented to support extra queries that are commonplace in many modern assemblers. Due to the wealth of research on Burrows-Wheeler transforms and Suffix Arrays on which the data
-structures in this thesis are based, it is likely that the set of supported operations will continue to grow as applications are found.
+
+
+%TODO: move to conclusion
+%These three papers demonstrate that the burrows-wheeler approach is efficient, but can also be augmented to support extra queries that are commonplace in many modern assemblers. Due to the wealth of research on Burrows-Wheeler transforms and Suffix Arrays on which the data
+%structures in this thesis are based, it is likely that the set of supported operations will continue to grow as applications are found.
 
 \section*{Original Papers}
 
