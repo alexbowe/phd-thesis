@@ -1,0 +1,240 @@
+\chapter{Succinct de Bruijn Graphs}
+
+\section{BOSS Matrix}
+\label{sec:boss}
+
+Consider the de Bruijn graph \(G = (V, E)\) for a set of $k$-mers, with each $k$-mer \(a_0 \cdots a_{k - 1}\) representing a directed edge from the node labelled \(a_0 \cdots a_{k - 2}\) to the node labelled \(a_1 \cdots a_{k - 1}\), with the edge itself labelled \(a_{k - 1}\).  Define the nodes' co-lexicographic order to be the lexicographic order of their reversed labels.  Let $F$ be the list of $G$'s edges sorted co-lexicographically by their ending nodes, with ties broken co-lexicographically by their starting nodes (or, equivalently, by their $k$-mers' first characters).  Let $L$ be the list of $G$'s edges sorted co-lexicographically by their starting nodes, with ties broken co-lexicographically by their ending nodes (or, equivalently, by their own labels).  If two edges $e$ and $e'$ have the same label, then they have the same relative order in both lists; otherwise, their relative order in $F$ is the same as their labels' lexicographic order.  This means that if $e$ is in position $p$ in $L$, then in $F$ it is in position
+%% \[|\{d\,:\,d \in E,\ \elabel (d) \prec \elabel (e)\}| +
+%%   \{h\,:\,\elabel (L [h]) = \elabel (e),\ h \leq p\}| - 1\,.\]
+\begin{equation*}
+\begin{split}  
+  |\{d\,:\,d \in E,\ \elabel (d) \prec \elabel (e)\}|\\
+  +
+ | \{h\,:\,\elabel (L [h]) = \elabel (e),\ h \leq p\}| - 1\,.
+\end{split}
+\end{equation*}
+%% \begin{multline*}
+%% |\{d\,:\,d \in E,\ \elabel (d) \prec \elabel (e)\}|\\
+%% + |\{h\,:\,\elabel (L [h]) = \elabel (e),\ h \leq p\}| - 1\,.
+%% \end{multline*}
+Defining the edge-BWT (EBWT) of $G$ to be the sequence of edge labels sorted according to the edges' order in $L$, so \(\elabel (L [h]) = \EBWT (G) [h]\) for all $h$, it follows that if we have, first, an array storing \(|\{d\,:\,d \in E,\ \elabel (d) \prec c\}|\) for each character $c$ and, second, a fast rank data structure on \(\EBWT (G)\) then, given an edge's position in $L$, we can quickly compute its position in $F$.
+
+Let $B_F$ be the bitvector with a 1 marking the position in $F$ of the last incoming edge of each node, and let $B_L$ be the bitvector with a 1 marking the position in $L$ of the last outgoing edge of each node.  Given a character $c$ and the co-lexicographic rank of a node $v$, we can use $B_L$ to find the interval in $L$ containing $v$'s outgoing edges, then we can search in \(\EBWT (G)\) to find the position of the one $e$ labelled $c$.  We can then find $e$'s position in $F$, as described above.  Finally, we can use $B_F$ to find the co-lexicographic rank of $e$'s ending node.  With the appropriate implementations of the data structures, we obtain the following result:
+
+\begin{theorem}[Bowe, Onodera, Sadakane and Shibuya, 2012]
+We can store $G$ in \((1 + o (1)) |E| (\lg \sigma + 2)\) bits such that, given a character $c$ and the co-lexicographic rank of a node $v$, in $\Oh{\log \log \sigma}$ time we can find the node reached from $v$ by following the directed edge labelled $c$, if such an edge exists.
+\end{theorem}
+
+If we know the range \(L [i..j]\) of $k$-mers whose starting nodes end with a pattern $P$ of length less than \((k - 1)\), then we can compute the range \(F [i'..j']\) of $k$-mers whose ending nodes end with \(P c\), for any character $c$, since
+
+\begin{equation*}
+  \begin{split}  
+    i'  =  |\{d\,:\,d \in E,\ \elabel (d) \prec c\}|\\
+    + |\{h\,:\,\EBWT (G) [h] = c,\ h < i\}|
+  \end{split}  
+\end{equation*}
+
+\begin{equation*}
+  \begin{split}  
+    j'  =  |\{d\,:\,d \in E,\ \elabel (d) \prec c\}|\\
+    + |\{h\,:\,\EBWT (G) [h] = c,\ h \leq j\}| - 1\,.
+  \end{split}  
+\end{equation*}
+
+
+
+%% \begin{eqnarray*}
+%% i' & = & |\{d\,:\,d \in E,\ \elabel (d) \prec c\}| +
+%% 	|\{h\,:\,\EBWT (G) [h] = c,\ h < i\}|\\
+%% j' & = & |\{d\,:\,d \in E,\ \elabel (d) \prec c\}| +
+%% 	|\{h\,:\,\EBWT (G) [h] = c,\ h \leq j\}| - 1\,.
+%% \end{eqnarray*}
+
+It follows that, given a node $v$'s label, we can find the interval in $L$ containing $v$'s outgoing edges in $\Oh{k \log \log \sigma}$ time, provided there is a directed path to $v$ (not necessarily simple) of length at least \(k - 1\).  In general there is no way, however, to use \(\EBWT (G)\), $B_F$ and $B_L$ alone to recover the labels of nodes with no incoming edges.
+
+To prevent information being lost and to be able to support searching for any node given its label, Bowe et al.\ add extra nodes and edges to the graph, such that there is a directed path of length at least \(k - 1\) to each original node.  Each new node's label is a \((k - 1)\)-mer that is prefixed by one or more copies of a special symbol $\$$ not in the alphabet and lexicographically strictly less than all others.  Notice that, when new nodes are added, the node labelled $\$^{k - 1}$ is always first in co-lexicographic order and has no incoming edges.  Bowe et al.\ also attach an extra outgoing edge labelled $\$$, that leads nowhere, to each node with no original outgoing edge.  The edge-BWT and bitvectors for this augmented graph are, together, the BOSS representation of $G$.
+
+Our data structure is similar to the XBW data structure~\cite{FLMM09} in the sense
+that the {\last} array in ours is the same as $S_{\last}$ in the XBW.
+We propose a new encoding scheme for storing labels of a graph.
+
+
+\section{Navigation Operations}
+
+\subsection{The {\cdeg} and {\child} operations}
+The ${\cdeg}(v)$ operation is easy to support.
+We assume that $v$ is the index of ${\last}$ such that ${\last}[v] = 1$ and
+${\Node}[v]$ is the label of the node.
+From the definition of ${\last}$, it is obvious that 
+${\cdeg}(v) = v - {\pred}_1({\last}, v-1)$.
+The time complexity is $\Order(t_b(m,2))$.
+
+The ${\child}(v,c)$ operation is done as follows.
+For any $1 \le i \le m$, we define $R(i) = [{\pred}_1({\last},i-1)+1,{\succ}_1({\last},i)]$,
+which is the range of $W$ and ${\last}$ that for all $j \in R(i)$, ${\Node}[j]$ are identical.
+The labels of outgoing edges of node $v$ are stored in $W[j]$ for $j \in R(v)$.
+%and they are sorted.  
+%
+%binary searchðµ�?­Ä� �?Crank/selectÅ¢«�?è�?Üé�?D
+%We perform a binary search in the range using the ${\access}$ operation
+%on $W$.  Note that during the binary search we regard any character $a^- \in {\cal A}^-$
+%as the corresponding character $a$ in ${\cal A}$.
+Let $j$ be the index such that $u(W[j]) = c$.
+We can find $j$ by ${\pred}_c(W, v)$ and ${\pred}_{c^-}(W, v)$.
+Then $x = {\child}(v,c)$ can be computed by $x = \fwd(j)$.
+
+The time complexity for ${\child}(v,c)$ is 
+$\Order(t_f + t_b(m, 2\sigma))$.
+
+\subsection{The {\pdeg} and {\parent} operations}
+Consider to compute ${\pdeg}(v)$.
+Let $d = C(v)$ and $x = bwd(v)$.  Then it holds $d = W[x]$ and the first character
+of ${\Node}[x]$ is the label of an edge pointing to $v$.
+Let $y = {\succ}_d(W, x)$.  Then all $d^-$ between $W[x]$ and $W[y]$ correspond
+to parents of $v$.  The number of such $d^-$ is computed by {\rank} on $W$.
+The time complexity is $\Order(t_f + t_b(m,2\sigma))$.
+
+To compute ${\parent}(v,c)$, we need to obtain the first character of ${\Node}[i]$
+such that $x \le i < y$ and $u(W[i]) = d$.  The first character of ${\Node}[i]$
+is computed by $C(b^{k-1}(i))$ where $b^{k-1}$ stands for applying
+${\bwd}({\succ}_1({\last},i))$ repeatedly $k-1$ times.  
+We perform a binary search to
+find the index $i$ such that $c = C({\bwd}^{k-1}(i))$.
+The time complexity is 
+$\Order(k(t_f + t_b(m,2\sigma))\log\sigma)$.
+
+\subsection{The {\search} operation}
+Recall that ${\search}(s)$ returns the index $i$ of the node whose label 
+is the string $s$ of length $k$.
+Precisely, it returns $i$ such that ${\last}[i] = 1$ and ${\Node}[i] = s$.
+The algorithm for ${\search}(s)$ is similar to \cite{FerMan05}.
+Let $i_1 < i_2 < \cdots < i_w$ be the indices such that
+${\last}[i_j] = 1$ and ${\Node}[i_j]$ and $s$ have the same suffix of length $d$ ($1 \le d \le k$).
+Let $i_0$ be the smallest index in $R(i_1)$.
+Then for any $i$ such that $i_0 \le i \le i_w$, ${\Node}[i]$ and $s$ have the same suffix of length $d$
+and for other indices this does not hold.
+Therefore ${\search}(s)$ can be done by computing 
+ranges $[i_0, i_w]$ for $d = 1,2,\ldots,k$.
+Let $c_d$ denote the $d$-th character of $s$ ($1 \le d \le k$).
+For $d=1$, the range is $[F[c_1]+1, F[c_1+1]]$.
+Given the range $[\ell_d, r_d]$ for $d$,  we can compute the range $[\ell_{d+1}, r_{d+1}]$ for $d+1$
+as follows.  The end of the range $r_{d+1}$ is computed by $r_{d+1} = {\child}(r_d, c_{d+1})$.
+The beginning of the range $\ell_d$ is computed by ${\pred}_1({\last},{\child}({\succ}_1({\last}, \ell_d), c_{d+1})+1$.
+
+The above algorithm can be simplified.  Instead of computing ranges $[i_0, i_w]$,
+we can use $[i_1, i_w]$.  For $d=1$, the range is $[{\succ}_1({\last},F[c_1]+1), F[c_1+1]]$.
+Given the range $[\ell_d, r_d]$ for $d$, the range for $d+1$ is obtained by
+$r_{d+1} = {\child}(r_d, c_{d+1})$ and $\ell_{d+1} = {\child}(\ell_d, c_{d+1})$.
+The time complexity is $\Order(k(t_f + t_b(m,2\sigma)))$.
+
+\subsection{Time and space complexities}
+We implement the above data structure for the static case using known succinct data structures.
+The array $F$ is stored in $\sigma \log m$ bits.  The data structure for computing $C(i)$
+uses $\Order(\sigma \log m) + \Order(m \log \log m/\log m)$ bits.  The operation time $t_f$ is constant.
+The string {\last} is stored in $m+\order(m)$ bits so that {\rank}, {\select}, and {\access} takes constant 
+time~\cite{RRR07}.  The string $W$ is stored by using \cite{FerManMakNav06}.  
+Because the characters
+of $W$ are from ${\cal A} \cup {\cal A}^- \cup \{\$_1,\ldots,\$_M\}$, 
+the alphabet size is $2\sigma + M$.
+%
+%Note that there is another character \$ in $W$ which indicates the end of the string, but
+%we do not encode it in $W$.  Instead we store the position of the character using $\log m$ bits.
+%Then the alphabet size of $W$ is $2\sigma$.  
+We can reduce the alphabet size to $2\sigma+1$ by unifying the $M$ terminators
+$\$_1,\ldots,\$_M$ into a character \$.  We distinguish two terminators, but
+encode them using the same code.
+
+The string $W$ is stored in $m \log (2\sigma+M) +
+\Order((\sigma+M) \log m) + \order(m \log\sigma)
+ = m + m \log\sigma + \Order((\sigma+M) \log m) + \order(m \log\sigma)$ bits,
+and the time complexities $t_r, t_s, t_a$ are 
+$\Order(\frac{\log\sigma}{\log\log m})$.
+Therefore the time complexities for {\cdeg}, {\pdeg}, {\child}, {\parent},
+and {\search} are $\Order(\frac{\log\sigma}{\log\log n})$, 
+$\Order(\frac{\log\sigma}{\log\log n})$, 
+$\Order(\frac{\log\sigma}{\log\log n})$, 
+$\Order(\frac{k\log^2\sigma}{\log\log n})$,
+$\Order(\frac{k\log\sigma}{\log\log n})$, respectively.
+
+For polylog-size alphabets, {\cdeg}, {\pdeg} and {\child} takes constant time,
+{\parent} takes $\Order(k \log \sigma)$ time,
+and {\search} takes $\Order(k)$ time.
+
+\section{Construction}
+%Standard, online, external
+
+\subsection{Static construction}
+
+\subsection{On-line construction}
+In this section we propose an on-line construction algorithm of the de Bruijn graph of a string.
+Here on-line means given the succinct de Bruijn graph $G$ of a string $T = T[1] \cdots T[N]$, we change it
+to the succinct de Bruijn graph $G^\prime$ of the string $T^\prime = T[1] \cdots T[N+1]$ which is made by
+appending a character to $T$.
+%We give two algorithms; one is space-efficient and the other is faster.
+%The former uses no additional space, while the latter uses ..............................
+%
+%\subsection{Space-efficient algorithm}
+
+As stated above, our succinct representation of $G$ assumes that a character \$ is appended
+to the end of $T$.  Let $p$ be the position of \$ in $W$.
+To construct the succinct representation of $G^\prime$,
+we first change $W[p]$ from \$ to $T[N+1]$ and modify other parts if necessary,
+then insert \$ to another position of $W$.  The details are as follows.
+
+Let $p$ be the position of \$ in $W$ for the string $T = T[1] \cdots T[N]$.
+If a new character $c = T[N+1]$ is appended to the end of $T$, we change $W[p]$ from \$ to $T[N+1]$.
+We have to maintain the invariant that for all $i \in R(p)$, that is, ${\Node}[i] = {\Node}[p]$,
+$W[i]$ are distinct.
+% and sorted alphabetically.  
+%Such $i$'s satisfy
+%$p \le i \le {\succ}_1({\last}, p)$.  We do a binary search in this range to find the correct
+%position $p^\prime$ for $T[N+1]$.  
+Because before changing $W[p]$ they are distinct, we can check the invariant by finding the character
+$c = T[N+1]$ or $c^-$ in $W[i]$ such that $i \in R(p)$.  This is done by {\rank} and {\select} on $W$.
+%If the same character as $T[N+1]$ does not exist in the range, 
+%we insert $T[N+1]$ at the beginning of the range.  Let $x$ denote this position.
+%otherwise we do not insert and we delete $W[p]$ and ${\last}[p]$.
+
+If $T[N+1]$ already exists in the range, let $p^\prime$ be its position.
+We delete $W[p]$ and ${\last}[p]$ and we insert \$ in $W$ at position $x = {\fwd}(p^\prime)$.
+We also insert $0$ in ${\last}[x]$ because ${\Node}[x]$ already exists.
+We update $p = x$ and the array $F$ accordingly.
+
+If $T[N+1]$ does not exist in the range,
+we change $W[p] = \$ $ to either $c = T[N+1]$ or $c^-$.
+To determine $c$ or $c^-$, we first find the nearest occurrence of $c$ to $W[p]$,
+namely, its position is $j = {\pred}_c(W, p-1)$ if it exists ($j > 0$).
+We compare ${\Node}[j]$ with ${\Node}[p]$.  If they have the same suffix of length $k-1$,
+we change $W[p]$ to $c^-$, and otherwise change $W[p]$ to $c$.
+We compare characters of ${\Node}[j]$ and ${\Node}[p]$ one by one using the {\bwd} function.
+We also compare ${\Node}[j_2]$ with ${\Node}[p]$ where
+$j_2 = {\succ}_c(W, p+1)$ if it exists ($j_2 \le m$).
+If they share the length $k-1$ suffix, we change $c_2 = W[j_2]$ to $c_2^-$.
+This takes $\Order(k(t_f + t_b(m,2\sigma)))$ time.
+If the nearest $c$ does not exist ($j = 0$), let $j = F[c]$.
+The position $x$ to insert \$ is computed by $x = {\fwd}(j)$.
+We insert $0$ to ${\last}[x]$ if $W[p]$ or $W[j_2]$ has a character in ${\cal A}^-$,
+or $1$ otherwise.  Finally we set $p = x$ and update the array $F$.
+
+In total, the update operation takes 
+$\Order(k(t_f + t_b(m,2\sigma)))$ time.
+If we use the dynamic {\rank}/{\select} data structure of \cite{NavSad10}
+for $W$ and ${\last}$, $t_b = \Order(\frac{\log m}{\log \log m}(1+\frac{\log\sigma}{\log\log m}))$ time.
+We also use \cite{NavSad10} for computing $C(i)$.  Then $t_f = \Order(\frac{\log m }{\log \log m}(1+\frac{\log\sigma}{\log\log m}))$
+and the space is $\Order(\sigma \log n) + \Order(m \log \log m/\log m)$ bits.
+Because we repeat this update operation $N$ times for all characters of the input string,
+the succinct de Bruijn graph can be constructed in
+$\Order\left(Nk \cdot \frac{\log m}{\log \log m}
+(1+\frac{\log\sigma}{\log\log m})\right)$ time.
+For polylog-sized alphabets, it becomes $\Order(Nk \cdot \frac{\log m}{\log \log m})$.
+
+It is easy to construct the static data structure from the dynamic one.
+The strings {\last} and $W$ for the static one are generated by
+applying {\access} operations to the dynamic one for $i=1,\ldots,m$
+in $\Order(m t_b(m,2\sigma))$ time.
+After constructing the static strings, the auxiliary data structures for
+computing {\rank}/{\select} are constructed in $\Order(m)$ time.
+
+
+\subsection{External}
+

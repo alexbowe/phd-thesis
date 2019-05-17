@@ -1,19 +1,13 @@
 \documentclass[11pt,a4paper]{report}
 
 %%%%%%%% PACKAGES %%%%%%%%
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{url}
 \def\UrlBreaks{\do\/\do-}
 \usepackage{breakurl}
-\usepackage[breaklinks]{hyperref}
 \usepackage[numbers,sort]{natbib}
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  urlcolor=black
-}
+
 
 %\usepackage{algpseudocode}
 \usepackage{algorithm}
@@ -36,7 +30,14 @@
 \usepackage{comment} % PS
 %\usepackage{pdflscape} % if pdflatex used reverses  also in PDF -- PS
 \usepackage{lscape} %   PS
-
+\usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
 \textwidth16cm
 \oddsidemargin0mm
 \evensidemargin\oddsidemargin
@@ -146,7 +147,7 @@
 \def\pyt#1{}
 \def\pyt#1{\marginpar{\tiny #1}} % comment this to remove margin comments
 
-\includeonly{chapters/introduction}
+%\includeonly{chapters/introduction}
 
 \begin{document}
 
@@ -178,7 +179,7 @@ Chiyoda-ku, Tokyo, Japan}
 
 \include{chapters/introduction}
 
-%\include{chapters/succinct-dbg}
+\include{chapters/succinct-dbg}
 %
 %\include{chapters/variable-order-dbg}
 %
