@@ -25,12 +25,13 @@
 \usepackage{tabularx,booktabs}
 \usepackage{dcolumn}
 \newcolumntype{d}[1]{D{.}{.}{#1}}
+\usepackage{rotating} % To use "sidewaystable"
 
 
 \usepackage{comment} % PS
 %\usepackage{pdflscape} % if pdflatex used reverses  also in PDF -- PS
 \usepackage{lscape} %   PS
-\usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref}
+\usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref} % Hyperref should be the last package called, to prevent problems
 \hypersetup{
   colorlinks,
   citecolor=black,
@@ -181,7 +182,7 @@ Chiyoda-ku, Tokyo, Japan}
 
 \include{chapters/succinct-dbg}
 
-%\include{chapters/variable-order-dbg}
+\include{chapters/variable-order-dbg}
 %
 %\include{chapters/colour-dbg}
 %
