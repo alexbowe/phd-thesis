@@ -1,4 +1,4 @@
-%\section{Methods}
+\section{Methods}
 \label{sec:methods}
 
 Our data structure for colored de Bruijn graphs is based on the succinct representation of individual de Bruijn graphs introduced by \cite{BOSS12}---which we refer to as the BOSS representation from the authors' initials---so we start by describing that representation.  We note that BOSS is itself a generalization of FM-indexes~\citep{FM05} obtained by extending the Burrows-Wheeler transform (BWT) from strings to the multisets of edge-labels of de Bruijn graphs.  We then give a general explanation of how we add colors, and finally give details of our implementation.
@@ -35,9 +35,10 @@ If the individual graphs are sufficiently similar, then we can compress $C$ effe
 Figure~\ref{fig:purple} shows an example of how we represent a colored de Bruijn graph consisting of two individual de Bruijn graphs.  Suppose we are at node {\tt ACG} in the graph, which is the co-lexicographically eighth node.  Since the eighth 1 in $B_L$ is \(B_L [10]\) and it is preceded by two 0s, we see that {\tt ACG}'s outgoing edges' labels are in \(\EBWT [8..10]\), so they are {\tt A}, {\tt C} and {\tt T}.  Suppose we want to follow the outgoing edge $e$ labelled {\tt C}.  We see from \(C [9, 0..1]\) (i.e., the tenth column in $C^\mathrm{T}$) that $e$ appears in the second individual graph but not the first one (i.e., it is blue but not red).    There are four edges labelled {\tt A} in the graph and three {\tt C}s in \(\EBWT (G) [0..9]\), so $e$ is \(F [6]\).  (Since edges labelled {\tt \$} have only one end, they are not included in $L$ or $F$.)  From counting the 1s in \(B_F [0..6]\), we see that $e$ arrives at the fifth node in co-lexicographic order that has incoming edges.  Since the first node, {\tt \$\$\$}, has no incoming edges, that means $e$ arrives at the sixth node in co-lexicographic order, {\tt CGC}.
 
 \begin{figure*}
+\footnotesize
 \begin{tabular}{c@{\hspace{0.03\textwidth}}c@{\hspace{0.03\textwidth}}c}
-\includegraphics[width=.31\textwidth]{purplegraph} &
-\includegraphics[width=.31\textwidth]{newpurplemapping} &
+\includegraphics[width=.3\textwidth]{purplegraph} &
+\includegraphics[width=.3\textwidth]{newpurplemapping} &
 \raisebox{11ex}{$\begin{array}{rr}
    \EBWT (G) = & \mathtt{TCCGTGGGACTAAA\$C}\\[1ex]
          B_F = & \mathtt{ 001111110111111}\\
@@ -69,7 +70,7 @@ and both encodings exploit this sparseness.
 
 \subsubsection{Construction}
 
-\input{construction}
+\input{\coldir/construction}
 %[SJP: The following overly detailed description is from Alex. To be refined.]
 %
 %Getting + sorting necessary kmers

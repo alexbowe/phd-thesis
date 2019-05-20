@@ -31,6 +31,7 @@
 \usepackage{comment} % PS
 %\usepackage{pdflscape} % if pdflatex used reverses  also in PDF -- PS
 \usepackage{lscape} %   PS
+\usepackage{pbox} % 3rd paper
 \usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref} % Hyperref should be the last package called, to prevent problems
 \hypersetup{
   colorlinks,
@@ -148,6 +149,9 @@
 \def\pyt#1{}
 \def\pyt#1{\marginpar{\tiny #1}} % comment this to remove margin comments
 
+\def\vardir{chapters/variable-order-dbg_sections} % Path for the 2nd paper sections
+\def\coldir{chapters/colour-dbg_sections} % Path for the 3rd paper sections
+
 %\includeonly{chapters/introduction}
 
 \begin{document}
@@ -184,7 +188,7 @@ Chiyoda-ku, Tokyo, Japan}
 
 \include{chapters/variable-order-dbg}
 %
-%\include{chapters/colour-dbg}
+\include{chapters/colour-dbg}
 %
 %\include{chapters/experiments}
 %

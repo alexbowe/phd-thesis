@@ -62,7 +62,7 @@ The three different datasets were chosen in order to test and evaluate the perfo
     % plants
 
     % VARI
-    \begin{table*}
+    \begin{sidewaystable}
 
       \small
    \centering
@@ -175,7 +175,7 @@ The three different datasets were chosen in order to test and evaluate the perfo
        \caption{Data structure construction performance measurements.  CPU time is user plus system time as reported by `/bin/time'.  (Internal) memory is reported in megabytes and is the maximum resident set size. KMC2 includes both counting and sorting $k$-mers. $\ours$-dBG forms the $k$-mer union and builds the succinct de Bruijn graph. $\ours$-C compresses the color matrix.}
   \label{tbl-buildper}
 
-      \end{table*}
+      \end{sidewaystable}
 
 
 
@@ -260,7 +260,7 @@ Hence, lowering the memory usage in exchange for higher running time deserves me
 %We note that the ratios were greater for the AMR dataset, which was likely due to the greater number of colors in the AMR versus the \emph{E. coli} and plant datasets (55 versus 6 and 4, respectively).
 
 
-\begin{table*}%[h!]
+\begin{sidewaystable}%[h!]
   \small
   \centering
   \begin{tabular}{| l | r | r | c | c | c |c |}
@@ -285,7 +285,7 @@ Hence, lowering the memory usage in exchange for higher running time deserves me
     %$k= 31$ was used for all datasets.
     The peak memory is given in megabytes (MB) or gigabytes (GB). The running time is reported in seconds (s), minutes (m), and hours (h).  The succinct de Bruijn graph and compressed color matrix components of the memory footprint are listed in parenthesis as sdBG and sC, respectively.}
  \label{tbl-cosmo}
-\end{table*}
+\end{sidewaystable}
 
 
 \subsection{\protect{Validation on Simulated \emph{E. coli}}}
