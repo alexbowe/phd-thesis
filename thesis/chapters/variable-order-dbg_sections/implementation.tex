@@ -1,0 +1,39 @@
+\section{Implementing $\shorter$, $\longer$ and $\maxlen$}
+\label{sec:implementing}
+
+The BOSS representation includes a wavelet tree over the last column $W$ of the BOSS matrix, and a bitvector $L$ of the same length with 1s marking where nodes' intervals end.  In our example, \(W = \mathrm{TCCGTGGATAA\$C}\) and \(L = 1110111011111\).
+
+%With these data structures, 
+Now we can implement \(\maxlen([i, j], a)\) in $\Oh{\log \sigma}$ time: we use $\rank$ and $\select$ on $W$ to find an occurrence \(W [r]\) of $a$ in \(W [i..j]\), if there is one; we then use $\rank$ and $\select$ on $L$ to find the last bit \(L [i' - 1] = 1\) with \(i' \leq r\) and the first bit \(L [j'] = 1\) with \(j' \geq r\), and return \([i', j']\).  (If there is no occurrence of 1 strictly before \(L [r]\), then we set \(i' = 1\).)  We can implement \(\maxlen([i, j], *)\) in $\Oh{1}$ time: instead of using $\rank$ and $\select$ on $W$ to find $r$, we simply choose any $r$ between $i$ and $j$.
+
+In our example, for \(\maxlen([4, 6], \mathrm{G})\) we first find an occurence \(W [r]\) of G in \(W [4..6]\), which could be either \(W [4]\) or \(W [6]\); if we choose \(r = 4\) then the last bit \(L [i' - 1] = 1\) with \(i' \leq r\) is \(L [3]\) and the first bit \(L [j'] = 1\) with \(j' \geq r\) is \(L [5]\), so we return \([i', j'] = [4, 5]\); if we choose \(r = 6\) then the last bit \(L [i' - 1] = 1\) with \(i' \leq r\) is \(L [5]\) and the first bit \(L [j'] = 1\) with \(j' \geq r\) is \(L [6]\), so we return \([i', j'] = [6, 6]\).
+
+To implement $\shorter$ and $\longer$, we store a wavelet tree over the sequence $L^*$ in which \(L^* [i]\) is the length of the longest common suffix of the label of the node in the original graph whose interval includes $i$, and the label of the node whose interval includes \(i + 1\); this takes $\Oh{\log K}$ bits per \((K + 1)\)-mer in the matrix.  To save space, we can omit $K$s in $L^*$, since they correspond to 0s in $L$ and indicate that $i$ and \(i + 1\) are in the interval of the same node in the original graph; the wavelet tree then takes $\Oh{\log K}$ bits per node in the original graph and $\Oh{n \log K}$ bits in total.  In our example, \(L^* = 0, 1, 0, 3, 2, 1, 0, 3, 2, 0, 1, 1\) (and we can omit the 3s to save space).
+
+For \(\shorter([i, j], k)\), we use the wavelet tree over $L^*$ to find the largest \(i' \leq i\) and the smallest \(j' \geq j\) with \(L^* [i' - 1], L^* [j'] < k\) and return \([i', j']\), which takes $\Oh{\log K}$ time.  For \(\longer([i, j], k)\), we use the wavelet tree to find the set \(B = \{b\,:\,L^* [b] < k\,;\,i - 1 \leq b \leq j\}\) --- which includes \(i - 1\) and $j$ --- and then, for each consecutive pair \((b, b')\) in $B$, we report \([b + 1, b']\); this takes a total of $\Oh{|B| \log K}$ time.  With these implementations, if the time bounds for \(\forward(v, a)\), \(\backward(v)\) and \(\lastchar(v)\) are $\Oh{t_\forward}$, $\Oh{t_\backward}$ and $\Oh{t_\lastchar}$ when $v$ is a node in the original graph, respectively, then they are $\Oh{t_\forward + \log \sigma + \log K}$, $\Oh{\sigma (t_\backward + \log K)}$ and $\Oh{t_\lastchar + 1}$ when $v$ is not a node in the original graph.
+
+In our example, for \(\shorter([4, 5], 2)\) we find the largest \(i' \leq 4\) and the smallest \(j' \geq 5\) with \(L^* [i' - 1], L^* [j'] < 2\) --- which are 4 and 6, respectively --- and return \([4, 6]\).  For \(\longer([4, 6], 3)\) we find the set \(B = \{b\,:\,L^* [b] < 3\,;\,3 \leq b \leq 6\} = \{3, 5, 6\}\) and report \([4, 5]\) and \([6, 6]\).
+
+A smaller but slower approach is not to store $L^*$ explicitly but to support access to any cell \(L^* [i]\) by finding the nodes in the original graph whose intervals include $i$ and \(i + 1\), then using $\backward$ and $\lastchar$ to compute their labels and find the length of their longest common suffix; this takes a total of $\Oh{K (t_\backward + t_\lastchar)}$ time.  To implement $\shorter$ and $\longer$, we store a range-minimum data structure~\cite{fh2011} over $L^*$, which takes \(2 n + o (n)\) bits and returns the position of the minimum value in a specified substring of $L^*$ in $\Oh{1}$ time.
+
+For \(\shorter([i, j], k)\), we use binary search and range-minimum queries to find the largest \(i' \leq i\) and the smallest
+\(j' \geq j\) with \(L^* [i' - 1], L^* [j'] < k\) and return \([i', j']\), which takes $\Oh{K (t_\backward + t_\lastchar) \log (n \sigma)}$ time. 
+%(With a more complicated use of the range-minimum data structure, which we will describe in the full version of this paper, we use $\Oh{K^2 (t_\backward + t_\lastchar)}$ time.)
+For \(\longer([i, j], k)\), we recursively split \([i, j]\) into subintervals with range-minimum queries, at each step using $\backward$ and $\lastchar$ to check that the minimum value found is less than $k$; this takes $\Oh{K (t_\backward + t_\lastchar)}$ time per node returned.  With these implementations, \(\forward(v, a)\), \(\backward(v)\) and \(\lastchar(v)\) take $\Oh{t_\forward + K (t_\backward + t_\lastchar) \log (n \sigma)}$, $\Oh{\sigma K (t_\backward + t_\lastchar) \log (n \sigma) + \sigma^2 t_\backward}$ and $\Oh{t_\lastchar + 1}$ time, respectively, when $v$ is not a node in the original graph.
+
+For \(\sigma = \Oh{1}\), our bounds are summarized in the following theorem. % We will provide more details in the full version of this paper.
+
+\begin{theorem}
+\label{thm:bounds}
+When \(\sigma = \Oh{1}\), we can store a variable-order de Bruijn graph in $\Oh{n \log K}$ bits on top of the BOSS representation, where $n$
+is the number of nodes in the $K$th-order de Bruijn graph, and support \forward\ and \backward\ in $\Oh{\log K}$ time and \lastchar\ in
+$\Oh{1}$ time.  We can also use $\Oh{n}$ bits on top of the BOSS representation, at the cost of using $\Oh{K \log n / \log \log n}$ time
+for \forward\ and \backward.
+\end{theorem}
+
+%shorter - logK
+%longer - |B| log K time (for a set of B resulting nodes)
+
+%K^2 log^2 n / log log n
+
+%O(B K^2 log^2 n / log log n)

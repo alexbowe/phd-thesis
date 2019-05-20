@@ -1,0 +1,93 @@
+\section{Preliminaries} \label{sec:preliminaries}
+
+%DO WE WANT A FORMAL DEFINITION OF THE DEBRUIJN GRAPH IN HERE?
+\subsection{De Bruijn Graphs} \label{sec:dbg}
+
+Given an alphabet $\Sigma$ of $\sigma$ symbols and a set of strings $\lbrace
+S_1, S_2, \ldots, S_t \rbrace$, $S_i \in \Sigma^{+}$, the {\em de Bruijn graph}
+of order $K$, denoted $G^S_K$, or just $G_K$, when the context is clear, is a
+directed, labelled graph defined as follows.
+
+Let $M_{K}$ be the set of distinct $K$-mers (strings of length $K$) that occur
+as substrings of some $S_i$. $M_{K+1}$ is defined similarly.  $G_K$ has exactly
+$|M_{K}|$ nodes and with each node $u$ we associate a distinct $K$-mer from
+$M_{K}$, denoted $\nodelabel(u)$. Edges are defined by $M_{K+1}$: for each
+string $T \in M_{K+1}$ there is a directed edge, labelled with symbol $T[K+1]$,
+from node $u$ to node $v$, where $\nodelabel(u) = T[1,K]$ and $\nodelabel(v) =
+T[2,K+1]$. 
+
+\subsection{Rank and Select} \label{sec:rank} Two basic operations used in almost
+every succinct and compressed data structure are {\em rank} and {\em select}.
+Given a sequence (string) $S[1,n]$ over an alphabet $\Sigma =
+\{1,\ldots,\sigma\}$, a character $c \in \Sigma $, and integers $i$,$j$,
+$\rank_c(S,i)$ is the number of times that $c$ appears in $S[1,i]$, and
+$\select_c(S,j)$ is the position of the $j$-th occurrence of $c$ in $S$.
+%There is a great variety of techniques to answer these queries, with
+%suitability depending on the nature of the sequence, for example, on whether or
+%not it will be compressed and on the size of the alphabet.
+For a binary string $B[1,n]$, the classic solution for rank and
+select~\cite{Mun96} is built upon the input sequence, requiring $o(n)$
+additional bits.  Generally, $\rank_1$ and $\select_1$ are considered the
+default rank and select queries.  More advanced solutions
+(e.g.~\cite{bitvector}) achieve zero-order compression of $B$,
+%For example, the several structures (e.g.~\cite{bitvector}), (see
+%also~\cite{kkp2014}), 
+representing it in just $nH_0(B) + o(n)$ bits of space, and supporting $\rank$
+and $\select$ operations in constant time. 
+%Several practical implementations and improvements of RRR exists (see,
+%e.g.,~\cite{kkp2014}).
+
+\subsection{Wavelet Trees} \label{sec:WVT} To support rank and select on larger
+alphabet strings, the wavelet tree~\cite{ggv2003,n2013} is a commonly used data
+structure that occupies $n\log\sigma + o(n\log\sigma)$ bits of space and
+supports $\rank$ and $\select$ queries in $\Oh{\log\sigma}$ time.  Wavelet trees
+also support a variety of more complex queries on the underlying string (see,
+e.g.~\cite{gnp2012}), in $\Oh{\log\sigma}$ time, and we will make use of some of
+this functionality in Section~\ref{sec:implementing}.
+%One we will make use of in this paper is the {\em range successor query},
+%$\rsucc_c(i,j)$, which returns the smallest character $d > c$ in $S[i,j]$, or
+%$\inf$ if no such character exists.  Wavelet trees support \rsucc queries in
+%$\Oh{\log\sigma}$ time.
+
+
+%We will also make use of the Wavelet Tree~\cite{GGV03} data structure on a
+%string $T=a_{1}a_{2} \ldots a_{n}$ over an alphabet $\Sigma$.
+%
+%The Wavelet Tree of $T$ is a binary balanced tree, where each leaf represents a
+%symbol of $\Sigma$. The root is associated with the complete sequence $T$. Its
+%left child is associated with a subsequence obtained by concatenating the
+%symbols $a_i$ of $T$ satisfying $a_i < \sigma /2$. The right child corresponds
+%to the concatenation of every symbol $a_i$ satisfying $a_i \geq \sigma$.  This
+%relation is maintained recursively up to the leaves, which will be associated
+%with the repetitions of a unique symbol.  At each node we store only a binary
+%sequence of the same length of the corresponding sequence, using at each
+%position a $0$ to indicate that the corresponding symbol is mapped to the left
+%child, and a $1$ to indicate the symbol is mapped to the right child.
+%
+%If the bitmaps of the nodes support constant-time {\em rank} and {\em select}
+%queries, then the Wavelet Tree support fast $access$, {\em rank} and {\em
+%select} on $T$.
+%
+%\emph{Access:} In order to obtain the value of $a_{i}$ the algorithm begins at
+%the root, and depending on the value of the root bitmap $B$ at position $i$, it
+%moves down to the left or to the right child. If the bitmap value is $0$ it
+%goes to the left, and replaces $i \leftarrow \rank_{0}(B,i)$. If the bitmap
+%value is $1$ it goes to the right child and replaces $i \leftarrow
+%\rank_{1}(B,i)$.  When a leaf is reached, the symbol associated with that leaf
+%is the value of $a_i$.
+%
+%\emph{Rank:} To obtain the value of $\rank_c(S,i)$ the algorithm is similar: it
+%begins at the root, and goes down updating $i$ as in the previous query, but
+%the path is chosen according to the bits of $c$ instead of looking at $B[i]$.
+%When a leaf is reached, the $i$ value is the answer.
+%
+%\emph{Select:} The value of $\select_c(S,j)$ is computed as follows: The
+%algorithm begins in the leaf corresponding to the character $c$, and then moves
+%upwards until reaching the root.  When it moves from a node to its parent, $j$
+%is updated as $j \leftarrow \select_{0}(B,j)$ if the node is a left child, and
+%$j \leftarrow \select_{1}(B,j)$ otherwise. When the root is reached, the final
+%$j$ value is the answer.
+%
+%{\em Range Successor Queries}.
+
+

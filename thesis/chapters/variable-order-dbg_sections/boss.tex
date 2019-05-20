@@ -1,0 +1,61 @@
+\section{BOSS representation}
+\label{sec:BOSS}
+
+% TODO: take the concise description of BOSS from CDBG paper?
+
+Conceptually, to build the BOSS representation~\cite{bowe} of a $K$th-order de Bruijn graph from a set of \((K + 1)\)-mers, we first add enough dummy \((K + 1)\)-mers starting with \$s so that if \(\alpha a\) is in the set, then some \((K + 1)\)-mer ends with $\alpha$ ($\alpha$ a $K$-mer, $a$ a symbol).  We also add enough dummy \((K + 1)\)-mers ending with \$ that if \(b \alpha\) is in the set, with $\alpha$ containing no \$ symbols, then some \((K + 1)\)-mer starts with $\alpha$.  We then sort the set of \((K + 1)\)-mers into the right-to-left lexicographic order of their first $K$ symbols (with ties broken by the last symbol) to obtain a matrix.  If the $i$th through $j$th \((K + 1)\)-mers start with $\alpha$, then we say node \([i, j]\) in the graph has label $\alpha$, with \(j - i + 1\) outgoing edges labelled with the last symbols of the $i$th through $j$th \((K + 1)\)-mers.  If there are $n$ nodes in the graph, then there are at most \(\sigma n\) rows in the matrix, i.e., \((K + 1)\)-mers.
+
+For example, if \(K = 3\) and the matrix is the one from Bowe et al.'s paper,
+shown in the left of Fig.~\ref{fig:matrix}, then the \(n = 11\) nodes are
+\begin{gather*}
+ [1, 1], [2, 2], [3, 3], [4, 5], [6, 6], [7, 7], [8, 9], [10,
+ 10], [11, 11], \\ [12, 12], [13, 13]
+\end{gather*}
+with labels
+
+\begin{gather*}
+ \mathrm{\$\$\$}, \mathrm{CGA}, \mathrm{\$TA}, \mathrm{GAC}, \mathrm{TAC},
+\mathrm{GTC}, \mathrm{ACG}, \mathrm{TCG}, \mathrm{\$\$T}, \\
+\mathrm{ACT}, \mathrm{CGT},
+\end{gather*}%
+respectively. The 3rd-order de Bruijn graph itself is shown in the right of the figure.
+
+\begin{figure*}[!t]
+\centering
+\begin{tabular}{c@{\hspace{10ex}}c}
+\begin{tabular}{r@{\hspace{1ex}}@{\hspace{1ex}}@{\hspace{1ex}}l@{\hspace{1ex}}c}
+1) & \,\$\,\$\,\$\, & T\\
+2) & CGA & C\\
+3) & \,\$\,TA & C\\
+4) & GAC & G\\
+5) & GAC & T\\
+6) & TAC & G\\
+7) & GTC & G\\
+8) & ACG & A\\
+9) & ACG & T\\
+10) & TCG & A\\
+11) & \,\$\,\$\,T & A\\
+12) & ACT & \$\\
+13) & CGT & C
+\end{tabular} &
+\raisebox{-10ex}
+{\includegraphics*[trim = 0cm 0cm 9cm 24cm, width=50ex]{graph.pdf}}
+\end{tabular}
+\caption{The BOSS matrix (left) and de Bruijn graph (right) for the quadruples CGAC, GACG, GACT, TACG, GTCG, ACGA, ACGT, TCGA, CGTC.}
+\label{fig:matrix}
+\hrulefill
+\end{figure*}
+
+Bowe et al.\ described a number of queries on the graph, all of which can be implemented in terms of the following three with at most an $\Oh{\sigma}$-factor slowdown:
+\begin{itemize}
+\item $\forward(v, a)$ returns the node $w$ reached from $v$ by an edge labelled $a$, or NULL if there is no such node;
+\item $\backward(v)$ lists the nodes $u$ with an edge from $u$ to $v$;
+\item $\lastchar(v)$ returns the last character of $v$'s label.
+\end{itemize}
+In our example, \(\forward \allowbreak ([8, 9], \mathrm{A}) \allowbreak =
+\allowbreak [2, 2]\),
+\(\backward \allowbreak ([2, 2]) \allowbreak = \allowbreak [8, 9], [10, 10]\) and
+\(\lastchar \allowbreak ([8, 9]) \allowbreak = \allowbreak \mathrm{G}\).
+Since $\backward$ always returns at least one node, we can recover any non-dummy node's entire label by $K$ calls to $\lastchar$ interleaved with \(K - 1\) calls to $\backward$.
+
+
