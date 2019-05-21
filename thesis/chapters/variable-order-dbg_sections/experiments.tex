@@ -1,7 +1,7 @@
 \section{Experiments}
 \label{sec:experiments}
 
-\begin{sidewaystable}
+\begin{table}
 %\caption{Construction Time and Memory Usage (top), and Mean Time per Navigation Operation (lower).}
 \caption{Input size (top), construction time, memory use, and structure size (middle), and mean time taken for each 
 navigation operation (lower), for all data sets and both structures. For variable-order, the multipliers in
@@ -9,8 +9,9 @@ parenthesis are the increase over the fixed-order results. Cells marked ``N/A'' 
 possible with that structure.
 %The times in parentheses for $\longer$ are the mean times per node in the resulting set.
 }
-\small
-\begin{tabularx}{\linewidth}{rd{3.2}d{4.9}d{3.2}d{4.9}d{3.2}d{5.9}d{3.2}d{5.9}}
+\scriptsize
+\setlength\tabcolsep{3pt}
+\begin{tabularx}{\linewidth}{@{}rd{3.2}d{4.9}d{3.2}d{4.9}d{3.2}d{5.9}d{3.2}d{5.9}@{}}
 % manual : http://ftp.jaist.ac.jp/pub/CTAN/macros/latex/required/tools/tabularx.pdf
 						%\cline{2-9}
 \toprule
@@ -65,7 +66,7 @@ $\longer_8$ ($\mu$s)  &\multicolumn{1}{r}{N/A}  &6441.33 &\multicolumn{1}{r}{N/A
 % $\dagger$ $\lastchar$ is a reverse lookup in a very small array, so the speed is in fractions of a nanosecond.
 % $\ddagger$ $\longer$ is reported as the average time  for the inputs $1$,$2$,$4$,$8$, due to much longer calculation time. }
 \label{tab:nav-time}
-\end{sidewaystable}
+\end{table}
 
 %We have implemented the faster version of our data structure on top of an efficient implementation of the BOSS single-$K$ data structure\footnote{The
 We have implemented the wavelet tree based data structure on top of an efficient implementation of the BOSS single-$K$ data structure\footnote{The
