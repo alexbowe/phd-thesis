@@ -72,13 +72,15 @@
 }
 
 \newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{definition}{Definition}
-\newtheorem{observation}{Observation}
+\numberwithin{lemma}{chapter}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{definition}{Definition}
+%\newtheorem{observation}{Observation}
 %\newtheorem{claim}{Claim}
 \newtheorem{theorem}{Theorem}
+\numberwithin{theorem}{chapter}
 %\newcommand{\proof}[1]{{\em Proof}}
-\newtheorem{claim}{Claim}
+%\newtheorem{claim}{Claim}
 
 \newcommand{\Oh}[1]
   {\ensuremath{\mathcal{O}\!\left( #1 \right)}}
@@ -163,7 +165,7 @@
 {\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
 {\end{threeparttable}\end{adjustbox}\end{table}}
 %\includeonly{chapters/blog}
-\newcommand\mypaper[2]{{\bigskip\advance\leftskip.5\parindent\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
+\newcommand\mypaper[2]{{\bigskip\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
 
 \begin{document}
 
