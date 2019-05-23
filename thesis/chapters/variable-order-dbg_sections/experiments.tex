@@ -1,7 +1,7 @@
 \section{Experiments}
 \label{sec:experiments}
 
-\begin{table}
+\begin{mytable}[t!]
 %\caption{Construction Time and Memory Usage (top), and Mean Time per Navigation Operation (lower).}
 \caption{Input size (top), construction time, memory use, and structure size (middle), and mean time taken for each 
 navigation operation (lower), for all data sets and both structures. For variable-order, the multipliers in
@@ -11,11 +11,11 @@ possible with that structure.
 }
 \scriptsize
 \setlength\tabcolsep{3pt}
-\begin{tabularx}{\linewidth}{@{}rd{3.2}d{4.9}d{3.2}d{4.9}d{3.2}d{5.9}d{3.2}d{5.9}@{}}
+\begin{tabular}{@{}rd{3.2}d{4.9}d{3.2}d{4.9}d{3.2}d{5.9}d{3.2}d{5.9}@{}}
 % manual : http://ftp.jaist.ac.jp/pub/CTAN/macros/latex/required/tools/tabularx.pdf
 						%\cline{2-9}
 \toprule
-Dataset     & \multicolumn{2}{c}{{\em E.~coli}} & \multicolumn{2}{c}{Human chromosome 14} & \multicolumn{2}{c}{Human} 		& \multicolumn{2}{c}{Parrot} \\
+{\bf Dataset}     & \multicolumn{2}{c}{{\em E.~coli}} & \multicolumn{2}{c}{Human chromosome 14} & \multicolumn{2}{c}{Human} 		& \multicolumn{2}{c}{Parrot} \\
 % I think DSK size + number of K-mers is enough to demonstrate the increasing data set size
 % I don't have times for DSK, so I'd have to run those again if needed
 %Genome Size (bp) & \multicolumn{2}{c}{{4,639,221}} & \multicolumn{2}{c}{88,289,540} & \multicolumn{2}{c}{} 		& \multicolumn{2}{c}{} \\
@@ -24,15 +24,15 @@ Dataset     & \multicolumn{2}{c}{{\em E.~coli}} & \multicolumn{2}{c}{Human chrom
 %K & \multicolumn{2}{c}{{27}} & \multicolumn{2}{c}{55} & \multicolumn{2}{c}{55} 		& \multicolumn{2}{c}{55} \\
 %Frequency Threshold & \multicolumn{2}{c}{{1}} & \multicolumn{2}{c}{1} & \multicolumn{2}{c}{2} 		& \multicolumn{2}{c}{1} \\
 %DSK Time (mins) & \multicolumn{2}{c}{{}} & \multicolumn{2}{c}{} & \multicolumn{2}{c}{} 		& \multicolumn{2}{c}{} \\
-DSK Size (GB) & \multicolumn{2}{c}{{1.52}} & \multicolumn{2}{c}{6.88} & \multicolumn{2}{c}{26.74} 		& \multicolumn{2}{c}{70.28} \\
-Number of $K$-mers & \multicolumn{2}{c}{{204,098,902}} & \multicolumn{2}{c}{461,445,333} & \multicolumn{2}{c}{1,794,522,954} 		& \multicolumn{2}{c}{4,716,731,435} \\
-BOSS Order & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} \\
+{\bf DSK Size (GB)} & \multicolumn{2}{c}{{1.52}} & \multicolumn{2}{c}{6.88} & \multicolumn{2}{c}{26.74} 		& \multicolumn{2}{c}{70.28} \\
+{\bf\boldmath Number of $K$-mers} & \multicolumn{2}{c}{{204,098,902}} & \multicolumn{2}{c}{461,445,333} & \multicolumn{2}{c}{1,794,522,954} 		& \multicolumn{2}{c}{4,716,731,435} \\
+{\bf BOSS Order} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} \\
 \midrule
 %\cline{1-9}
-Construction (mins) & 3.93 & 5.09 \enspace (1.30{\sf x}) & 14.37 & 18.72 \enspace (1.30{\sf x}) & 64.45 & 83.85 \enspace (1.30{\sf x})& 162.58 & 225.73 \enspace (1.39{\sf x})\\
-Graph Size (GB)  			   & 0.16  & 0.41 \enspace (2.56{\sf x})  & 0.40   & 1.38 \enspace (3.45{\sf x}) & 1.67 & 5.42 \enspace (3.25{\sf x}) & 4.20 & 13.60 \enspace (3.24{\sf x}) \\
-Peak RAM (GB)  		 & 3.16 & 3.16 \enspace (1.00{\sf x}) & 3.22 & 3.22 \enspace (1.00{\sf x})& 7.65 & 9.31 \enspace (1.22{\sf x}) & 15.30 & 15.29 \enspace (1.00{\sf x}) \\
-Peak Disk (GB)  	 & 12.17 & 12.17 \enspace (1.00{\sf x}) & 56.68 & 56.68 \enspace (1.00{\sf x}) & 248.37 & 248.37 \enspace (1.00{\sf x}) & 562.28 & 562.28 \enspace (1.00{\sf x})\\
+{\bf Construction (mins)} & 3.93 & 5.09 \enspace (1.30{\sf x}) & 14.37 & 18.72 \enspace (1.30{\sf x}) & 64.45 & 83.85 \enspace (1.30{\sf x})& 162.58 & 225.73 \enspace (1.39{\sf x})\\
+{\bf Graph Size (GB)}  			   & 0.16  & 0.41 \enspace (2.56{\sf x})  & 0.40   & 1.38 \enspace (3.45{\sf x}) & 1.67 & 5.42 \enspace (3.25{\sf x}) & 4.20 & 13.60 \enspace (3.24{\sf x}) \\
+{\bf Peak RAM (GB)}  		 & 3.16 & 3.16 \enspace (1.00{\sf x}) & 3.22 & 3.22 \enspace (1.00{\sf x})& 7.65 & 9.31 \enspace (1.22{\sf x}) & 15.30 & 15.29 \enspace (1.00{\sf x}) \\
+{\bf Peak Disk (GB)}  	 & 12.17 & 12.17 \enspace (1.00{\sf x}) & 56.68 & 56.68 \enspace (1.00{\sf x}) & 248.37 & 248.37 \enspace (1.00{\sf x}) & 562.28 & 562.28 \enspace (1.00{\sf x})\\
 %\cline{1-9}
 \midrule
 $\forward$ ($\mu$s)   & 6.00 & 17.03 \enspace (2.84{\sf x}) &6.24	&16.17 \enspace (2.59{\sf x}) &7.07	&18.31 \enspace (2.59{\sf x})&7.77	 &19.39 \enspace (2.50{\sf x})\\
@@ -62,11 +62,11 @@ $\longer_8$ ($\mu$s)  &\multicolumn{1}{r}{N/A}  &6441.33 &\multicolumn{1}{r}{N/A
 %$\longer_8$ nodes&	N/A	20010.15	N/A	11824.04	N/A	36370.68	N/A	52388.38
 \bottomrule
 %\cline{2-9}
-\end{tabularx}
+\end{tabular}
 % $\dagger$ $\lastchar$ is a reverse lookup in a very small array, so the speed is in fractions of a nanosecond.
 % $\ddagger$ $\longer$ is reported as the average time  for the inputs $1$,$2$,$4$,$8$, due to much longer calculation time. }
 \label{tab:nav-time}
-\end{table}
+\end{mytable}
 
 %We have implemented the faster version of our data structure on top of an efficient implementation of the BOSS single-$K$ data structure\footnote{The
 We have implemented the wavelet tree based data structure on top of an efficient implementation of the BOSS single-$K$ data structure\footnote{The

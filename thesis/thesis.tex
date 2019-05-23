@@ -2,6 +2,7 @@
 
 %%%%%%%% PACKAGES %%%%%%%%
 \usepackage[utf8]{inputenc}
+\usepackage[left=1.5in,right=1.5in]{geometry}
 \usepackage{graphicx}
 \usepackage{url}
 \def\UrlBreaks{\do\/\do-}
@@ -22,7 +23,8 @@
 \usepackage{mathrsfs}
 \usepackage{color}
 \usepackage{multirow}
-\usepackage{tabularx,booktabs}
+\usepackage{booktabs}
+\usepackage{threeparttable}
 \usepackage{dcolumn}
 \newcolumntype{d}[1]{D{.}{.}{#1}}
 \usepackage{rotating} % To use "sidewaystable"
@@ -32,6 +34,9 @@
 %\usepackage{pdflscape} % if pdflatex used reverses  also in PDF -- PS
 \usepackage{lscape} %   PS
 \usepackage{pbox} % 3rd paper
+\usepackage{setspace} % To achieve 1.5 spacing
+\onehalfspacing
+\usepackage{adjustbox} % To have tables wider than the text
 \usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref} % Hyperref should be the last package called, to prevent problems
 \hypersetup{
   colorlinks,
@@ -40,9 +45,9 @@
   linkcolor=black,
   urlcolor=black
 }
-\textwidth16cm
-\oddsidemargin0mm
-\evensidemargin\oddsidemargin
+%\textwidth16cm
+%\oddsidemargin0mm
+%\evensidemargin\oddsidemargin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -75,7 +80,7 @@
 \newtheorem{claim}{Claim}
 
 \newcommand{\Oh}[1]
-  {\ensuremath{\mathcal{O}\!\left( {#1} \right)}}
+  {\ensuremath{\mathcal{O}\!\left( #1 \right)}}
 \newcommand{\forward}
   {\ensuremath{\mathsf{forward}}}
 \newcommand{\backward}
@@ -151,8 +156,11 @@
 
 \def\vardir{chapters/variable-order-dbg_sections} % Path for the 2nd paper sections
 \def\coldir{chapters/colour-dbg_sections} % Path for the 3rd paper sections
-
+\newenvironment{mytable}[1][]%
+{\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
+{\end{threeparttable}\end{adjustbox}\end{table}}
 %\includeonly{chapters/introduction}
+\newcommand\mypaper[2]{{\bigskip\advance\leftskip.5\parindent\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
 
 \begin{document}
 
