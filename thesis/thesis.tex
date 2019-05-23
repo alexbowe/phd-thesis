@@ -37,6 +37,7 @@
 \usepackage{setspace} % To achieve 1.5 spacing
 \onehalfspacing
 \usepackage{adjustbox} % To have tables wider than the text
+\usepackage{siunitx} % Used in Relative Select paper
 \usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref} % Hyperref should be the last package called, to prevent problems
 \hypersetup{
   colorlinks,
@@ -115,6 +116,8 @@
 \newcommand{\EBWT}{\ensuremath{\mathsf{EBWT}}}
 \def\ours{\mbox{\rm {\sc Vari}}}
 \newcommand{\ignore}[1]{}
+\newcommand{\occ}
+	{\ensuremath{\mathsf{occ}}}
 
 \def\child{\textit{outgoing}}
 \def\parent{\textit{incoming}}
@@ -159,7 +162,7 @@
 \newenvironment{mytable}[1][]%
 {\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
 {\end{threeparttable}\end{adjustbox}\end{table}}
-%\includeonly{chapters/introduction}
+%\includeonly{chapters/select}
 \newcommand\mypaper[2]{{\bigskip\advance\leftskip.5\parindent\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
 
 \begin{document}
@@ -210,8 +213,9 @@ Chiyoda-ku, Tokyo, Japan}
 %
 %\include{chapters/acknowledgements}
 
-%\appendix
-%\include{chapters/tables}
+\appendix
+\include{chapters/select}
+% \include{chapters/tables}
 
 % Enable this to list all bibliography entries
 %\nocite{*}
