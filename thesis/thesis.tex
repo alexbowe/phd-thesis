@@ -23,7 +23,7 @@
 \usepackage{mathrsfs}
 \usepackage{color}
 \usepackage{multirow}
-\usepackage{booktabs}
+\usepackage{tabularx,booktabs}
 \usepackage{threeparttable}
 \usepackage{dcolumn}
 \newcolumntype{d}[1]{D{.}{.}{#1}}
@@ -162,7 +162,7 @@
 \newenvironment{mytable}[1][]%
 {\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
 {\end{threeparttable}\end{adjustbox}\end{table}}
-%\includeonly{chapters/select}
+%\includeonly{chapters/blog}
 \newcommand\mypaper[2]{{\bigskip\advance\leftskip.5\parindent\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
 
 \begin{document}
@@ -215,7 +215,10 @@ Chiyoda-ku, Tokyo, Japan}
 
 \appendix
 \include{chapters/select}
-% \include{chapters/tables}
+
+\include{chapters/blog}
+
+%\include{chapters/tables}
 
 % Enable this to list all bibliography entries
 %\nocite{*}
