@@ -48,7 +48,7 @@ Eulerian assembly replaces the overlap graph with a de Bruijn graph~\cite{IW95, 
 
 \emph{Contigs} (contiguous sequences) are then found by following the edges between two branches (see Figure \ref{figure:dbg}). Most modern assembler programs use this paradigm~\cite{bankevich2012spades,peng2010idba,Li:2010,Simpson:2009,Butler:2008,SahShi12,MacPrz09,ZerBir08}. See \cite{compeau11} for a thorough explanation of de Bruijn graphs and their use in assembly.
 
-While the de Bruijn graph can be constructed more efficiently than the overlap graph, it remains a bottleneck in assembly, both in terms of speed and size, with a de Bruijn graph of a human genome requiring 300 GB of RAM~\cite{Simpson:2009}. Previous work has reduced this to 30 GB~\cite{Conway}. This thesis reduces this to 2 GB, bringing it in line with commodity hardware - a student or field biologist could now perform this on their laptop. Around the same time as the work done in this thesis, an alternative approach with similar performance was published~\cite{wabi}, but the Burrows-Wheeler based approach taken in this thesis offers more flexibility and faster edge traversal.
+While the de Bruijn graph can be constructed more efficiently than the overlap graph, it remains a bottleneck in assembly, both in terms of speed and size, with a de Bruijn graph of a human genome requiring 300 GB of RAM~\cite{Simpson:2009}. Previous work has reduced this to 30 GB~\cite{conway}. This thesis reduces this to 2 GB, bringing it in line with commodity hardware - a student or field biologist could now perform this on their laptop. Around the same time as the work done in this thesis, an alternative approach with similar performance was published~\cite{wabi}, but the Burrows-Wheeler based approach taken in this thesis offers more flexibility and faster edge traversal.
 
 
 
@@ -76,7 +76,11 @@ This thesis is comprised of the following three published papers:
 
 %TODO: Try to cite the papers in the headings?
 
-\paragraph{I. Succinct de Bruijn Graphs} \
+\mypaper{Succinct de Bruijn Graphs} 
+{Alexander Bowe, Taku Onodera, Kunihiko Sadakane, and Tetsuo Shibuya.\\
+In \textit{Algorithms in Bioinformatics. Proceedings of WABI 2012} (B.~Raphael and J.~Tang, editors). 
+Lecture Notes in Computer Science vol. 7534, pages 225--235. 
+Springer, Berlin, Heidelberg, 2012.}
 
 \noindent
 We propose a new succinct de Bruijn graph representation.  
@@ -89,7 +93,9 @@ and $\Order(k)$ time, respectively.
 The data structure is constructed in $\Order(Nk \log m/\log\log m)$
 time using no additional space.
 
-\paragraph{II. Variable-order de Bruijn Graphs} \
+\mypaper{Variable-Order de Bruijn Graphs}
+{Christina Boucher, Alex Bowe, Travis Gagie, Simon J.~Puglisi, and Kunihiko Sadakane.\\
+In \textit{Proceedings of the 2015 Data Compression Conference}, Snowbird, Utah, pages 383--392. IEEE, 2015.}
 
 \noindent
 The de Bruijn graph $G_K$ of a set of strings $S$ is a key data structure in 
@@ -110,7 +116,10 @@ a single data structure.
 Our experiments show our variable-order de Bruijn graph only modestly increases
 space usage, construction time, and navigation time compared to a single order graph.
 
-\paragraph{III. Colored de Bruijn Graphs} \
+
+\mypaper{Succinct colored de Bruijn graphs}
+{Martin D.~Muggli, Alexander Bowe, Noelle R.~Noyes, Paul S.~Morley, Keith E.~Belk, Robert Raymond, Travis Gagie, Simon J.~Puglisi, and Christina Boucher.\\
+\textit{Bioinformatics}, 33(20):3181--3187, 2017.}
 
 \noindent
 Iqbal et al. (Nature Genetics, 2012) introduced the {\em colored de Bruijn graph}, a variant of the classic de Bruijn graph, which is aimed at ``detecting and genotyping simple and complex genetic variants in an individual or population''.

@@ -1,0 +1,40 @@
+
+\section{Background}\label{sec:related}
+
+\paragraph{Rank and Select}
+\label{sec:rank}
+Two basic operations
+used in almost every succinct and compressed data structure are {\em rank} and
+{\em select}. Given a sequence (string) $S[1,n]$ over an alphabet $\Sigma =
+\{1,\ldots,\sigma\}$, a character $c \in \Sigma $, and integers
+$i$,$j$, $\rank_c(S,i)$ is the number of times that $c$ appears in
+$S[1,i]$, and $\select_c(S,j)$ is the position of the $j$-th
+occurrence of $c$ in $S$.
+%There is a great variety of techniques to answer these queries,
+%with suitability depending on the nature of the sequence, for example, on
+%whether or not it will be compressed and on the size of the alphabet.
+For a binary string $B[1,n]$, the classic solution for rank and select~\cite{Mun96} 
+is built upon the input sequence, requiring $o(n)$ additional bits.
+Generally, $\rank_1$ and $\select_1$ are considered the default
+rank and select queries.
+More advanced solutions (e.g.~\cite{bitvector}) achieve zero-order 
+compression of $B$,
+%For example, the several structures (e.g.~\cite{bitvector}),
+%(see also~\cite{kkp2014}), 
+representing it in just $nH_0(B) + o(n)$ bits of space, and supporting $\rank$ and
+$\select$ operations in constant time. 
+%Several practical implementations
+%and improvements of RRR exists (see, e.g.,~\cite{kkp2014}).
+
+\paragraph{Wavelet Trees}
+\label{sec:WVT}
+To support rank and select on larger alphabet strings, the wavelet tree~\cite{ggv2003,n2013} is a 
+commonly used data structure that occupies $n\log\sigma + o(n\log\sigma)$
+bits of space and supports $\rank$ and $\select$ queries in $\Oh{\log\sigma}$ time.
+Wavelet trees also support a variety of more complex queries on the underlying string (see, e.g.~\cite{gnp2012}),
+in $\Oh{\log\sigma}$ time, and we will make use of some of this functionality in Section~\ref{sec:implementing}.
+
+\paragraph{Coloured de Bruijn Graphs}
+\textbf{This would probaby go better in the introduction but it was being edited.}
+SplitMEM in 2014, by S. Marcus. et. al.~\cite{splitmem}. Sequence Bloom Trees in 2015, by B. Solomon and C. Kingsford~\cite{SBT}.
+Later, Bloom Filter Trie in 2015, by G. Holley et. al.~\cite{BFT}.

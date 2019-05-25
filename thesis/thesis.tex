@@ -2,6 +2,7 @@
 
 %%%%%%%% PACKAGES %%%%%%%%
 \usepackage[utf8]{inputenc}
+\usepackage[left=1.5in,right=1.5in]{geometry}
 \usepackage{graphicx}
 \usepackage{url}
 \def\UrlBreaks{\do\/\do-}
@@ -23,14 +24,21 @@
 \usepackage{color}
 \usepackage{multirow}
 \usepackage{tabularx,booktabs}
+\usepackage{threeparttable}
 \usepackage{dcolumn}
 \newcolumntype{d}[1]{D{.}{.}{#1}}
+\usepackage{rotating} % To use "sidewaystable"
 
 
 \usepackage{comment} % PS
 %\usepackage{pdflscape} % if pdflatex used reverses  also in PDF -- PS
 \usepackage{lscape} %   PS
-\usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref}
+\usepackage{pbox} % 3rd paper
+\usepackage{setspace} % To achieve 1.5 spacing
+\onehalfspacing
+\usepackage{adjustbox} % To have tables wider than the text
+\usepackage{siunitx} % Used in Relative Select paper
+\usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref} % Hyperref should be the last package called, to prevent problems
 \hypersetup{
   colorlinks,
   citecolor=black,
@@ -38,9 +46,9 @@
   linkcolor=black,
   urlcolor=black
 }
-\textwidth16cm
-\oddsidemargin0mm
-\evensidemargin\oddsidemargin
+%\textwidth16cm
+%\oddsidemargin0mm
+%\evensidemargin\oddsidemargin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -64,16 +72,18 @@
 }
 
 \newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{definition}{Definition}
-\newtheorem{observation}{Observation}
+\numberwithin{lemma}{chapter}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{definition}{Definition}
+%\newtheorem{observation}{Observation}
 %\newtheorem{claim}{Claim}
 \newtheorem{theorem}{Theorem}
+\numberwithin{theorem}{chapter}
 %\newcommand{\proof}[1]{{\em Proof}}
-\newtheorem{claim}{Claim}
+%\newtheorem{claim}{Claim}
 
 \newcommand{\Oh}[1]
-  {\ensuremath{\mathcal{O}\!\left( {#1} \right)}}
+  {\ensuremath{\mathcal{O}\!\left( #1 \right)}}
 \newcommand{\forward}
   {\ensuremath{\mathsf{forward}}}
 \newcommand{\backward}
@@ -108,6 +118,8 @@
 \newcommand{\EBWT}{\ensuremath{\mathsf{EBWT}}}
 \def\ours{\mbox{\rm {\sc Vari}}}
 \newcommand{\ignore}[1]{}
+\newcommand{\occ}
+	{\ensuremath{\mathsf{occ}}}
 
 \def\child{\textit{outgoing}}
 \def\parent{\textit{incoming}}
@@ -147,7 +159,13 @@
 \def\pyt#1{}
 \def\pyt#1{\marginpar{\tiny #1}} % comment this to remove margin comments
 
-%\includeonly{chapters/introduction}
+\def\vardir{chapters/variable-order-dbg_sections} % Path for the 2nd paper sections
+\def\coldir{chapters/colour-dbg_sections} % Path for the 3rd paper sections
+\newenvironment{mytable}[1][]%
+{\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
+{\end{threeparttable}\end{adjustbox}\end{table}}
+%\includeonly{chapters/blog}
+\newcommand\mypaper[2]{{\bigskip\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
 
 \begin{document}
 
@@ -179,11 +197,17 @@ Chiyoda-ku, Tokyo, Japan}
 
 \include{chapters/introduction}
 
+\include{chapters/succinct-intro}
+
 \include{chapters/succinct-dbg}
 
-%\include{chapters/variable-order-dbg}
-%
-%\include{chapters/colour-dbg}
+\include{chapters/variable-order-intro}
+
+\include{chapters/variable-order-dbg}
+
+\include{chapters/colour-intro}
+
+\include{chapters/colour-dbg}
 %
 %\include{chapters/experiments}
 %
@@ -191,7 +215,11 @@ Chiyoda-ku, Tokyo, Japan}
 %
 %\include{chapters/acknowledgements}
 
-%\appendix
+\appendix
+\include{chapters/select}
+
+\include{chapters/blog}
+
 %\include{chapters/tables}
 
 % Enable this to list all bibliography entries

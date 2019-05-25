@@ -1,0 +1,250 @@
+\section{Experiments}
+\label{sec:experiments}
+
+\begin{mytable}[t!]
+%\caption{Construction Time and Memory Usage (top), and Mean Time per Navigation Operation (lower).}
+\caption{Input size (top), construction time, memory use, and structure size (middle), and mean time taken for each 
+navigation operation (lower), for all data sets and both structures. For variable-order, the multipliers in
+parenthesis are the increase over the fixed-order results. Cells marked ``N/A'' for fixed-order indicate operations not
+possible with that structure.
+%The times in parentheses for $\longer$ are the mean times per node in the resulting set.
+}
+\scriptsize
+\setlength\tabcolsep{3pt}
+\begin{tabular}{@{}rd{3.2}d{4.9}d{3.2}d{4.9}d{3.2}d{5.9}d{3.2}d{5.9}@{}}
+% manual : http://ftp.jaist.ac.jp/pub/CTAN/macros/latex/required/tools/tabularx.pdf
+						%\cline{2-9}
+\toprule
+{\bf Dataset}     & \multicolumn{2}{c}{{\em E.~coli}} & \multicolumn{2}{c}{Human chromosome 14} & \multicolumn{2}{c}{Human} 		& \multicolumn{2}{c}{Parrot} \\
+% I think DSK size + number of K-mers is enough to demonstrate the increasing data set size
+% I don't have times for DSK, so I'd have to run those again if needed
+%Genome Size (bp) & \multicolumn{2}{c}{{4,639,221}} & \multicolumn{2}{c}{88,289,540} & \multicolumn{2}{c}{} 		& \multicolumn{2}{c}{} \\
+%Number of Reads & \multicolumn{2}{c}{{}} & \multicolumn{2}{c}{} & \multicolumn{2}{c}{} 		& \multicolumn{2}{c}{} \\
+%\midrule
+%K & \multicolumn{2}{c}{{27}} & \multicolumn{2}{c}{55} & \multicolumn{2}{c}{55} 		& \multicolumn{2}{c}{55} \\
+%Frequency Threshold & \multicolumn{2}{c}{{1}} & \multicolumn{2}{c}{1} & \multicolumn{2}{c}{2} 		& \multicolumn{2}{c}{1} \\
+%DSK Time (mins) & \multicolumn{2}{c}{{}} & \multicolumn{2}{c}{} & \multicolumn{2}{c}{} 		& \multicolumn{2}{c}{} \\
+{\bf DSK Size (GB)} & \multicolumn{2}{c}{{1.52}} & \multicolumn{2}{c}{6.88} & \multicolumn{2}{c}{26.74} 		& \multicolumn{2}{c}{70.28} \\
+{\bf\boldmath Number of $K$-mers} & \multicolumn{2}{c}{{204,098,902}} & \multicolumn{2}{c}{461,445,333} & \multicolumn{2}{c}{1,794,522,954} 		& \multicolumn{2}{c}{4,716,731,435} \\
+{\bf BOSS Order} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} & \multicolumn{1}{c}{fixed} 	& \multicolumn{1}{c}{variable} \\
+\midrule
+%\cline{1-9}
+{\bf Construction (mins)} & 3.93 & 5.09 \enspace (1.30{\sf x}) & 14.37 & 18.72 \enspace (1.30{\sf x}) & 64.45 & 83.85 \enspace (1.30{\sf x})& 162.58 & 225.73 \enspace (1.39{\sf x})\\
+{\bf Graph Size (GB)}  			   & 0.16  & 0.41 \enspace (2.56{\sf x})  & 0.40   & 1.38 \enspace (3.45{\sf x}) & 1.67 & 5.42 \enspace (3.25{\sf x}) & 4.20 & 13.60 \enspace (3.24{\sf x}) \\
+{\bf Peak RAM (GB)}  		 & 3.16 & 3.16 \enspace (1.00{\sf x}) & 3.22 & 3.22 \enspace (1.00{\sf x})& 7.65 & 9.31 \enspace (1.22{\sf x}) & 15.30 & 15.29 \enspace (1.00{\sf x}) \\
+{\bf Peak Disk (GB)}  	 & 12.17 & 12.17 \enspace (1.00{\sf x}) & 56.68 & 56.68 \enspace (1.00{\sf x}) & 248.37 & 248.37 \enspace (1.00{\sf x}) & 562.28 & 562.28 \enspace (1.00{\sf x})\\
+%\cline{1-9}
+\midrule
+$\forward$ ($\mu$s)   & 6.00 & 17.03 \enspace (2.84{\sf x}) &6.24	&16.17 \enspace (2.59{\sf x}) &7.07	&18.31 \enspace (2.59{\sf x})&7.77	 &19.39 \enspace (2.50{\sf x})\\
+$\backward$ ($\mu$s)  & 8.23 & 59.77 \enspace (7.26{\sf x}) &8.47	&55.63 \enspace (6.57{\sf x}) &9.27	&62.85 \enspace (6.78{\sf x})&10.46 &63.87 \enspace (6.11{\sf x})\\
+$\lastchar$ ($\mu$s)  & 0.01 &  0.01 \enspace (1.00{\sf x}) &0.01	& 0.01 \enspace (1.00{\sf x}) &0.01	& 0.01 \enspace (1.00{\sf x})&0.01	 &0.01 \enspace (1.00{\sf x})\\
+
+$\maxlen$ ($\mu$s)    &\multicolumn{1}{r}{N/A}  & 1.43   &\multicolumn{1}{r}{N/A} &1.56	   &\multicolumn{1}{r}{N/A}  	&2.02	    &\multicolumn{1}{r}{N/A}  &2.46 \\ 
+$\maxlen_c$ ($\mu$s)  &\multicolumn{1}{r}{N/A}  &	5.41  &\multicolumn{1}{r}{N/A} &5.98	   &\multicolumn{1}{r}{N/A}  &6.71	    &\multicolumn{1}{r}{N/A}  &7.49 \\
+$\shorter_1$ ($\mu$s) &\multicolumn{1}{r}{N/A}   &	14.65 &\multicolumn{1}{r}{N/A} &17.72	 &\multicolumn{1}{r}{N/A} 	  &19.54	  &\multicolumn{1}{r}{N/A}  &19.84 \\
+$\shorter_2$ ($\mu$s) &\multicolumn{1}{r}{N/A}  &	14.83 &\multicolumn{1}{r}{N/A} &17.79	 &\multicolumn{1}{r}{N/A}  	&19.68	  &\multicolumn{1}{r}{N/A}  &19.98 \\
+$\shorter_4$ ($\mu$s) &\multicolumn{1}{r}{N/A}   &	15.11 &\multicolumn{1}{r}{N/A} &18.02	 &\multicolumn{1}{r}{N/A}   &19.90	  &\multicolumn{1}{r}{N/A}  &20.20 \\
+$\shorter_8$ ($\mu$s) &\multicolumn{1}{r}{N/A}   &	15.73 &\multicolumn{1}{r}{N/A} &18.39	 &\multicolumn{1}{r}{N/A}   &20.29	  &\multicolumn{1}{r}{N/A}  &20.64 \\
+%$\shorter$ ($\mu$s)   &\multicolumn{1}{r}{N/A}   &	15.08 &\multicolumn{1}{r}{N/A} &17.98	 &\multicolumn{1}{r}{N/A}   &19.85	  &\multicolumn{1}{r}{N/A}  &20.17 \\ % mean avg of above 4
+$\longer_1$ ($\mu$s)  &\multicolumn{1}{r}{N/A}   &21.53   &\multicolumn{1}{r}{N/A} &18.61	 &\multicolumn{1}{r}{N/A}   &21.06	  &\multicolumn{1}{r}{N/A}  &20.57 \\ 
+$\longer_2$ ($\mu$s)  &\multicolumn{1}{r}{N/A}  &56.96   &\multicolumn{1}{r}{N/A} &41.08	 &\multicolumn{1}{r}{N/A}   &49.01	  &\multicolumn{1}{r}{N/A}  &47.07\\
+$\longer_4$ ($\mu$s)  &\multicolumn{1}{r}{N/A}   &503.60  &\multicolumn{1}{r}{N/A} &323.50	 &\multicolumn{1}{r}{N/A}   &446.51	  &\multicolumn{1}{r}{N/A}  &428.97 \\
+$\longer_8$ ($\mu$s)  &\multicolumn{1}{r}{N/A}  &6441.33 &\multicolumn{1}{r}{N/A}  &5338.38 &\multicolumn{1}{r}{N/A}   &18349.80	&\multicolumn{1}{r}{N/A}  &24844.80 \\
+
+%$\longer_1$ ($\mu$s)  &\multicolumn{1}{r}{N/A} &21.53 \enspace (10.82)  &\multicolumn{1}{r}{N/A} &18.61 \enspace (12.38)  &\multicolumn{1}{r}{N/A} &21.06 \enspace (13.25)    &\multicolumn{1}{r}{N/A} &20.57 \enspace (12.99)\\ 
+%$\longer_2$ ($\mu$s)  &\multicolumn{1}{r}{N/A} &56.96 \enspace (8.74)   &\multicolumn{1}{r}{N/A} &41.08 \enspace (11.24)  &\multicolumn{1}{r}{N/A} &49.01 \enspace (11.74)    &\multicolumn{1}{r}{N/A} &47.07 \enspace (11.02)\\
+%$\longer_4$ ($\mu$s)  &\multicolumn{1}{r}{N/A} &503.60 \enspace (7.98)  &\multicolumn{1}{r}{N/A} &323.50 \enspace (10.59) &\multicolumn{1}{r}{N/A} &446.51 \enspace (11.04)   &\multicolumn{1}{r}{N/A} &428.97 \enspace (9.95)\\
+%$\longer_8$ ($\mu$s)  &\multicolumn{1}{r}{N/A} &6441.33 \enspace (6.44) &\multicolumn{1}{r}{N/A} &5338.38 \enspace (9.03) &\multicolumn{1}{r}{N/A} &18349.80 \enspace (10.09) &\multicolumn{1}{r}{N/A} &24844.80 \enspace (9.48)\\
+
+%$\longer_1$ nodes&	N/A	39.80	N/A	30.06	N/A	31.78	N/A	31.66
+%$\longer_2$ nodes&	N/A	130.32	N/A	73.11	N/A	83.48	N/A	85.42
+%$\longer_4$ nodes&	N/A	1262.84	N/A	610.77	N/A	809.06	N/A	861.91
+%$\longer_8$ nodes&	N/A	20010.15	N/A	11824.04	N/A	36370.68	N/A	52388.38
+\bottomrule
+%\cline{2-9}
+\end{tabular}
+% $\dagger$ $\lastchar$ is a reverse lookup in a very small array, so the speed is in fractions of a nanosecond.
+% $\ddagger$ $\longer$ is reported as the average time  for the inputs $1$,$2$,$4$,$8$, due to much longer calculation time. }
+\label{tab:nav-time}
+\end{mytable}
+
+%We have implemented the faster version of our data structure on top of an efficient implementation of the BOSS single-$K$ data structure\footnote{The
+We have implemented the wavelet tree based data structure on top of an efficient implementation of the BOSS single-$K$ data structure\footnote{The
+implementation is released under GPLv3 license at \url{http://github.com/cosmo-team/cosmo}. As Cosmo is under continuous development,
+a static snapshot of the code used in this paper is available at \url{https://github.com/cosmo-team/cosmo/tree/varord-paper}.}.
+Both structures make use of the SDSL-lite software library\footnote{\url{https://github.com/simongog/sdsl-lite}} for succinct data structures, and the
+the construction code makes use of the STXXL software library\footnote{\url{https://github.com/stxxl/stxxl}} for external memory data structures and sorting.
+The construction code is also concurrent in many places.%, making use of C++11 threads, and OpenMP\footnote{\url{http://openmp.org/}} for parallel internal memory sorting.
+The smaller but slower version was not implemented.
+%Further implementation details are described in \ref{sec:implementation}.
+
+% TODO : cite their algorithmic paper?
+% What makes STXXL good:
+% http://stxxl.sourceforge.net/tags/master/introduction.html
+% http://stxxl.sourceforge.net/tags/master/design.html
+% http://stxxl.sourceforge.net/tags/master/design_algo_sorting.html
+% http://stxxl.sourceforge.net/tags/master/citelist.html
+
+% System
+Our test machine was a server with a hyperthreaded quad-core 2.93 Ghz Intel Core i7-875K CPU and 16 GB RAM running
+Ubuntu Server 14.04. Four Samsung 850 EVO 250GB SSDs were used for temporary storage for STXXL,
+with a fifth identical drive used for temporary storage for SDSL-Lite and final graph output. In order to make
+use of STXXL's parallel disk and asynchronous I/O support\footnote{\url{http://stxxl.sourceforge.net/tags/master/design_algo_sorting.html}},
+the SSDs were not in a RAID configuration. The input files were read from a mechanical 2TB 7200 RPM disk.
+% I might have been able to load the DSK files from a SSD thinking back... but it wouldn't make a difference except faster run time *for everything*
+
+To minimize the effect of external factors on our results, each experiment was repeated three times with the minimum values
+reported. The swap file was disabled, forcing the operating system to keep each graph completely in memory, and
+there were no other users on the server.
+
+% TODO : should construction be moved up and merged with the above?
+% TODO : describe the construction algorithm
+% TODO : describe why we needed external construction
+
+\subsection{Test Data}
+
+%To assess assembly quality, we aligned the reads to the {\em E.~coli} reference genome (substr.  K-12) using BWA (version 0.5.9) \cite{li2009fast} with default parameters.  We call a read {\em mapped} if BWA outputs an alignment for it and {\em unmapped} otherwise.  Analysis of the alignments revealed that 98\% of the reads mapped to the reference genome, representing an average depth of approximately $600\times$.  Next, we determined the amount of memory and time needed for our method for a larger dataset.  For that, we 
+%The reference genome was also downloaded from the website (Reference genome GCA\_000001405.16).  
+% Analysis of the alignments revealed that 98\% of the reads mapped to the reference genome, which represents 
+% approximately 47x coverage of the genome.
+
+In order to test the scalability of our approach, we repeated the experiment on readsets of varying size.
+Our first data set consists of 27 million paired-end 100 character reads (strings)
+from {\em E.~coli} (substr.  K-12). It was obtained from the NCBI Short Read Archive (accession 
+ERA000206, EMBL-EBI Sequence Read Archive). The total size of this data set is around 2.3 GB compressed on disk (6 GB uncompressed).
+
+The second data set is 36 million 155 character reads from the Human chromosome 14 Illumina reads used in the GAGE
+benchmark\footnote{\url{http://gage.cbcb.umd.edu/}}, totalling 1.3 GB compressed on disk (6 GB uncompressed).
+
+For our third data set we obtained 1,415 million  paired-end 100 character Human genome reads
+(SRX01231) that were generated by Illumina Genome Analyzer (GA) IIx platform. The total size of this data set is 130 GB compressed on disk (470 GB uncompressed).
+
+Our fourth data set is 700 million paired-end 101 character reads, and 131 paired-end 75 character reads from the short
+insert libraries of the Parrot data (ERA201590) provided in Assemblathon 2\cite{assemblathon2}.
+The total size of this data set is 64 GB compressed on disk (245 GB uncompressed).
+
+%We ran DSK on each... The human data set required too much external memory, and the final dBG size would have been too large to fit in internal memory,
+%so had to be re-run with the frequency threshold set to 2.
+
+We used DSK~\cite{dsk} on each data set to find the unique $(K+1)$-mers.
+It is usual to have DSK ignore low-frequency $(K+1)$-mers (as they may result from sequencing errors). 
+However, removing such $(K+1)$-mers may result in the removal of some $k$-mers with $k \leq K$ that would 
+otherwise have an acceptable frequency. We therefore set the frequency threshold to be as low as possible: $1$ (accepting 
+all $(K+1)$-mers) for all data sets except for the Human genome data set, which was too big for our SSDs during construction,
+and too big to fit into RAM afterwards. Hence, for the Human genome data set, the frequency threshold was $2$.
+
+%\footnote{This increases the resulting size, but the size relative to the standard BOSS representation can still be compared.
+%Variable-$K$ frequency filtering can be implemented using the $L^*$ vector, but will affect the dummy edge calculations, and
+%is hence designated as future work.}.
+% TODO: mention mercy kmers (Megahit) as another strategy? ultimately we just don't want gaps
+
+A value of $K = 27$ was chosen
+%\footnote{Note that the BOSS de Bruijn graph is defined in terms of $K+1$-mers, so DSK must be run for $K+1$ (i.e. 28 and 56) rather than for $K$.}
+for the {\em E.~coli} data, and $K = 55$
+for the Human data sets as these values produced good assemblies in previous papers (see, e.g.,~\cite{paul}). $K = 55$ was also chosen for the Parrot
+data set, %as there was no clear choice for $K$ from the Assemblathon 2 contestants, and
+as it produced a graph that almost filled the main memory.
+The resulting file sizes and $(K+1)$-mer totals are shown in Table~\ref{tab:nav-time}.
+
+% TODO: Run experiment with one data set over multiple Ks to see how it scales that way
+
+% TODO: Time DSK (multithreaded) (I don't have timings for these)
+%DSK took 28 and 58 minutes to run on the {\em E.~coli} and human data sets, respectively.
+
+\subsection{Construction}
+\label{sec:construction}
+
+In order to convert the input DSK data to the format required by BOSS (in the correct order, with dummy edges, as required by both single-$K$ and variable-$K$ structures),
+we use the following process, which has been designed with disk I/O in mind.
+
+While reading the DSK input data, we generate and add the reverse complements for each $(K+1)$-mer, then sort them by their first $K$ symbols (the source nodes). Concurrently, we also sort another copy of the $(K+1)$-mers and their reverse complements by their last $K$ symbols (the target nodes). Let the resulting tables
+be $A$ and $B$, respectively.
+
+Next, we calculate the set differences $A-B$, comparing only the $K$-length prefixes to the $K$-length suffixes respectively. This tells us which source nodes do not
+appear as target nodes, which we prepend with $\$$ signs to create the required incoming dummy edges ($K$ each), and then sort by the first $K$ symbols. Concurrently, we also calculate $B-A$ to give us
+the nodes requiring outgoing dummy edges (to which we append $\$$). Let the resulting tables be $I$ and $O$, respectively. At this point $B$ can be deleted.
+%\footnote{This will create duplicate strings, which can be avoided using Longest Common Prefix calculations.}.
+
+Finally, we perform a three-way merge (by first $K$ symbols) of $A$, $I$, and $O$, outputting the rightmost column. In the case of the variable-$K$ graph,
+we also calculate the $L^{*}$ values while merging. Finally, we construct the necessary succinct indexes from the output.
+
+The time bottleneck in the above process is clearly in sorting the $A$ and $I$ tables. $|I|$ can be as big as $K|A|$, but in practice only $1\%$ or fewer
+nodes require incoming dummies. Our elements are of size $\Oh{K}$, thus, overall, construction of both data structures takes $\Oh{K^2|A|\log|A|}$ time
+and $\Oh{K^2|A|}$ space in theory, but in practice takes $\Oh{K|A|\log|A|}$ time and $\Oh{K|A|}$ space.
+
+%The large file sizes necessitated an external construction scheme.
+
+% Draw attention to the limited difference
+%The only place that construction differs for the variable order de Bruijn graph is during the merge, where the longest common suffix length is calculated
+%for consecutive edges, and written to disk. Finally, when constructing the rank and select structures, the variable order de Bruijn graph creates a Wavelet Tree
+%as well.
+
+
+\subsection{Results}
+
+For each data set, the $(K+1)$-mers from DSK (and their reverse complements) were converted into the BOSS format
+using the process outlined in \ref{sec:construction}, using the external memory vectors and multithreaded, external
+memory sort from STXXL. The BOSS structure and $L^{*}$ wavelet tree were then built using indexes from SDSL-lite.
+
+Construction times and structure sizes are shown in Table~\ref{tab:nav-time}.
+While the variable-$K$ BOSS structure is around $30\%$ slower to build, and $2.6$ to $3.5$ times larger 
+than the standard BOSS structure, this is clearly much faster and less space consuming than building 
+$K$ separate instances of the BOSS structure. The peak RAM and disk usage is the same for both structures
+except in the case of the Human genome data set, where the variable-$K$ BOSS structure used $22\%$ more RAM.
+% TODO : repeat, if same results, trace RAM usage, work out why?
+
+% identical peak disk and RAM
+% TODO : Does this sounds week since we didn't measure building/storing each static-k dbg individually?
+% TODO : Should we compare it to megahit?
+
+%% TODO: fix the xs in this table? \times doesnt handle \em well though
+%\begin{table}[h!]
+%\begin{tabularx}{\textwidth}{@{\extracolsep{\fill} } r  c  c   c  c }
+%						& \multicolumn{2}{c}{{\em Escherichia coli}} 		& \multicolumn{2}{c}{Human chromosome 14} \\
+%						\cline{2-5}
+%   						& BOSS 		& multi-K BOSS			& BOSS  		&  multi-K BOSS  \\
+%\hline
+%Wall Time (mins) & 19  & 25 {\em(1.32x)} & 153 & 203 {\em(1.33x)} \\
+%Final Size (MB)  & 163 & 420 {\em(2.58x)} & 414 & 1416 {\em(3.42x)}\\
+%Genome Size (bp) 	&  \multicolumn{2}{c}{4,639,221} 			&  \multicolumn{2}{c}{88,289,540} \\
+%Number of Reads 			&  \multicolumn{2}{c}{27 M} 				&  \multicolumn{2}{c}{36.5 M}  \\
+%DSK Time (mins) 	&  \multicolumn{2}{c}{28} 			&  \multicolumn{2}{c}{58} \\
+%\hline
+%\end{tabularx}
+%\caption{Summary of data sets, as well as construction time and final space for BOSS de Bruijn graph and multi-$K$ de Bruijn graph. For the multi-$K$ BOSS representation, the
+%increase factor is shown in parentheses.}
+%\label{tab:build}
+%\end{table}
+
+%Due to the non-trivial engineering effort required to integrate a particular de Bruijn graph 
+%structure in a live assembler, we compare our new data structure to the original BOSS structure
+%by measuring average times for navigation operations.
+To measure navigation functions $\forward$ and $\backward$ we took the mean time 
+over 20,000 random queries. For the variable-$K$ graph, the $k$ values for each node 
+were chosen randomly between $8$ and $K$. 
+%(involves only a reverse lookup on a very small array). 
+Results are shown in Table~\ref{tab:nav-time}. 
+The new structure makes the $\forward$ operation $2.5$ to $3$ times slower for $k < K$, though we 
+note that for $k = K$ $\forward$ time is identical.
+The $\backward$ operation is much slower in the new structure, but is much less frequently 
+used than $\forward$ in assembly algorithms (for a variation that supports fast
+$\backward$ calculations, see \cite{varorder-latin}). We also measured $\lastchar$, which took only
+nanoseconds on both structures.
+
+To see how fast the order can be changed, we timed $\shorter$ and $\longer$ for
+changes of $1$, $2$, $4$, and $8$ symbols. Our experiments show that in practice changing 
+order by a single symbol ($\shorter_1$ and $\longer_1$) is a cheap operation, taking around the
+same time as $\forward$. For larger changes in order, the time for $\shorter$ is stable
+($\shorter_1$, $\shorter_2$, $\shorter_4$, and $\shorter_8$ all take roughly the same time),
+whereas $\longer$ takes significantly more time as the difference in order increases. This is because
+$\longer$ must compute a set of nodes, and the size of that set grows roughly exponentially with
+the change in order ($\longer$ takes around $10 \mu$s per node when averaged over the size of the resulting set).
+%If not every node in the result is to be visited, the set could instead be calculated lazily.
+
+As expected, $\maxlen$ is very fast (it requires a single rank and select operation
+over a bit vector), and only slightly affected when finding the specified outgoing edge label (which
+uses a rank and select over the BOSS wavelet tree instead).
+
+% TODO: add separate measurements for 2,4,8... but as order changes increase, the... factor is more evident.
+
+

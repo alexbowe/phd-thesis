@@ -1,0 +1,2279 @@
+% Encoding: UTF-8
+
+
+
+
+@article{splitmem,
+	
+Author = {Marcus, Shoshana and Lee, Hayan and Schatz, Michael C},
+	
+Journal = {Bioinformatics},
+	
+Number = {24},
+	Pages = {3476--3483},
+	
+Publisher = {Oxford Univ Press},
+	
+Title = {SplitMEM: A graphical algorithm for pan-genome analysis with suffix skips},
+	
+Volume = {30},
+	
+Year = {2014}}
+
+
+
+@article{SBT,
+	Author = {Solomon, Brad and Kingsford, Carleton},
+	
+Journal = {bioRxiv},
+	
+Pages = {017087},
+	
+Publisher = {Cold Spring Harbor Labs Journals},
+	
+Title = {Large-Scale Search of Transcriptomic Read Sets with Sequence Bloom Trees},
+	
+Year = {2015}}
+
+
+
+@article{BFT,
+	
+Author = {Holley, Guillaume and Wittler, Roland and Stoye, Jens},
+	
+Journal = {Algorithms in Bioinformatics},
+	
+Pages = {217--230},
+	
+Publisher = {Springer},
+	
+Title = {Bloom Filter Trie--A Data Structure for Pan-Genome Storage},
+	
+Year = {2015}}
+
+
+
+@article{carbapenem_review,
+	
+Author = {Anne Marie Queenan and Karen Bush},
+	
+Journal = {Clinical Microbiology Reviews},
+	
+Number = {3},
+	
+Pages = {440--458},
+	
+Title = {Carbapenemases: the Versatile beta-lactamases},
+	
+Volume = {7},
+	
+Year = {2007}}
+
+
+
+@article{port_2014_metagenomics_AMR_monitoring,
+	
+Author = {Jesse A. Port and Alison C. Cullen and James C. Wallace and Marissa N. Smith and Elaine M. Faustman},
+	
+Journal = {Environmental. Health Perspectives},
+	
+Number = {3},
+	
+Title = {Metagenomic Frameworks for Monitoring Antibiotic Resistance in Aquatic Environments},
+	
+Volume = {122},
+	
+Year = {2014}}
+
+
+
+@article{baquero_metagenomic_epi,
+	
+Author = {Baquero, F. and others},
+	
+Journal = {Clinical Microbiology and Infection},
+	
+Number = {4},
+	
+Pages = {67-73},
+	
+Title = {Metagenomic epidemiology: a public health need for the control of antimicrobial resistance},
+	
+Volume = {18},
+	
+Year = {2012}}
+
+
+
+@article{megahit,
+	
+Author = {Li, D. and Liu, C.-M. and Luo, R. and Sadakane, K. and Lam, T.-W.},
+	
+Journal = {Bioinformatics},
+	
+Number = {10},
+	
+Pages = {1674--1676},
+	
+Title = {{MEGAHIT}: An ultra-fast single-node solution for large and complex metagenomics assembly via succinct de {B}ruijn graph},
+	
+Volume = {31},
+	
+Year = {2015}}
+
+
+
+@article{idbaud,
+	
+Author = {Peng, Y. and Leung, H. C. and Yiu, S. M. and Chin, F. Y.},
+	
+Journal = {Bioinformatics},
+	
+Number = {11},
+	
+Pages = {1420--1428},
+	
+Title = {{{IDBA-UD}: a {\em de novo} assembler for single-cell and metagenomic sequencing data with highly uneven depth}},
+	Volume = {28},
+	
+Year = {2012}}
+
+
+
+@article{wabi,
+	
+Author = {Chikhi, R. and Rizk, G.},
+	
+Journal = {Algorithms for Molecular Biology},
+	
+Number = {22},
+	
+Title = {Space-efficient and exact de {Bruijn} graph representation based on a {Bloom} filter},
+	
+Volume = {8},
+	
+Year = {2012}}
+
+
+
+@inproceedings{kkp2014,
+	
+Author = {Juha K{\"{a}}rkk{\"{a}}inen and Dominik Kempa and Simon J. Puglisi},
+	
+Booktitle = {Proc. of DCC},
+	
+Pages = {302--311},
+	
+Title = {Hybrid Compression of Bitvectors for the {FM}-Index},
+	
+Year = {2014}}
+
+
+
+@inproceedings{bitvector,
+	
+Author = {Okanohara, D. and Sadakane, K.},
+	
+Booktitle = {Proc. ALENEX},
+	
+Pages = {60--70},
+	
+Publisher = {SIAM},
+	
+Title = {Practical Entropy-Compressed Rank/Select Dictionary},
+	
+Year = {2007}}
+
+
+
+@article{Simpson:2009,
+	
+Author = {Simpson, J.T. and Wong, K. and Jackman, S.D. and Schein, J.E. and Jones, S.J. and Birol, I.},
+	
+Journal = {Genome Research},
+	
+Number = {6},
+	
+Pages = {1117--1123},
+	
+Title = {{ABySS}: a parallel assembler for short read sequence data},
+	
+Volume = {19},
+	
+Year = {2009}}
+
+
+
+@article{conway,
+	
+Author = {Conway, T. C. and Bromage, A. J.},
+	
+Journal = {Bioinformatics},
+	
+Number = {4},
+	
+Pages = {479--486},
+	
+Title = {Succinct data structures for assembling large genomes},
+	
+Volume = {27},
+	
+Year = {2011}}
+
+
+
+@inproceedings{paul,
+	
+Author = {Chikhi, R. and Limasset, A. and Jackman, S. and Simpson, J.T. and Medvedev, P.},
+	
+Booktitle = {Proc. {RECOMB}},
+	
+Pages = {35--55},
+	
+Title = {On the representation of de {B}ruijn graphs},
+	
+Year = {2014}}
+
+
+
+@article{arabidopsis,
+	
+Author = {Weigel, D. and Mott, R.},
+	
+Journal = {Genome Biology},
+	
+Number = {5},
+	
+Pages = {107},
+	
+Title = {The 1001 Genomes Project for {Arabidopsis thaliana}},
+	
+Volume = {10},
+	
+Year = {2009}}
+
+
+
+@article{tomato1,
+	
+Author = {Causse, M. and others},
+	
+Journal = {BMC Genomics},
+	
+Pages = {791},
+	
+Title = {Whole genome resequencing in tomato reveals variation associated with introgression and breeding events},
+	Volume = {14},
+	
+Year = {2013}}
+
+
+
+@article{tomato2,
+	
+Author = {Kobayashi, M. and others},
+	
+Journal = {Plant Cell Physiology},
+	
+Number = {2},
+	
+Pages = {445--454},
+	
+Title = {Genome-wide analysis of intraspecific {DNA} polymorphism in ``Micro-Tom'', a model cultivar of tomato (Solanum lycopersicum)},
+	
+Volume = {55},
+	
+Year = {2014}}
+
+
+
+@article{Robinson:2011,
+	
+Author = {G.E.~Robinson, K.J. and others},
+	
+Journal = {Science},
+	
+Number = {6023},
+	
+Pages = {1386},
+	
+Title = {Creating a buzz about insect genomes},
+	
+Volume = {331},
+	
+Year = {2011}}
+
+
+
+@article{Haussler:2009,
+	
+Author = {{Genome 10K~Community of~Scientists}},
+	
+Journal = {Journal of Heredity},
+	
+Number = {6},
+	
+Pages = {659--674},
+	
+Title = {{Genome 10K: A proposal to obtain whole-genome sequence for 10,000 vertebrate species}},
+	
+Volume = {100},
+	
+Year = {2009}}
+
+
+
+@article{ismb2015,
+	
+Author = {Muggli, M.D. and Puglisi, S.J. and Ronen, R. and Boucher, C.},
+	
+Journal = {Bioinformatics (special issue of ISMB 2015)},
+	
+Number = {12},
+	
+Pages = {i80--i88},
+	
+Title = {Misassembly detection using paired-end sequence reads and optical mapping data},
+	
+Volume = {31},
+	
+Year = {2015}}
+
+
+
+@article{sequel,
+	
+Author = {Ronen, R. and Boucher, C. and Chitsaz, H. and Pevzner, P.},
+	
+Journal = {Bioinformatics (special issue of ISMB 2012)},
+	
+Number = {12},
+	
+Pages = {i188--i196},
+	
+Title = {{SEQuel}: Improving the Accuracy of Genome Assemblies},
+	
+Volume = {28},
+	
+Year = {2012}}
+
+
+
+@article{huang,
+	
+Author = {Huang, W. and Li, L. and Myers, J.R. and Marth, G.T.},
+	
+Journal = {Bioinformatics},
+	
+Number = {4},
+	
+Pages = {593-4},
+	
+Title = {{ART}: a next-generation sequencing read simulator},
+	
+Volume = {28},
+	
+Year = {2012}}
+
+
+
+@article{weizhong,
+	
+Author = {Weizhong Li, Lukasz Jaroszewski and Adam Godzik},
+	
+Journal = {Bioinformatics},
+	
+Number = {3},
+	
+Pages = {282-3},
+	
+Title = {Clustering of highly homologous sequences to reduce the size of large protein database},
+	
+Volume = {17},
+	
+Year = {2001}}
+
+
+
+@article{zankari,
+	
+Author = {Zankari, E. and others},
+	
+Journal = {Antimicrobial Agents and Chemotherapy},
+	
+Number = {11},
+	
+Pages = {2640-2644},
+	
+Title = {Identification of acquired antimicrobial resistance genes.},
+	
+Volume = {67},
+	
+Year = {2012}}
+
+
+
+@article{gupta,
+	
+Author = {Gupta, S. and others},
+	
+Journal = {Antimicrobial Agents and Chemotherapy},
+	
+Number = {1},
+	
+Pages = {212-20},
+	
+Title = {{ARG-ANNOT}, a new bioinformatic tool to discover antibiotic resistance genes in bacterial genomes.},
+	
+Volume = {58},
+	
+Year = {2014}}
+
+
+
+@article{mcarthur,
+	
+Author = {McArthur, A. G. and others},
+	
+Journal = {Antimicrobial Agents and Chemotherapy},
+	
+Pages = {3348-3357},
+	
+Title = {The comprehensive antibiotic resistance database.},
+	
+Volume = {57},
+	
+Year = {2013}}
+
+
+
+@article{mckenna,
+	
+Author = {McKenna, Maryn},
+	
+Journal = {Nature},
+	
+Pages = {394-396},
+	
+Title = {Antibiotic resistance: The last resort},
+	
+Volume = {499},
+	
+Year = {2013}}
+
+
+
+article{how,
+	
+Author = {Compeau, P.E. and Pevzner, P.A. and Tesler, G.},
+	
+Journal = {Nature Biotechnology},
+	
+Pages = {987--991},
+	
+Title = {How to apply de Bruijn graphs to genome assembly},
+	
+Volume = {29},
+	
+Year = {2011}}
+
+
+
+@inproceedings{BGGMS14,
+	
+Author = {Belazzougui, D. and Gagie, T. and Gog, S. and Manzini, G. and Sir\'{e}n, J.},
+	
+Booktitle = {Proc. of SPIRE},
+	
+Pages = {52--64},
+	
+Title = {Relative {FM}-Indexes},
+	
+Year = {2014}}
+
+
+
+@inproceedings{BP15,
+	
+Author = {Bonissone, S.R. and Pevzner, P.A.},
+	Booktitle = {Proc.\ RECOMB},
+	
+Pages = {44--59},
+	
+Title = {Immunoglobin classification using the colored antibody graph},
+	
+Year = {2015}}
+
+
+
+inproceedings{BBGPS15,
+crossref={varorder-dcc},
+
+	
+Author = {Boucher, C. and Bowe, A. and Gagie, T. and Puglisi, S.J. and Sadakane, K.},
+	
+Booktitle = {Proc. of DCC},
+	
+Title = {Variable-Order de {Bruijn} Graphs},
+	
+Year = {2015}}
+
+
+
+inproceedings{BOSS12,
+	
+Author = {Bowe, A. and Onodera, T. and Sadakane, K. and Shibuya, T.},
+	
+Booktitle = {Proc.\ WABI},
+	
+Pages = {225--235},
+	
+Title = {Succinct de {Bruijn} Graphs},
+	
+Year = {2012}}
+
+
+
+techreport{BW94,
+	
+Author = {Burrows, M. and Wheeler, D.J.},
+	
+Institution = {Digital Equipment Corporation},
+	
+Number = {124},
+	
+Title = {A Block Sorting Lossless Data Compression Algorithm},
+	
+Year = 1994}
+
+
+
+article{FM05,
+	
+Author = {Ferragina, P. and Manzini, G.},
+	
+Journal = {Journal of the ACM},
+	
+Pages = {552--581},
+	
+Title = {Indexing Compressed Text},
+	
+Volume = 52,
+	
+Year = 2005}
+
+
+
+@inproceedings{GBMP14,
+	
+Author = {Gog, S. and Beller, T. and Moffat, A. and Petri, M.},
+	Booktitle = {Proc.\ SEA},
+	
+Pages = {326--337},
+	
+Title = {From Theory to Practice: Plug and Play with Succinct Data Structures},
+	
+Year = {2014}}
+
+
+
+@article{IW95,
+	
+Author = {Idury, R.M. and Waterman, M.S.},
+	
+Journal = {Journal of Computational Biology},
+	
+Pages = {291--306},
+	
+Title = {A new algorithm for {DNA} sequence assembly},
+	
+Volume = {2},
+	
+Year = {1995}}
+
+
+
+@article{ICTFM12,
+	
+Author = {Iqbal, Z. and Caccamo, M. and Turner, I. and Flicek, P. and McVean, G.},
+	
+Journal = {Nature Genetics},
+	
+Pages = {226--232},
+	
+Title = {De novo assembly and genotyping of variants using colored de {Bruijn} graphs},
+	
+Volume = {44},
+	
+Year = {2012}}
+
+
+
+@article{PTW01,
+	
+Author = {Pevzner, P.A. and Tang, H. and Waterman, M.S.},
+	
+Journal = {Proc.\ Nat.\ Acad.\ Sci.},
+	
+Pages = {9748--9753},
+	
+Title = {An {E}ulerian path approach to {DNA} fragment assembly},
+	
+Volume = {98},
+	
+Year = {2001}}
+
+
+
+@article{Rozowsky2011,
+	
+Author = {Rozowsky, J. and others},
+	
+Journal = {Molecular Systems Biology},
+	
+Pages = {522},
+	
+Title = {{AlleleSeq}: analysis of allele\mbox{-}specific expression and binding in a network framework},
+	
+Volume = {7},
+	
+Year = {2011}}
+
+
+
+@article{swarbreck,
+	
+Author = {Swarbreck, D. and others},
+		
+Journal = {Nucleic Acids Research.},
+	
+Pages = {D1009-14},
+	
+Title = {The {Arabidopsis} Information Resource ({TAIR}): gene structure and function annotation},
+	
+Volume = {36},
+	
+Year = {2008}}
+
+
+
+@article{rice,
+	
+Author = {Tanaka, T. and others},
+	
+Journal = {Nucleic Acids Research},
+	
+Pages = {D1028-33},
+	
+Title = {The Rice Annotation Project Database ({RAP-DB}): 2008 update.},
+	
+Volume = {36},
+	
+Year = {2008}}
+
+
+
+@article{corn,
+	
+Author = {Schnable, P. and others},
+	
+Journal = {Science},
+	Pages = {1112-1115},
+	
+Title = {The B73 Maize Genome: Complexity, Diversity, and Dynamics},
+	
+Volume = {326},
+	
+Year = {2009}}
+
+
+
+@article{noyes2016resistome,
+	
+Author = {Noyes, Noelle R and Yang, Xiang and Linke, Lyndsey M and Magnuson, Roberta J and Dettenwanger, Adam and Cook, Shaun and Geornaras, Ifigenia and Woerner, Dale E and Gow, Sheryl P and McAllister, Tim A and others},
+	
+Journal = {eLife},
+	
+Pages = {e13195},
+	
+Publisher = {eLife Sciences Publications Limited},
+	
+Title = {Resistome diversity in cattle and the environment decreases during beef production},
+	Volume = {5},
+	
+Year = {2016}}
+
+
+
+@article{KMC2,
+	
+Author = {Deorowicz, Sebastian and Kokot, Marek and Grabowski, Szymon and Debudaj-Grabysz, Agnieszka},
+	
+Journal = {Bioinformatics},
+	
+Number = {10},
+	
+Pages = {1569--1576},
+	
+Publisher = {Oxford Univ Press},
+	
+Title = {KMC 2: Fast and resource-frugal k-mer counting},
+	
+Volume = {31},
+	
+Year = {2015}}
+
+
+
+@inbook{varorder-latin,
+	
+Address = {Berlin, Heidelberg},
+	
+Author = {Belazzougui, Djamal and Gagie, Travis and M{\"a}kinen, Veli and Previtali, Marco and Puglisi, Simon J.},
+	
+Booktitle = {LATIN 2016: Theoretical Informatics: 12th Latin American Symposium, Ensenada, Mexico, April 11-15, 2016, Proceedings},
+	
+Doi = {10.1007/978-3-662-49529-2_13},
+	
+Editor = {Kranakis, Evangelos and Navarro, Gonzalo and Ch{\'a}vez, Edgar},
+	
+Isbn = {978-3-662-49529-2},
+	Pages = {164--178},
+	
+Publisher = {Springer Berlin Heidelberg},
+	
+Title = {Bidirectional Variable-Order de Bruijn Graphs},
+	
+Url = {http://dx.doi.org/10.1007/978-3-662-49529-2_13},
+	
+Year = {2016},
+	
+Bdsk-Url-1 = {http://dx.doi.org/10.1007/978-3-662-49529-2_13}}
+
+
+
+@inproceedings{varorder-dcc,
+
+	
+Author = {Christina Boucher and Alexander Bowe and Travis Gagie and Simon J. Puglisi and Kunihiko Sadakane},
+	
+Booktitle = {Proc. Data Compression Conference ({DCC})},
+	
+Pages = {383--392},
+	
+Publisher = {{IEEE}},
+	
+Title = {Variable-Order de {B}ruijn Graphs},
+	
+Year = {2015}}
+
+
+
+@article{assemblathon2,
+	
+Abstract = {The process of generating raw genome sequence data continues to become cheaper, faster, and more accurate. However, assembly of such data into high-quality, finished genome sequences remains challenging. Many genome assembly tools are available, but they differ greatly in terms of their performance (speed, scalability, hardware requirements, acceptance of newer read technologies) and in their final output (composition of assembled sequence). More importantly, it remains largely unclear how to best assess the quality of assembled genome sequences. The Assemblathon competitions are intended to assess current state-of-the-art methods in genome assembly.},
+	
+Author = {Bradnam, Keith R. and others},
+	
+Doi = {10.1186/2047-217X-2-10},
+	
+Issn = {2047-217X},
+	
+Journal = {GigaScience},
+	
+Number = {1},
+	
+Pages = {1--31},
+	
+Title = {Assemblathon 2: evaluating de novo methods of genome assembly in three vertebrate species},
+	
+Url = {http://dx.doi.org/10.1186/2047-217X-2-10},
+	
+Volume = {2},
+	
+Year = {2013},
+	
+Bdsk-Url-1 = {http://dx.doi.org/10.1186/2047-217X-2-10}}
+
+
+
+@inproceedings{mdbg,
+	
+Author = {Lin, Y. and Pevzner, P.A.},
+	
+Booktitle = {Proc. {WABI}},
+	
+Title = {Manifold de {B}ruijn Graphs},
+	
+Year = {2014}}
+
+
+
+techreport{bw1994,
+crossref={BW94},
+	
+Author = {Burrows, M. and Wheeler, D. J.},
+	
+Institution = {Digital Equipment Corporation},
+	
+Number = {124},
+	
+Title = {A block sorting lossless data compression algorithm},
+	
+Year = {1994}}
+
+
+
+@article{li2009fast,
+	
+Author = {Li, H. and Durbin, R.},
+	
+Journal = {Bioinformatics},
+	
+Number = {14},
+	
+Pages = {1754--1760},
+	
+Title = {Fast and accurate short read alignment with {B}urrows-{W}heeler transform},
+	
+Volume = {25},
+	
+Year = {2009}}
+
+
+
+@misc{liu_et_al,
+	
+Author = {Liu, Chi-Man and Luo, Ruibang and Lam, Tak-Wah},
+	
+Howpublished = {arXiv:1401.7457},
+	
+Month = {Jan},
+	
+Title = {{GPU}-Accelerated {BWT} Construction for Large Collection of Short Reads},
+	
+Year = {2014}}
+
+
+
+@article{dsk,
+	
+Author = {Rizk, Guillaume and Lavenier, Dominique and Chikhi, Rayan},
+	
+Doi = {10.1093/bioinformatics/btt020},
+	
+Journal = {Bioinformatics},
+	
+Title = {{DSK}: k-mer counting with very low memory usage},
+	
+Year = {2013},
+	
+Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/btt020}}
+
+
+
+@incollection{cascading,
+	
+Author = {Salikhov, Kamil and Sacomoto, Gustavo and Kucherov, Gregory},
+	
+Booktitle = {Algorithms in Bioinformatics},
+	
+Pages = {364--376},
+	
+Publisher = {Springer},
+	
+Title = {Using cascading Bloom filters to improve the memory usage for de Brujin graphs},
+	
+Year = {2013}}
+
+
+
+@inproceedings{bowe,
+	
+Author = {Alexander Bowe and Taku Onodera and Kunihiko Sadakane and Tetsuo Shibuya},
+	
+Booktitle = {Proc. WABI},
+	
+Pages = {225--235},
+	
+Title = {Succinct de {Bruijn} Graphs},
+	
+Year = {2012}}
+
+
+
+@misc{colombus,
+	
+Howpublished = {\url{http://bioweb2.pasteur.fr/docs/velvet/Columbus_manual.pdf}},
+	
+Note = {Unpublished},
+	
+Title = {{Colombus module of Velvet}}}
+
+
+
+@misc{idbahyb,
+	
+Howpublished = {\url{http://i.cs.hku.hk/~alse/hkubrg/projects/idba_hybrid/index.html}},
+	
+Note = {Unpublished},
+	
+Title = {{IDBA-Hybrid}}}
+
+
+
+@book{gusfield1997algorithms,
+	
+Address = {New York)},
+	
+Author = {Gusfield, D.},
+	
+Publisher = {Cambridge University Press},
+	
+Title = {Algorithms on strings, trees and sequences: computer science and computational biology},
+	
+Year = {1997}}
+
+
+
+@article{benson1995space,
+	
+Author = {Benson, G.},
+	
+Journal = {Theor. Comput. Sci.},
+	
+Number = {1},
+	
+Pages = {357--369},
+	
+Publisher = {Elsevier},
+	
+Title = {A space efficient algorithm for finding the best nonoverlapping alignment score},
+	
+Volume = {145},
+	
+Year = {1995}}
+
+
+
+@inproceedings{sagot1998spelling,
+	
+Author = {Sagot, Marie-France},
+	
+Booktitle = {{LATIN'98}: Theoretical Informatics},
+	
+Pages = {374-390},
+	
+Series = {Lecture Notes in Computer Science},
+	
+Title = {Spelling approximate repeated or common motifs using a suffix tree},
+	
+Volume = {1380},
+	
+Year = {1998}}
+
+
+
+@article{fitch1985detecting,
+	
+Author = {Fitch, W. M. and Smith, T. and Breslow, J. L.},
+	
+Journal = {Method Enzymol.},
+	
+Pages = {773--788},
+	
+Title = {Detecting internally repeated sequences and inferring the history of duplication.},
+	
+Volume = {128},
+	
+Year = {1985}}
+
+
+
+@article{kurtz2001reputer,
+	
+Author = {Kurtz, S. and Choudhuri, J. V and Ohlebusch, E. and Schleiermacher, Chris and Stoye, J. and Giegerich, R.},
+	Journal = {Nucleic Acids Res.},
+	
+Number = {22},
+	
+Pages = {4633--4642},
+	
+Title = {{REPuter}: the manifold applications of repeat analysis on a genomic scale},
+	
+Volume = {29},
+	
+Year = {2001}}
+
+
+
+@article{bayeshammer,
+	
+Author = {Nikolenko, S.I. and Korobeynikov, A.I. and Alekseyev, M.A.},
+	
+Journal = {BMC Genomics},
+	
+Number = {Suppl 1},
+	
+Pages = {S7},
+	
+Title = {{BayesHammer}: bayesian clustering for error correction in single-cell sequencing},
+	
+Volume = 14,
+	
+Year = 2013}
+
+
+
+article{Haussler09,
+	
+Author = {Haussler, D. and others},
+	
+Journal = {J. Hered.},
+	
+Number = {6},
+	
+Pages = {659--674},
+	
+Title = {{{G}enome 10{K}: a proposal to obtain whole-genome sequence for 10,000 vertebrate species}},
+	
+Volume = {100},
+	
+Year = {2009}}
+
+
+
+
+@article{gnerre2009assisted,
+	
+Author = {Gnerre, S. and Lander, E. S. and Lindblad-Toh, K. and Jaffe, D. B.},
+	
+Journal = {Genome Biol.},
+	
+Number = {8},
+	
+Pages = {R88},
+	
+Title = {Assisted assembly: how to improve a \emph{de novo} genome assembly by using related species},
+	
+Volume = {10},
+	Year = {2009}}
+
+
+
+article{vezzi2011rga,
+	
+Author = {Vezzi, F. and Cattonaro, F. and Policriti, A.},
+	
+Journal = {EMBnet. journal},
+	
+Number = {1},
+	
+Pages = {pp--46},
+	
+Title = {{e-RGA}: enhanced reference guided assembly of complex genomes},
+	
+Volume = {17},
+	
+Year = {2011}}
+
+
+
+@article{Haussler09full,
+	
+Author = {Haussler, D. and others},
+	
+Journal = {J. Hered.},
+	
+Number = {6},
+	
+Pages = {659--674},
+	
+Title = {{{G}enome 10{K}: a proposal to obtain whole-genome sequence for 10,000 vertebrate species}},
+	
+Volume = {100},
+	
+Year = {2009}}
+
+
+
+
+@article{Robinson11,
+	
+Author = {Robinson, G. E. and others},
+	
+Journal = {Science},
+	
+Number = {6023},
+	
+Pages = {1386},
+	
+Title = {{{C}reating a buzz about insect genomes}},
+	
+Volume = {331},
+	
+Year = {2011}}
+
+
+
+@article{Ossowski08,
+	
+Author = {Ossowski, S. and others},
+	
+Journal = {Genome Res.},
+	
+Number = {12},
+	
+Pages = {2024--2033},
+	
+Title = {{{S}equencing of natural strains of \emph{Arabidopsis Thaliana} with short reads}},
+	
+Volume = {18},
+	
+Year = {2008}}
+
+
+
+@article{Abecasis12,
+	
+Author = {{The 1000 Genomes Project Consortium}},
+	
+Journal = {Nature},
+	
+Number = {7422},
+	
+Pages = {56--65},
+	
+Title = {{{A}n integrated map of genetic variation from 1,092 human genomes}},
+	
+Volume = {491},
+	
+Year = {2012}}
+
+
+
+@article{Abecasis12full,
+	
+Author = {Abecasis, G. R. and others.},
+	
+Journal = {Nature},
+	
+Number = {7422},
+	
+Pages = {56--65},
+	
+Title = {{{A}n integrated map of genetic variation from 1,092 human genomes}},
+	
+Volume = {491},
+	
+Year = {2012}}
+
+
+
+@article{hmp,
+	
+Author = {P. J. Turnbaugh and others},
+	
+Journal = {Nature},
+	
+Number = {7164},
+	
+Pages = {804--810},
+	
+Title = {{The {H}uman {M}icrobiome {P}roject: exploring the microbial part of ourselves in a changing world}},
+	
+Volume = {449},
+	
+Year = {2007}}
+
+
+
+@article{lin2012agora,
+	
+Author = {Lin, H.C. and others},
+	
+Journal = {BMC Bioinformatics},
+	Number = {1},
+	
+Pages = {189},
+	
+Title = {{AGORA: assembly guided by optical restriction alignment}},
+	
+Volume = {13},
+	
+Year = {2012}}
+
+
+
+@article{nagarajan2008scaffolding,
+	
+Author = {Nagarajan, N. and Read, T. D. and Pop, M.},
+	
+Journal = {Bioinformatics},
+	
+Number = {10},
+	
+Pages = {1229--1235},
+	
+Title = {Scaffolding and validation of bacterial genome assemblies using optical restriction maps},
+	
+Volume = {24},
+	
+Year = {2008}}
+
+
+
+@article{huddleston2014,
+	
+Author = {Huddleston, J. and others},
+	
+Journal = {Genome Res.},
+	
+Number = {4},
+	
+Pages = {688--696},
+	
+Title = {{{R}econstructing complex regions of genomes using long-read sequencing technology}},
+	
+Volume = {24},
+	
+Year = {2014}}
+
+
+
+@article{PTW,
+	
+Author = {Pevzner, P. A. and Tang, H. and Waterman, M. S.},
+	
+Journal = {Proc. Natl. Acad. Sci.},
+	
+Number = {17},
+	
+Pages = {9748--9753},
+	
+Title = {An {E}ulerian path approach to {DNA} fragment assembly},
+	
+Volume = {98},
+	
+Year = {2001}}
+
+
+
+@article{Compeau11,
+	
+Author = {Compeau, P. E. C. and Pevzner, P. A. and Tesler, G.},
+	
+Journal = {Nature Biotechnol.},
+	
+Number = {11},
+	
+Pages = {987--991},
+	
+Title = {How to apply de {Bruijn} graphs to genome assembly},
+	
+Volume = {29},
+	
+Year = {2011}}
+
+
+
+@article{bankevich2012spades,
+	
+Author = {Bankevich, A. and others},
+	
+Journal = {J. Comput. Biol.},
+	
+Number = {5},
+	
+Pages = {455--477},
+	
+Title = {{SPAdes}: a new genome assembly algorithm and its applications to single-cell sequencing},
+	
+Volume = {19},
+	
+Year = {2012}}
+
+
+
+@inproceedings{peng2010idba,
+	
+Author = {Peng, Yu and Leung, Henry CM and Yiu, Siu-Ming and Chin, Francis YL},
+	
+Booktitle = {Proc. RECOMB},
+	
+Pages = {426--440},
+	
+Title = {{IDBA}--a practical iterative de {Bruijn} graph \emph{de novo} assembler},
+	
+Year = {2010}}
+
+
+
+
+@article{Chaisson:2008,
+	
+Author = {Chaisson, M. J. and Pevzner, P. A.},
+	
+Journal = {Genome Res.},
+	
+Number = {2},
+	
+Pages = {324--330},
+	
+Title = {Short read fragment assembly of bacterial genomes},
+	
+Volume = {18},
+	
+Year = {2008}}
+
+
+
+article{Zerbino:2008,
+	
+Author = {Zerbino, R. and Birney, E.},
+	
+Journal = {Genome Res.},
+	
+Number = {5},
+	
+Pages = {821--829},
+	
+Title = {Velvet: algorithms for \emph{de novo} short read assembly using de {Bruijn} graphs},
+	
+Volume = {18},
+	
+Year = {2008}}
+
+
+
+@article{Li:2010,
+	
+Author = {Li, R. and others},
+	
+Journal = {Genome Res.},
+	
+Number = {2},
+	
+Pages = {265--272},
+	
+Title = {{\emph{{D}e novo} assembly of human genomes with massively parallel short read sequencing}},
+	
+Volume = {20},
+	
+Year = {2010}}
+
+
+
+@article{Butler:2008,
+	
+Author = {Butler, J. and others},
+	
+Journal = {Genome Res.},
+	
+Number = {5},
+	
+Pages = {810--820},
+	
+Title = {{ALLPATHS:} \emph{de novo} assembly of whole-genome shotgun microreads},
+	
+Volume = {18},
+	
+Year = {2008}}
+
+
+
+@article{alkan2011limitations,
+	
+Author = {Alkan, C. and Sajjadian, S. and Eichler, E. E.},
+	
+Journal = {Nat. Methods},
+	
+Number = {1},
+	Pages = {61--65},
+	
+Title = {Limitations of next-generation genome sequence assembly},
+	
+Volume = {8},
+	
+Year = {2011}}
+
+
+
+@article{kmergenie13,
+	
+Author = {Chikhi, R. and Medvedev, P.},
+	
+Journal = {Bioinformatics},
+	
+Number = {1},
+	
+Pages = {31--37},
+	
+Title = {Informed and automated $k$-mer size selection for genome assembly},
+	
+Volume = {30},
+	
+Year = {2014}}
+
+
+
+@inproceedings{hyda,
+	
+Author = {Movahedi, N. S. and Forouzmand, E. and Chitsaz, H.},
+	
+Booktitle = {IEEE Conference on Bioinformatics and Biomedicine},
+		
+Pages = {561--565},
+	
+Title = {{\em De novo} co-assembly of bacterial genomes from multiple single cells},
+	
+Year = {2012}}
+
+
+
+@article{klein2011locas,
+	
+Author = {Klein, J. D. and others},
+	
+Journal = {PLOS ONE},
+	
+Number = {8},
+	
+Pages = {e23455},
+	
+Title = {{LOCAS}--a low coverage assembly tool for resequencing projects},
+	
+Volume = {6},
+	
+Year = {2011}}
+
+
+
+@article{schneeberger2011reference,
+	
+Author = {Schneeberger, K. and others},
+	
+Journal = {Proc. Natl. Acad. Sci.},
+	
+Number = {25},
+	
+Pages = {10249--10254},
+	
+Title = {{{R}eference-guided assembly of four diverse \emph{{A}rabidopsis thaliana} genomes}},
+	
+Volume = {108},
+	Year = {2011}}
+
+
+
+@article{mm1993,
+	
+Author = {Manber, U. and Myers, G.},
+	
+Journal = {SIAM J. Comput.},
+	
+Number = {5},
+	
+Pages = {935--948},
+	
+Publisher = {SIAM},
+	
+Title = {{Suffix arrays: a new method for on-line string searches}},
+	
+Volume = {22},
+	
+Year = {1993}}
+
+
+
+@inproceedings{recGraphs,
+	
+Author = {Vyahhi, Nikolay and Pyshkin, Alex and Pham, Son and Pevzner, Pavel A.},
+	Booktitle = {Algorithms in Bioinformatics},
+		
+Pages = {249--261},
+	
+Series = {Lecture Notes in Computer Science},
+	
+Title = {From de Bruijn graphs to rectangle graphs for genome assembly},
+	
+Volume = {7534},
+	
+Year = {2012}}
+
+
+
+@article{ks2006,
+	
+Author = {K\"{a}rkk\"{a}inen, J. and Sanders, P. and Burkhardt, S.},
+	
+Issue_Date = {November 2006},
+	
+Journal = {J. ACM},
+	Number = {6},
+	
+Pages = {918--936},
+	
+Publisher = {{ACM}},
+	
+Title = {Linear word suffix array construction},
+	Volume = {53},
+	
+Year = {2006}}
+
+
+
+@article{phillippy2008genome,
+	
+Author = {Phillippy, A. M. and Schatz, M. C. and Pop, M.},
+	
+Journal = {Genome Biol.},
+	
+Number = {3},
+	Pages = {R55},
+	
+Title = {Genome assembly forensics: finding the elusive mis-assembly},
+	
+Volume = {9},
+	
+Year = {2008}}
+
+
+
+@article{medvedev2011paired,
+	
+Author = {Medvedev, P. and Pham, S. and Chaisson, M. and Tesler, G. and Pevzner, P. A.},
+	Journal = {J. Comput. Biol.},
+	
+Number = {11},
+	
+Pages = {1625--1634},
+	
+Title = {Paired de Bruijn graphs: a novel approach for incorporating mate pair information into genome assemblers},
+	
+Volume = {18},
+	
+Year = {2011}}
+
+
+
+@article{pevzner2004novo,
+	
+Author = {Pevzner, P. A. and Tang, H. and Tesler, G.},
+	
+Journal = {Genome Res.},
+	
+Number = {9},
+	
+Pages = {1786--1796},
+	
+Title = {{{\em {D}e novo} repeat classification and fragment assembly}},
+	
+Volume = {14},
+	
+Year = {2004}}
+
+
+
+@inproceedings{manzini00,
+	
+Author = {Ferragina, P. and Manzini, G.},
+	
+Booktitle = {Proc. of FOCS},
+	
+Pages = {390--398},
+	
+Title = {{Opportunistic data structures with applications}},
+	
+Year = {2000}}
+
+
+
+@inproceedings{Manber90,
+	
+Author = {Manber, U. and Myers, G.},
+	
+Booktitle = {Proc. of SODA},
+	
+Pages = {319--327},
+	
+Title = {{Suffix arrays: a new method for on-line string searches}},
+	
+Year = {1990}}
+
+
+
+@inproceedings{suffixtree73,
+	
+Author = {Weiner, P.},
+	
+Booktitle = {Proc. of SWAT},
+	
+Pages = {1--11},
+	
+Title = {{Linear pattern matching algorithms}},
+	
+Year = {1973}}
+
+
+
+@article{ShenSV14,
+	
+Author = {Shen, X. and Shamaiah M. and Vikalo H.},
+	
+Journal = {CoRR},
+	
+Title = {{Iterative learning for reference-guided {DNA} sequence assembly from short reads: algorithms and limits of performance}},
+	
+Volume = {abs/1403.5686},
+	
+Year = {2014}}
+
+
+
+@article{Blumer198531,
+	
+Author = {Blumer, A. and others},
+	
+Journal = {Theor. Comput. Sci.},
+	
+Number = {0},
+	
+Pages = {31 - 55},
+	
+Title = {The smallest automation recognizing the subwords of a text},
+	
+Volume = {40},
+	Year = {1985}}
+
+
+
+@article{Chitsaz11,
+	
+Author = {Chitsaz, H. and others},
+	
+Journal = {Nat. Biotechnol.},
+	
+Number = {10},
+	
+Pages = {915--921},
+	Title = {Efficient {\em de novo} assembly of single-cell bacterial genomes from short-read data sets},
+	
+Volume = {29},
+	Year = {2011}}
+
+
+
+@article{Gurevich13,
+	
+Author = {Gurevich, A. and Saveliev, V. and Vyahhi, N. and Tesler, G.},
+	
+Journal = {Bioinformatics},
+	
+Number = {8},
+	
+Pages = {1072--1075},
+	
+Title = {{{Q}{U}{A}{S}{T}: quality assessment tool for genome assemblies}},
+	
+Volume = {29},
+	
+Year = {2013}}
+
+
+
+@article{Earl11,
+	
+Author = {Earl, D. and others},
+	
+Journal = {Genome Res.},
+	
+Number = {12},
+	
+Pages = {2224--2241},
+	Title = {{{A}ssemblathon 1: a competitive assessment of \emph{de novo} short read assembly methods}},
+	
+Volume = {21},
+	Year = {2011}}
+
+
+
+@article{Vezzi2011,
+	
+Author = {Vezzi, Francesco and Cattonaro, Federica and Policriti, Alberto},
+	Journal = {EMBnet. journal},
+	
+Number = {1},
+	
+Pages = {pp--46},
+	
+Title = {e-{RGA}: enhanced reference guided assembly of complex genomes},
+	
+Volume = {17},
+	
+Year = {2011}}
+
+
+
+@inproceedings{nn2012,
+	
+Author = {G. Navarro and Y. Nekrich},
+	
+Booktitle = {Proc. Scandinavian Workshop on Algorithm Theory},
+	
+Pages = {271--282},
+	
+Publisher = {Springer},
+	
+Series = {LNCS 7357},
+	
+Title = {Sorted Range Reporting},
+	
+Year = 2012}
+
+
+
+@article{yhw2011,
+	
+Author = {Chih-Chiang Yu and Wing-Kai Hon and Biing-Feng Wang},
+	Journal = {Computational Geometry},
+	
+Number = 3,
+	
+Pages = {148--159},
+	
+Title = {Improved data structures for the orthogonal range successor problem},
+	
+Volume = 44,
+	
+Year = 2011}
+
+
+
+@article{n2013,
+	
+Author = {Gonzalo Navarro},
+	
+Journal = {J. Discrete Algorithms},
+	
+Pages = {2--20},
+	
+Title = {Wavelet Trees for All},
+	
+Volume = 25,
+	
+Year = 2014}
+
+
+
+@inproceedings{ggv2003,
+	
+Author = {Roberto Grossi and Ankur Gupta and Jeffrey Scott Vitter},
+	
+Booktitle = {Proc. SODA},
+	
+Pages = {841--850},
+	
+Title = {High-order entropy-compressed text indexes},
+	
+Year = {2003}}
+
+
+
+@article{gnp2012,
+	
+Author = {Travis Gagie and Gonzalo Navarro and Simon J. Puglisi},
+	Journal = {Theor. Comp. Sci},
+	
+Pages = {25--41},
+	
+Title = {New algorithms on wavelet trees and applications to information retrieval},
+	Volume = {426},
+	
+Year = {2012}}
+
+
+
+@inproceedings{rrr2002,
+	
+Author = {Rajeev Raman and Venkatesh Raman and S. Srinivasa Rao},
+	Booktitle = {Proc. SODA},
+	
+Pages = {233--242},
+	
+Title = {Succinct indexable dictionaries with applications to encoding k-ary trees and multisets},
+	
+Year = {2002}}
+{Mun96,
+	
+@Comment = {!Booktitle = {Proc. 15th Conference on Foundations of Software Technology and Theoretical Computer Science (FSTTCS)}},
+	
+Author = {I. Munro},
+	
+Booktitle = {Proc. FSTTCS},
+	
+Pages = {37--42},
+	
+Title = {Tables},
+	Year = {1996}}
+
+
+
+@article{fh2011,
+	
+Author = {Johannes Fischer and Volker Heun},
+	
+Journal = {{SIAM} J. Comput.},
+	
+Number = {2},
+	
+Pages = {465--492},
+	Title = {Space-Efficient Preprocessing Schemes for Range Minimum Queries on Static Arrays},
+	
+Volume = {40},
+	
+Year = {2011}}
+
+
+
+@article{BatJaf02,
+	
+Author = {S. Batzoglou and D.~B. Jaffe and K. Stanley and J. Butler and S. Gnerre and E. Mauceli and B. Berger and J.~P. Mesirov and E.~S. Lander},
+	
+Journal = {Genome Research},
+	
+Pages = {177-189},
+	Title = {ARACHNE: a whole-genome shotgun assembler},
+	
+Volume = {12},
+	
+Year = {2002}}
+
+
+
+article{ConBro11,
+	
+Author = {T.~C. Conway and A.~J. Bromage},
+	
+Journal = {Bioinformatics},
+	
+Number = {4},
+	
+Pages = {479-486},
+	
+Title = {Succinct data structures for assembling large genomes},
+	
+Volume = {27},
+	
+Year = {2011}}
+
+
+
+@article{HuaYan05,
+	Author = {X. Huang and S.~P. Yang},
+	
+Journal = {Current Protocols in Bioinformatics},
+	
+Title = {Generating a genome assembly with PCAP},
+	
+Volume = {Unit 11.3},
+	
+Year = {2005}}
+
+
+
+@book{KasMor06,
+	
+Author = {M. Kasahara and S. Morishita},
+	
+Publisher = {Imperial College Press},
+	
+Title = {Large-Scale Genome Sequence Processing},
+	
+Year = {2006}}
+
+
+
+@article{LiZhu09,
+	
+Annote = {delete
+},
+	
+Author = {R. Li and H. Zhu and J. Ruan and W. Qjan and X. Fang and Z. Shi and Y. Li and S. Li and G. Shan and K. Kristiansen and H Yang and J. Wang},
+		
+Journal = {Genome Research},
+	
+Pages = {265-272},
+	
+Title = {De novo assembly of human genomes with massively parallel short read sequencing},
+	
+Volume = {20},
+	
+Year = {2009}}
+
+
+
+@article{MacPrz09,
+	
+Author = {I. MacCallum and D. Przybylski and S. Gnerre and J. Burton and I. Shlyakhter and A. Gnirke and J. Malek and K. McKernan and S. Ranade and T. P. Shea and L. Williams and S. Young and C. Nusbaum and D. B. Jaffe},
+	
+Journal = {Genome Biology},
+	Number = {R103},
+	
+Title = {ALLPATHS 2: small genomes assembled accurately and with high continuity from short paired reads},
+	
+Volume = {10},
+	
+Year = {2009}}
+
+
+
+@article{MilKor10,
+	
+Author = {J. R. Miller and S. Koren and G. Sutton},
+	Journal = {Genomics},
+	
+Pages = {315-327},
+	
+Title = {Assembly algorithms for next-generation sequencing data},
+	Volume = {95},
+	
+Year = {2010}}
+
+
+
+@article{Mye95,
+	
+Author = {E. W. Myers},
+	
+Journal = {Journal of Comutational Biology},
+	Pages = {275-290},
+	
+Title = {Toward Simplifying and Accurately Formulating Fragment Assembly},
+	
+Volume = {2},
+	Year = {1995}}
+
+
+
+@article{MyeSut00,
+	
+Author = {E. W. Myers and G. G. Sutton and A. L. Delcher and I. M. Dew and D. P. Fasulo and M. J. Flanigan and S. A. Kravitz and C. M. Mobarry and K. H. J. Reinert and K. A. Remington and E. L. Anson and R. A. Bolanos and H. Chou and C. M. Jordan and A. L. Halpern and S. Lonardi and E. M. Beasley and R. C. Brandon and L. Chen and P. J. Dunn and Z. Lai and Y. Liang and D. R. Nusskern and M. Zhan and Q. Zhang and X. Zheng and G. M. Rubin and M. D. Adams and J. C. Venter},
+	
+Journal = {Science},
+	
+Pages = {2196-2204},
+	
+Title = {A whole-genome assembly of Drosophila},
+	
+Volume = {287},
+	
+Year = {2000}}
+
+
+
+@article{PevTan01,
+	
+Author = {P. A. Pevzner and H. Tang and M. S. Waterman},
+	
+Journal = {Proceedings of the National Academy of Sciences},
+	
+Pages = {9748-9753},
+	
+Title = {An eulerian path approach to DNA fragment assembly},
+	
+Volume = {98},
+	
+Year = {2001}}
+
+
+
+@article{Pop09,
+	
+Author = {M. Pop},
+	Journal = {Briefings in Bioinformatics},
+	
+Number = {4},
+	
+Pages = {354-366},
+	
+Title = {Genome assembly reborn: recent computational challenges},
+	
+Volume = {10},
+	
+Year = {2009}}
+
+
+
+@article{SahShi12,
+	
+Author = {M. Sahli and T. Shibuya},
+	
+Journal = {BMC Research Notes},
+	
+Title = {Arapan-S: a fast and highly accurate whole-genome assembly software for viruses and small genomes},
+	
+Year = {in press}}
+
+
+
+@article{SimWon09,
+	
+Author = {J. T. Simpson and K. Wong and S. D. Jackman and J. E. Schein and S. J. Jones},
+	
+Journal = {Genome Research},
+	
+Pages = {1117-1123},
+	
+Title = {ABySS: a parallel assembler for short read sequence data},
+	
+Volume = {19},
+	
+Year = {2009}}
+
+
+
+@article{YeMa12,
+	
+Author = {C. Ye and Z.~S. Ma and C.~H. Cannon and M. Pop and D.~W. Yu},
+	
+Journal = {BMC Bioinformatics},
+	
+Number = {Suppl 6:S1},
+	Title = {Exploiting sparseness in de novo genome assembly},
+	
+Volume = {13},
+	
+Year = {2012}}
+
+
+
+@article{ZerBir08,
+	Author = {D.~R. Zerbino and E. Birney},
+	
+Journal = {Genome Research},
+	
+Pages = {821-829},
+	
+Title = {Velvet: algorithms for de novo short read assembly using de Bruijn graphs},
+	
+Volume = {18},
+	
+Year = {2008}}
+
+
+
+@article{RRR07,
+	
+Acmid = {1290680},
+	
+Address = {New York, NY, USA},
+	
+Articleno = {43},
+	
+Author = {R. Raman and V. Raman and S.~R. Satti},
+	
+Doi = {10.1145/1290672.1290680},
+	
+Issn = {1549-6325},
+	
+Issue_Date = {November 2007},
+	Journal = {ACM Trans. Algorithms},
+	
+Keywords = {Dictionaries, multisets, perfect hashing, prefix sums, sets, succinct data structures, tries},
+	
+Month = nov,
+	
+Number = {4},
+	
+Publisher = {ACM},
+	
+Title = {Succinct indexable dictionaries with applications to encoding k-ary trees, prefix sums and multisets},
+	
+Url = {http://doi.acm.org/10.1145/1290672.1290680},
+	
+Volume = {3},
+	
+Year = {2007},
+	
+Bdsk-Url-1 = {http://doi.acm.org/10.1145/1290672.1290680},
+	
+Bdsk-Url-2 = {http://dx.doi.org/10.1145/1290672.1290680}}
+
+
+
+@article{FLMM09,
+	
+Author = {P. Ferragina and F. Luccio and G. Manzini and S. Muthukrishnan},
+	
+Journal = {{Journal of the ACM}},
+	
+Number = {1},
+	
+Pages = {4:1--4:33},
+	
+Title = {{Compressing and indexing labeled trees, with applications}},
+	
+Volume = {57},
+	
+Year = {2009}}
+
+
+%crossref={BW94},
+@techreport{BurWhe94,
+
+	
+Annote = {{\tt http://gatekeeper.dec.com/pub/DEC/SRC/research-reports/abstracts/src-rr-124.html}},
+	Author = {M. Burrows and D.~J. Wheeler},
+	
+Institution = {Digital SRC Research Report},
+	
+Number = {124},
+	
+Title = {{A Block-sorting Lossless Data Compression Algorithms}},
+	
+Year = {1994}}
+
+
+
+@article{FerManMakNav06,
+	
+Author = {P. Ferragina and G. Manzini and V. M{\"a}kinen and G. Navarro},
+	
+Journal = {{ACM Transactions on Algorithms}},
+	
+Number = {2},
+	
+Pages = {No. 20},
+	
+Title = {{Compressed Representations of Sequences and Full-Text Indexes}},
+	
+Volume = {3},
+	
+Year = {2006}}
+
+
+
+@misc{NavSad10,
+	
+Author = {G. Navarro and K. Sadakane},
+	
+Note = {Submitted for journal publication. Available at http://arxiv.org/abs/0905.0768. A preliminary version appeared in Proc. ACM-SIAM SODA, pp.~134--149, 2010.},
+	
+Title = {Fully-Functional Static and Dynamic Succinct Trees},
+	
+Year = {2010}}
+
+
+
+@article{deBruijn46,
+	
+Author = {N.~G. De~Bruijn},
+	Journal = {Koninklijke Nederlandse Akademie v. Wetenschappen},
+	
+Pages = {758--764},
+	
+Title = {A Combinatorial Problem},
+	Volume = 49,
+	
+Year = 1946}
+
+
+
+@article{CleWit84,
+	
+Author = {J.~G. Cleary and I.~H. Witten},
+	
+Journal = {IEEE Trans. on Commun.},
+	
+Month = apr,
+	
+Number = {4},
+	
+Pages = {396--402},
+	
+Title = {{Data Compression Using Adaptive Coding and Partial String Matching}},
+	
+Volume = {COM-32},
+	
+Year = {1984}}
+
+
+
+@article{FerMan05,
+	
+Author = {P. Ferragina and G. Manzini},
+	
+Journal = {Journal of the ACM},
+	
+Number = {4},
+	
+Pages = {552--581},
+	
+Title = {{Indexing compressed texts}},
+	
+Volume = {52},
+	
+Year = {2005}}
+
+
+
+@inproceedings{OkaSad07,
+	
+Author = {D. Okanohara and K. Sadakane},
+	Booktitle = {Proc. of Workshop on Algorithm Engineering and Experiments (ALENEX)},
+	
+Title = {{Practical Entropy-Compressed Rank/ Select Dictionary}},
+	
+Year = 2007}
+
+@Misc{dantelabscost,
+  title        = {For {R}are {D}isease {M}onth {F}ebruary 2019, {D}ante {L}abs launches special genetic testing offering for rare disease patients},
+  howpublished = {\url{https://www.prnewswire.com/news-releases/for-rare-disease-month-february-2019-dante-labs-launches-special-genetic-testing-offering-for-rare-disease-patients-300788748.html}},
+  month        = feb,
+  year         = {2019},
+}
+
+@Article{HGP,
+  author    = {Collins, Francis S. and Morgan, Michael and Patrinos, Aristides},
+  title     = {The Human Genome Project: Lessons from Large-Scale Biology},
+  journal   = {Science},
+  year      = {2003},
+  volume    = {300},
+  number    = {5617},
+  pages     = {286--290},
+  issn      = {0036-8075},
+  abstract  = {The Human Genome Project has been the first major foray of the biological and medical research communities into {\textquotedblleft}big science.{\textquotedblright} In this Viewpoint, we present some of our experiences in organizing and managing such a complicated, publicly funded, international effort. We believe that many of the lessons we learned will be applicable to future large-scale projects in biology.},
+  doi       = {10.1126/science.1084564},
+  eprint    = {https://science.sciencemag.org/content/300/5617/286.full.pdf},
+  publisher = {American Association for the Advancement of Science},
+  url       = {https://science.sciencemag.org/content/300/5617/286},
+}
+
+@Article{EnhancedSuffixArrays,
+  author   = {Mohamed Ibrahim Abouelhoda and Stefan Kurtz and Enno Ohlebusch},
+  title    = {Replacing suffix trees with enhanced suffix arrays},
+  journal  = {Journal of Discrete Algorithms},
+  year     = {2004},
+  volume   = {2},
+  number   = {1},
+  pages    = {53 - 86},
+  issn     = {1570-8667},
+  note     = {The 9th International Symposium on String Processing and Information Retrieval},
+  abstract = {The suffix tree is one of the most important data structures in string processing and comparative genomics. However, the space consumption of the suffix tree is a bottleneck in large scale applications such as genome analysis. In this article, we will overcome this obstacle. We will show how every algorithm that uses a suffix tree as data structure can systematically be replaced with an algorithm that uses an enhanced suffix array and solves the same problem in the same time complexity. The generic name enhanced suffix array stands for data structures consisting of the suffix array and additional tables. Our new algorithms are not only more space efficient than previous ones, but they are also faster and easier to implement.},
+  doi      = {https://doi.org/10.1016/S1570-8667(03)00065-0},
+  keywords = {Suffix array, Suffix tree, Repeat analysis, Genome comparison, Pattern matching},
+  url      = {http://www.sciencedirect.com/science/article/pii/S1570866703000650},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
+
+@article{ConBro11, 
+author = {T.~C. Conway and A.~J. Bromage}, 
+title = {Succinct data structures for assembling large genomes}, 
+journal = {Bioinformatics}, 
+year = {2011},
+volume = {27},
+number = {4},
+pages = {479-486}
+}
