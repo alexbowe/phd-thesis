@@ -2,7 +2,7 @@
 
 %%%%%%%% PACKAGES %%%%%%%%
 \usepackage[utf8]{inputenc}
-\usepackage[left=1.5in,right=1.5in]{geometry}
+\usepackage[left=1in,right=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{url}
 \def\UrlBreaks{\do\/\do-}
@@ -24,7 +24,8 @@
 \usepackage{color}
 \usepackage{multirow}
 \usepackage{tabularx,booktabs}
-\usepackage{threeparttable}
+%\usepackage{threeparttable}
+\usepackage{caption} % To separate captions from tables
 \usepackage{dcolumn}
 \newcolumntype{d}[1]{D{.}{.}{#1}}
 \usepackage{rotating} % To use "sidewaystable"
@@ -36,7 +37,7 @@
 \usepackage{pbox} % 3rd paper
 \usepackage{setspace} % To achieve 1.5 spacing
 \onehalfspacing
-\usepackage{adjustbox} % To have tables wider than the text
+%\usepackage{adjustbox} % To have tables wider than the text
 \usepackage{siunitx} % Used in Relative Select paper
 \usepackage[breaklinks,pdfpagelabels,plainpages=false]{hyperref} % Hyperref should be the last package called, to prevent problems
 \hypersetup{
@@ -161,11 +162,13 @@
 
 \def\vardir{chapters/variable-order-dbg_sections} % Path for the 2nd paper sections
 \def\coldir{chapters/colour-dbg_sections} % Path for the 3rd paper sections
-\newenvironment{mytable}[1][]%
-{\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
-{\end{threeparttable}\end{adjustbox}\end{table}}
+%\newenvironment{mytable}[1][]%
+%{\begin{table}[#1]\begin{adjustbox}{center}\begin{threeparttable}}%
+%{\end{threeparttable}\end{adjustbox}\end{table}}
 %\includeonly{chapters/blog}
 \newcommand\mypaper[2]{{\bigskip\noindent{\bf#1}\\\small#2\par\medskip}} % for the articles in the introduction
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Right-aligned tablularx column
+\newcolumntype{Y}{>{\centering\arraybackslash}X} % Centered tabularx column 
 
 \begin{document}
 
@@ -211,9 +214,9 @@ Chiyoda-ku, Tokyo, Japan}
 %
 %\include{chapters/experiments}
 %
-%\include{chapters/conclusion}
+\include{chapters/conclusion}
 %
-%\include{chapters/acknowledgements}
+\include{chapters/acknowledgements}
 
 \appendix
 \include{chapters/select}

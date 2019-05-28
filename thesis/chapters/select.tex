@@ -1,4 +1,4 @@
-\chapter{Relative Select}
+\chapter{Relative Select}\label{ch:rel}
 
 \begin{quote}
 Motivated by the problem of storing coloured de Bruijn graphs, we show how, if we can already support fast select queries on one string, then we can store a little extra information and support fairly fast select queries on a similar string.
@@ -84,7 +84,7 @@ As our reference sequence, we used the 1000 Genomes Project's version of the GRC
 
 To test the performance of relative select, we ran 100 million random $\Psiop(i) = \BWT.\select_{c}(i - \C[c])$ queries on the BWT of the target sequence, using a plain FM-index and Relative FM-indexes with and without relative select. (Character $c$ is the $i$th character in the BWT in sorted order, while $\C[c]$ is the number of occurrences of characters smaller than $c$ in the BWT.) The implementation of $\Psiop$ in the Relative FM-index without relative select was based on binary searching with rank queries. As a comparison, we also ran $\LF(i) = \C[\BWT[i]] + \BWT.\rank_{\BWT[i]}(i)$ queries. Table~\ref{rs-table:queries} shows the results: the relative FM-indexes without relative select are each about a fifth the size of the normal FM-indexes but rank queries are about seven times slower and select queries are about forty times slower; the relative FM-indexes with relative select are about a third the size of the normal FM-indexes but select queries are only about five times slower (rank queries are unaffected).
 
-\begin{mytable}[tb!]
+\begin{table}[tb!]
 \caption{Average query times for 100 million random $\LF$ and $\Psiop$ queries on NA12878 stored relative to the human reference genome, with and without chromosome Y.}
 \label{rs-table:queries}
 \setlength{\tabcolsep}{4pt}
@@ -99,7 +99,7 @@ yes & 1090 MB & \mus{0.55} & \mus{1.22} & 218 MB & \mus{3.95} & \mus{48.0} & 382
 no  & 1090 MB & \mus{0.55} & \mus{1.11} & 181 MB & \mus{3.84} &  \mus{44.8} & 331 MB & \mus{6.12} \\
 \bottomrule
 \end{tabular}
-\end{mytable}
+\end{table}
 
 \section{Appendix: de Bruijn Graphs}
 \label{rs-sec:graphs}

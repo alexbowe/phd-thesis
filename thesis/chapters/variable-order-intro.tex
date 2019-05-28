@@ -1,1 +1,10 @@
-Introductory comments to the paper
+In the first paper we showed how to remove the relationship to $k$ from the size complexity of a de Bruijn graph. However, $k$ is still an exceedingly important factor -- it determines the edges in the graph, and the edges of the graph determine the quality of the assembled output.
+
+As there is no best $k$ for some given data, it was common to assemble using multiple $k$ values, and keep the best result. Soon after, iterative de Bruijn graphs were developed that would assemble with increasing values of $k$, using the output of the previous iteration to clean the input data at each step. This introduced a relationship to $k$ in the time complexity of an assembly pipeline, whereby up to $k$ graphs must be constructed, but significantly improved the assembly quality.
+
+Since our approach used dummy edges to ensure that every base in input data would be an outgoing edge of at least one node, and all of the node strings were discarded, I wondered if we could augment our data structure to represent de Bruijn graphs of multiple $k$ values.
+
+The next paper introduces the first de Bruijn graph that can change $k$ on the fly, bypassing the need to construct multiple de Bruijn graphs.
+
+My contribution was the original concept, co-working on designing the algorithms, implementing the data structure, experimenting, writing roughly 25\% of the paper, and presenting it.
+

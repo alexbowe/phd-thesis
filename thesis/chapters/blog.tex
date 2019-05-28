@@ -1,4 +1,4 @@
-\chapter{Succinct de Bruijn Graphs}
+\chapter{Succinct de Bruijn Graphs Blog Post}
 
 This post will give a brief explanation of a Succinct implementation for storing \emph{de Bruijn graphs},\footnote{\url{http://en.wikipedia.org/wiki/De_Bruijn_graph}} which is recent (and continuing) work I have been doing with Sadakane.
 
@@ -26,7 +26,7 @@ Let's make this concrete with a diagram:
 
 Doesn't this just \emph{feel good} to look at? Now tilt your head and look at it this way: it is essentially a \emph{Finite State Machine}\footnote{\url{https://en.wikipedia.org/wiki/Finite-state_machine}} with additional bounded memory of the last $k$ visited states, if you added a few more states to allow for incomplete input at the start. For example, if X represents blank input, from a starting state XXX we might have the transition chain: $\rm XXX \to XX1 \to X10 \to 101$ (which is already a node in the graph). Put this way, it is easy to see that the $k$ previous edges define the current node. This perspective will make things easier to understand later, I promise.
 
-Still with me? Good (: Then let's also consider that if one node is defined by a $k$-length string, then a \emph{pair of nodes} (i.e.\ an edge) can be identified by a $k+1$ length string, since they overlap and differ by 1 symbol. This will also be important later.
+Still with me? Good. Then let's also consider that if one node is defined by a $k$-length string, then a \emph{pair of nodes} (i.e.\ an edge) can be identified by a $k+1$ length string, since they overlap and differ by 1 symbol. This will also be important later.
 
 And of course, this can be extended to larger alphabet sizes than binary (say, 4\ldots).
 
@@ -213,7 +213,7 @@ This is a constant number of calls to $\mathcal{O}(1)$ functions, so outgoing is
 
 \subsection{Label}\label{bl-sec:lab}
 
-At some point (e.g.\ during traversal) we are probably going to want to print the node labels out. Let's work out how to do that (:
+At some point (e.g.\ during traversal) we are probably going to want to print the node labels out. Let's work out how to do that.
 
 Remember, we aren't storing the node labels explicitly. The $F$ array will come in handy: We can use the position of our node (found using select) as a reverse lookup into $F$. This can be done in constant time with a sparse bit vector, or in logarithmic time using binary search, or we can use a linear scan if our alphabet is small. In any case, lets assume it is $\mathcal{O}(1)$ time, although a linear scan might be faster in practice (fewer function calls may yield a lower constant coefficient).
 
@@ -262,6 +262,6 @@ In conclusion, by using memory more efficiently, hopefully the cost of genome se
 
 The total space is a theoretical $m(2 + \log{\sigma} + o(1))$ bits in general, or $4m + o(m)$ bits for DNA, given $m$ edges. Using specially modified indexes we can lower this to around 3 bits per edge.
 
-I apologize that an efficient implementation isn't available, nor have I provided experimental results. But if you found this post interesting you can get your hands dirty with the Python implementation\footnote{\url{https://github.com/alexbowe/debby/blob/0.1.1/debby.py}} I have provided. The results and efficient implementation are on their way (:
+I apologize that an efficient implementation isn't available, nor have I provided experimental results. But if you found this post interesting you can get your hands dirty with the Python implementation\footnote{\url{https://github.com/alexbowe/debby/blob/0.1.1/debby.py}} I have provided. The results and efficient implementation are on their way.
 
-And as always, follow me on Twitter,\footnote{\url{http://www.twitter.com/alexbowe}} and feel free to send me questions, criticisms, and especially pull requests!
+%And as always, follow me on Twitter,\footnote{\url{http://www.twitter.com/alexbowe}} and feel free to send me questions, criticisms, and especially pull requests!
