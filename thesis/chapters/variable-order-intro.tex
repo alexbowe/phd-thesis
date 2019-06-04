@@ -1,3 +1,5 @@
+\chapter*{Preface to Paper II}
+
 In the first paper we showed how to remove the relationship to $k$ from the size complexity of a de Bruijn graph. However, $k$ is still an exceedingly important factor -- it determines the edges in the graph, and the edges of the graph determine the quality of the assembled output.
 
 As there is no best $k$ for some given data, it was common to assemble using multiple $k$ values, and keep the best result. Soon after, iterative de Bruijn graphs were developed that would assemble with increasing values of $k$, using the output of the previous iteration to clean the input data at each step. This introduced a relationship to $k$ in the time complexity of an assembly pipeline, whereby up to $k$ graphs must be constructed, but significantly improved the assembly quality.
