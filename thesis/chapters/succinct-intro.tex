@@ -1,3 +1,5 @@
+\chapter*{Preface to Paper I}
+
 Conway's 2011 paper~\cite{conway} received a lot of attention for being such a drastic decrease in the memory requirement of a de Bruijn graph. It was the first succinct de Bruijn graph, using one of the key building blocks of succinct data structures proposed by Sadakane and Onodera -- the sparse succinct bit vector. In his representation, the edges, or $(k+1)$-mers of the de Bruijn graph that were present would be represented with a 1 in the graph, and a 0 for every \emph{possible} $(k+1)$-mer that was not in the graph.
 
 While a de Bruijn graph would typically have hundreds of millions, or even multiple billions of edges in the case of humans, the number of possible edges would be on the order of $4^{k+1}$. For a common $k$ value such as 31, this would be $4^{32} \simeq 1.84 \times 10^{19}$, meaning that only one tenth of a billionth of possible edges would be present. This meant that even though the sparse bit vector was tuned to handle very sparse data, it still had to represent those 0s somehow.
@@ -6,5 +8,5 @@ After discussing this with Sadakane, he identified that the de Bruijn graph is s
 
 The following paper introduces this Burrows--Wheeler-inspired data structure in theory, with data being reported during WABI 2012, and later in the blog post in Appendix~\ref{ch:rel}. In the end, we reduced it to around 4GB uncompressed when using the same data and $k$ value as Conway, and around 2GB when using a compressed Wavelet Tree to represent the edges (which was slower to traverse).
 
-My contribution to this paper was identifying the opportunity to compress de Bruijn graphs beyond the work of Conway by avoiding storing edges that were not present in the data, implementing and tested the succinct de Bruijn graph in C\texttt{++}, and presenting it.
+My contribution to this paper was identifying the opportunity to compress de Bruijn graphs beyond the work of Conway by avoiding storing edges that were not present in the data, implementing and testing the succinct de Bruijn graph in C\texttt{++}, and presenting it.
 

@@ -1,11 +1,13 @@
+\chapter*{Preface to Paper III}
+
 In the previous paper, we demonstrated for the first time that de Bruijn graphs using a BWT-based representation could be augmented to support additional operations and applications.
 
 At the time, metagenomics was becoming a popular topic, with the Colored de Bruijn Graph, introduced in 2012, sitting at the center of many metagenomic tools. We wanted to see how we could extend our idea to create a succinct Colored de Bruijn Graph.
 
 Initially, we took inspiration from Jouni Siren's 2014 paper Relative FM-Indexes, which described a way to use an FM-Index for one sequence, $S_1$, to provide a fully functional FM-index for another sequence, $S_2$, with minimal extra information. This was essentially the same as our goal for the colored de Bruijn graph, which would capitalise on the fact that most genomes in a population are very similar.
 
-Jouni's paper described how to implement a relative version of the access and rank functions, which were essential to implement a succinct de Bruijn graph, but didn't have a relative select function. We worked with Jouni to describe such a function in the paper Relative Select~\cite{boucher15}, with the goal of using it to implement a succinct colored de Bruijn graph. This paper is available in Appendix~\ref{ch:rel}.
+Siren's paper described how to implement a relative version of the access and rank functions, which were essential to implement a succinct de Bruijn graph, but didn't have a relative select function. We worked with Siren to describe such a function in the paper Relative Select~\cite{boucher15}, with the goal of using it to implement a succinct colored de Bruijn graph. This paper is available in Appendix~\ref{ch:rel}.
 
-However, in parallel, we began experimenting with a simpler mapping of Cortex's colored de bruijn graph using a succinct bit matrix to store color. Cortex simply did bubble detection, which would not require the relative operations above. As a result, we simply needed to represent colors using a succinct bit matrix. This simple idea yielded very practical results, which are presented in the next paper.
+However, in parallel, we began experimenting with a simpler translation of the Cortex Colored de Bruijn Graph using a succinct bit matrix to store color. Cortex simply did bubble detection, which would not require the relative operations above. As a result, we only needed to represent colors using a succinct bit matrix. This simple idea yielded practical results, which are presented in the next paper.
 
 My contribution to \textit{Colored de Bruijn Graphs} was in identifying the opportunity, designing the data structure, assisting implementation and experimentation, and roughly 20\% of the writing.
