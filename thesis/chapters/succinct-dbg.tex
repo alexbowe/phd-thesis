@@ -43,7 +43,7 @@ and their read lengths are not long enough to detect overlaps with enough length
 between reads. 
 To conquer these problems, many recent assembler algorithms utilize a graph 
 called the {\it de Bruijn graph} in the overlap 
-phase~\cite{LiZhu09,MacPrz09,PevTan01,SahShi12,SimWon09,ZerBir08}, 
+phase~\cite{Li:2010,MacPrz09,PTW,SahShi12,Simpson:2009,ZerBir08}, 
 instead of the overlap graph. 
 
 A de Bruijn graph is a graph where each node represents a $k$-mer
@@ -59,7 +59,7 @@ Thus we focus on reducing the memory required for the de Bruijn graph in this pa
 
 There have been proposed only two data structures for
 reducing the size of memory for the de Bruijn graph.
-The succinct data structure proposed by Conway and Bromage~\cite{ConBro11}
+The succinct data structure proposed by Conway and Bromage~\cite{conway}
 is a data structure that straightforwardly
 represents the de Bruijn graph by a bit vector.
 Its representation should be smaller than a naive ordinary implementation of
@@ -100,11 +100,11 @@ $\Order\left(\frac{m\log m}{\log \log m}
 For DNA sequences ($\sigma=4$), the succinct de Bruijn graph can be constructed in 
 $\Order(Nk \log m/\log\log m)$ time and its space becomes $4m + \order(m)$ bits.
 This is much smaller than existing ones.
-For example, the succinct representation of Conway and Bromage~\cite{ConBro11}
+For example, the succinct representation of Conway and Bromage~\cite{conway}
 uses 40.8GB for storing a de Bruijn graph with $m = $ 12,292,819,311 edges
 and $k = 27$ (28.5 bits per edge).  
 On the other hand, if we use an efficient implementation
-of {\rank}/{\select} data structures~\cite{OkaSad07} for our representation,
+of {\rank}/{\select} data structures~\cite{bitvector} for our representation,
 the estimated size is less than $5$ bits per edge.  
 Therefore the above graph is stored in less than 8GB.
 \emergencystretch=20pt\par
@@ -208,7 +208,7 @@ The time complexities for insert and delete are denoted by $t_u(n,\sigma)$.
 
 \subsection{The XBW data structure}
 The XBW-transform~\cite{FLMM09} is a method for compressing and indexing labeled trees.
-It is an extension of the Burrows-Wheeler transform~\cite{BurWhe94} used for compressing
+It is an extension of the Burrows-Wheeler transform~\cite{BW94} used for compressing
 and indexing strings.  Given a rooted tree with $n$ nodes where each node has a label in
 the set of size $\sigma$, the XBW-transform converts the tree into a representation of
 $2n + n \log\sigma$ bits.  The size of the representation matches the information-theoretic
@@ -397,7 +397,7 @@ $\Order(k(t_f + t_b(m,2\sigma))\log\sigma)$.
 Recall that ${\search}(s)$ returns the index $i$ of the node whose label 
 is the string $s$ of length $k$.
 Precisely, it returns $i$ such that ${\last}[i] = 1$ and ${\Node}[i] = s$.
-The algorithm for ${\search}(s)$ is similar to \cite{FerMan05}.
+The algorithm for ${\search}(s)$ is similar to \cite{FM05}.
 Let $i_1 < i_2 < \cdots < i_w$ be the indices such that
 ${\last}[i_j] = 1$ and ${\Node}[i_j]$ and $s$ have the same suffix of length $d$ ($1 \le d \le k$).
 Let $i_0$ be the smallest index in $R(i_1)$.

@@ -24,7 +24,7 @@
 
 Accurate assembly of genomes is a fundamental problem in
 bioinformatics and is vital to several ambitious scientific projects, including
-the 10,000 vertebrate genomes (Genome 10K)~\cite{Haussler09}, \emph{Arabidopsis}
+the 10,000 vertebrate genomes (Genome 10K)~\cite{Haussler:2009}, \emph{Arabidopsis}
 variations (1001 genomes)~\cite{Ossowski08}, human variations (1000
 genomes)~\cite{Abecasis12}, and the Human Microbiome~\cite{hmp} projects. The
 genome assembly process builds long contiguous DNA sequences, called {\em
@@ -116,15 +116,15 @@ Minia, by Chikhi and Rizk~\cite{wabi}, uses a Bloom filter to store edges.
 They traverse the graph by generating all possible outgoing edges at each node
 and testing their membership in the Bloom filter. Using this approach, the graph
 was reduced to 5.7 GB on the same dataset.  Contemporaneously, Bowe, Onodera,
-Sadakane and Shibuya~\cite{bowe} developed a different succinct data structure
-based on the Burrows-Wheeler transform~\cite{bw1994} that requires 2.5 GB.
+Sadakane and Shibuya~\cite{BOSS12} developed a different succinct data structure
+based on the Burrows-Wheeler transform~\cite{BW94} that requires 2.5 GB.
 Their representation, which henceforth we refer to as BOSS from the authors'
 initials, is a starting point for our methods and we will discuss it in detail
 below.  Very recently Chikhi {et al.}~\cite{paul} implemented the de Bruijn
 graph using an FM-index and {\em minimizers}.  Their method uses 1.5 GB on the
 same NA18507 data.  
 
-The data structure of Bowe et al.~\cite{bowe}
+The data structure of Bowe et al.~\cite{BOSS12}
 %and BWT construction of short reads of Liu et al.~\cite{liu_et_al} --- are 
 is combined with ideas from IDBA-UD~\cite{idbaud} in a metagenomics assembler
 called MEGAHIT~\cite{megahit}.  In practice MEGAHIT requires more memory than
@@ -147,7 +147,7 @@ theoretical interest since it has not yet been implemented.
 
 \subsection{Roadmap} Section \ref{sec:preliminaries} sets notation, and formally
 lays down the problem and auxiliary data structures we use.
-Section~\ref{sec:BOSS} gives details of the BOSS representation~\cite{bowe}.
+Section~\ref{sec:BOSS} gives details of the BOSS representation~\cite{BOSS12}.
 Sections~\ref{sec:changing} and~\ref{sec:implementing} then describes our
 variable-order de Bruijn graph structure. In Section~\ref{sec:experiments} we
 report on experiments comparing the practical performance of our data structure

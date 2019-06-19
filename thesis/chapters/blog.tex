@@ -4,7 +4,7 @@ This post will give a brief explanation of a Succinct implementation for storing
 
 Using our new structure, we have squeezed a graph for a human genome (which took around 300 GB of memory if using previous representations) down into 2.5 GB. In addition, the construction method allows much of the work to be done on disk. Your computer might not have 300 GB of RAM, but you might have 2.5 GB of RAM and a hard disk.
 
-I have given a talk about this a few times, so I've been itching to write it up as a blog post (if only to shamelessly plug my blog at conferences). However, since it is a lowly blog post, I won't give attention to the gory details, nor provide any experimental results. But this post is merely to \emph{communicate the approach}. Feel free to check out our conference paper~\cite{bowe}, and stay tuned for the journal paper.
+I have given a talk about this a few times, so I've been itching to write it up as a blog post (if only to shamelessly plug my blog at conferences). However, since it is a lowly blog post, I won't give attention to the gory details, nor provide any experimental results. But this post is merely to \emph{communicate the approach}. Feel free to check out our conference paper~\cite{BOSS12}, and stay tuned for the journal paper.
 
 In this blog post, I will first give an introduction to de Bruijn graphs (Section~\ref{bl-sec:dbg}) and how they are used in DNA assembly (Section~\ref{bl-sec:dna}). Then I will briefly explain some previous implementations (Section~\ref{bl-sec:pre}) before reaching the main topic of this post: our new succinct representation (Section~\ref{bl-sec:our}). The explanation first explains some preliminaries, such as how we were inspired by the Burrows Wheeler Transform (Section~\ref{bl-sec:bur}), and what rank and select are (Section~\ref{bl-sec:ras}), which are required to understand the construction method (Section~\ref{bl-sec:con}), and traversal interface (Section~\ref{bl-sec:int}) respectively.
 
@@ -32,7 +32,7 @@ And of course, this can be extended to larger alphabet sizes than binary (say, 4
 
 \section{DNA Assembly}\label{bl-sec:dna}
 
-First suggested in 2001 by Pevzner et al.~\cite{PevTan01}, we can use de Bruijn graphs to represent a network of overlapping \emph{short read data}.
+First suggested in 2001 by Pevzner et al.~\cite{PTW}, we can use de Bruijn graphs to represent a network of overlapping \emph{short read data}.
 
 The long and short of it (heh heh) is that a DNA molecule is currently too difficult to sequence (that is, read it into a computer) in its entirety. Special methods must be used so we can sequence parts of the molecule, and hand off the putting-back-together process (assembly) to an algorithm.
 
@@ -56,7 +56,7 @@ Even though this is only a de Bruijn \emph{subgraph}, these things still grow pr
 
 One of the first approaches to this was to scale ``horizontally''. Simpson et al.~\cite{Simpson:2009} introduced ABySS in 2009. The graph for reads from a human genome (HapMap: NA18507),\footnote{\url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dra/fastq/SRA010/SRA010896/SRX016231/}} which used a distributed hash table, reached 336 GB.
 
-In 2011, Conway and Bromage~\cite{ConBro11} instead approached this problem from a ``vertical'' scaling perspective (that is, scaling to make better use of a single system's resources), by using a sparse bitvector (by Okanohara and Sadakane~\cite{OkaSad07}) to represent the $(k+1)$-mers (the edges), and used \emph{rank and select} (to be described shortly in Section~\ref{bl-sec:ras}) to traverse it. As a result, their representation took 32 GB for the same data set.
+In 2011, Conway and Bromage~\cite{conway} instead approached this problem from a ``vertical'' scaling perspective (that is, scaling to make better use of a single system's resources), by using a sparse bitvector (by Okanohara and Sadakane~\cite{bitvector}) to represent the $(k+1)$-mers (the edges), and used \emph{rank and select} (to be described shortly in Section~\ref{bl-sec:ras}) to traverse it. As a result, their representation took 32 GB for the same data set.
 
 Minia, by Cikhi and Rizk (2012)~\cite{wabi}, proposed yet another approach by using a \emph{bloom filter}\footnote{\url{http://en.wikipedia.org/wiki/Bloom_filter}} (with additional structure to avoid false positive edges that would affect the assembly). They traverse by generating possible edges and testing for it in the bloom filter. Using this approach, the graph was reduced to 5.7 GB.
 
@@ -66,11 +66,11 @@ As stated, we were able to represent the same graph in 2.5 GB (after some furthe
 
 The key insight is that the edges define overlapping node labels. This is similar to that of Conway and Bromage, although they have some redundancy, since some \emph{nodes} are represented more times than necessary.
 
-We further exploit the \emph{mutual information}\footnote{\url{https://en.wikipedia.org/wiki/Mutual_information}} of edges by taking inspiration from the Burrows Wheeler Transform~\cite{BurWhe94}.
+We further exploit the \emph{mutual information}\footnote{\url{https://en.wikipedia.org/wiki/Mutual_information}} of edges by taking inspiration from the Burrows Wheeler Transform~\cite{BW94}.
 
 \subsection{Inspiration from the Burrows Wheeler Transform}\label{bl-sec:bur}
 
-The Burrows Wheeler Transform~\cite{BurWhe94} is a reversible string permutation that can be searched directly and has the admirable quality of having long strings of repeated characters (great for compression). The easiest way to calculate the BWT of a string is to sort each symbol by their prefixes in colex order (that is, alphabetic order of the reverse of the string, not reverse alphabetic!) More information can be found on Wikipedia\footnote{\url{http://en.wikipedia.org/wiki/Burrows-Wheeler_transform}} and this Dr. Dobbs\footnote{\url{http://marknelson.us/1996/09/01/bwt/}} article.
+The Burrows Wheeler Transform~\cite{BW94} is a reversible string permutation that can be searched directly and has the admirable quality of having long strings of repeated characters (great for compression). The easiest way to calculate the BWT of a string is to sort each symbol by their prefixes in colex order (that is, alphabetic order of the reverse of the string, not reverse alphabetic!) More information can be found on Wikipedia\footnote{\url{http://en.wikipedia.org/wiki/Burrows-Wheeler_transform}} and this Dr. Dobbs\footnote{\url{http://marknelson.us/1996/09/01/bwt/}} article.
 
 The XBW is a generalisation of the BWT that applies to rooted, labeled trees~\cite{FLMM09}. The idea is that instead of taking all suffixes, we sort all paths from the root to each node, and support tree navigation (since it isn't a linearly shaped string) with auxiliary bit vectors indicating which edges are leaves, and which are the last edges (of their siblings) of internal nodes.
 
