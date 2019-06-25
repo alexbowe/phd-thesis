@@ -29,7 +29,6 @@ Given a select data structure for a string $S_1$, and a subsequence $S_2$ of $S_
 We store a bitvector \(B [1..|S_1|]\) with 1s marking the characters of $S_1$ that do not appear in $S_2$.  For each distinct character $x$, we store a bitvector \(B_x [1..\occ (x, S_1)]\), where \(\occ (x, S_1)\) is the number of occurrences of $x$ in $S_1$, with 1s marking the occurrences of $x$ in $S_1$ that do not appear in $S_2$.  We use the same sparse-bitvector implementation as in Section~\ref{rs-sec:introduction}, so this takes a total of $\Oh{|S_1| - |S_2|}$ extra words and lets us compute
 \[S_2.\select_x (i) = B.\rank_0 (S_1.\select_x (B_x.\select_0 (i)))\]
 using $\Oh{\log \log |S_1|}$ time on top of a select query on $S_1$.  To see why this equality holds, consider that \(B_x.\select_0 (i)\) returns the rank in $S_1$ of the $i$th $x$ that appears in $S_2$; \(S_1.\select_x (B_x.\select_0 (i))\) returns the position of that $x$ in $S_1$; and \(B.\rank_0 (S_1.\select_x (B_x.\select_0 (i)))\) returns the position of that $x$ in $S_2$.
-\qed
 \end{proof}
 
 \begin{lemma}
@@ -45,7 +44,6 @@ B.\select_0 (S_1.\select_x (B_x.\rank_0 (i))) & \mbox{if \(B_x [i] = 0\),}\\
 B.\select_1 (D.\select_x (B_x.\rank_1 (i))) & \mbox{if \(B_x [i] = 1\).}
 \end{array} \right.\]
 using $\Oh{\log \log |S_2|}$ time on top of a select query on $S_1$.  To see why this equality holds, suppose the $i$th $x$ in $S_2$ also appears in $S_1$, so \(B_x [i] = 0\).  Consider that \(B_x.\rank_0 (i)\) returns the rank of that $x$ in $S_1$; \(S_1.\select_x (B_x.\rank_0 (i))\) returns the position of that $x$ in $S_1$; and \(B.\select_0 (S_1.\select_x (B_x.\rank_0 (i)))\) returns the position of that $x$ in $S_2$.  Now suppose the $i$th $x$ in $S_2$ does not appear in $S_1$, so \(B_x [i] = 1\).  Consider that \(B_x.\rank_1 (i)\) returns the rank of that $x$ in $D$; \(D.\select_x (B_x.\rank_1 (i))\) returns the position of that $x$ in $D$; and \(B.\select_1 (D.\select_x (B_x.\rank_1 (i)))\) returns the position of that $x$ in $S_2$.
-\qed
 \end{proof}
 
 \begin{theorem}
