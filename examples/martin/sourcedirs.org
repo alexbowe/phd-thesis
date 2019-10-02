@@ -1,6 +1,0 @@
-/Users/muggli/Dropbox/projects/orm/ORM/paper/content/document.bib
-/Users/muggli/recomb15mis7/Muggli.217/document.bib
-/Users/muggli/gcsa_paper/jbio/gcsa_paper.bib
-/Users/muggli/gcsa_paper/document.bib
-/Users/muggli/coloreddbg/cdbg.bib
-/Users/muggli/class/research/research_exam/research_exam.bib
