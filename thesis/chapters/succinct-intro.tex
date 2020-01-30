@@ -6,7 +6,7 @@ While a de Bruijn graph would typically have hundreds of millions, or even multi
 
 After discussing this with Sadakane, he identified that the de Bruijn graph is similar to a bound-depth suffix trie, and could hence be represented with something like a Burrows--Wheeler transform, effectively removing the need for representing edges that were not in the graph, and allowing it to scale in size without a relation to $k$.
 
-The following paper introduces this Burrows--Wheeler-inspired data structure in theory, with data being reported during WABI 2012, and later in the blog post in Appendix~\ref{ch:rel}. In the end, we reduced it to around 4GB uncompressed when using the same data and $k$ value as Conway, and around 2GB when using a compressed Wavelet Tree to represent the edges (which was slower to traverse).
+The following paper introduces this Burrows--Wheeler-inspired data structure in theory, with data being reported during WABI 2012, and later in the implementation note in Appendix~\ref{ch:rel}. In the end, we reduced it to around 4GB uncompressed when using the same data and $k$ value as Conway, and around 2GB when using a compressed Wavelet Tree to represent the edges (which was slower to traverse).
 
 My contribution to this paper was identifying the opportunity to compress de Bruijn graphs beyond the work of Conway by avoiding storing edges that were not present in the data, implementing and testing the succinct de Bruijn graph in C\texttt{++}, and presenting it.
 
