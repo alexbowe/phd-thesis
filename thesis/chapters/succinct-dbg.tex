@@ -541,10 +541,12 @@ that each edge is traversed.  Then we have enough information for compression.
 The succinct de Bruijn graph is used for natural language processing because
 it stores all $n$-grams in a text.
 
-Our future work will be to improve the time complexity for the on-line construction
-algorithm, and to implement the proposed data structure and apply it
-for assembling large genomes and PPM data compression.
-A sample source code is available at {\tt http://code.google.com/p/csalib/}.
+At the time of publishing, our intended future work was to improve the time complexity for
+the on-line construction algorithm, and to implement the data structure and apply it to
+assembling large genomes, and PPM data compression. It has since been implemented and used
+in the popular assembler MEGAHIT~\cite{megahit}.
+
+The original sample implementation is available at {\tt http://code.google.com/p/csalib/}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
