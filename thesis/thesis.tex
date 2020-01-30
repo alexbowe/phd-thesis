@@ -171,20 +171,64 @@
 \newcolumntype{Y}{>{\centering\arraybackslash}X} % Centered tabularx column 
 
 \begin{document}
+\pagenumbering{gobble}
 
-\title{Succinct de Bruijn Graphs}
-\author{Alex Bowe\\
-\texttt{alex@nii.ac.jp} \\ \\
-Ph.D. Thesis\\ \\
-\textbf{Supervisors:} Takeaki Uno, Kunihiko Sadakane\\ \\
-School of Multidisciplinary Sciences \\
-Department of Informatics \\
-National Institute of Informatics \\
-Chiyoda-ku, Tokyo, Japan}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% REMOVE BELOW IF YOU DO NOT WANT NEW COVER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newgeometry{left=3.5cm,right=3.5cm,top=4.15cm,bottom=5cm}
+\newcommand\circrow{\leavevmode\xleaders\hbox{\scalebox{2}{$\mkern.5mu\bigcirc\mkern.5mu$}}\hfill\kern0pt}
+%\circrow
+\begin{center}
+\fontfamily{ptm}\fontsize{20}{19.2}\selectfont  
+Succinct de Bruijn Graphs
+%\vskip1.15cm
+%\circrow
+\vskip8mm
+\fontfamily{ptm}\fontsize{16}{19.2}\selectfont  
+by
+\vskip4.5mm
+Alexander BOWE
+\vskip1.7cm
+Dissertation
+\vskip8mm
+{\Large
+submitted to the Department of Informatics\\[-6pt]
+in partial fulfillment of the requirements for the degree of}
+\vskip1.5cm
+\emph{\bfseries Doctor of Philosophy}
+\vskip9mm
+\includegraphics[width=.87\textwidth]{sokendai}
+\vskip1.1cm
+{\Large The Graduate University for Advanced Studies, SOKENDAI\\[-5pt]
+March 2020}
+\end{center}  
+\restoregeometry
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% REMOVE ABOVE IF YOU DO NOT WANT NEW COVER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\date{\today}
 
-\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% REMOVE BELOW IF YOU DO NOT WANT OLD COVER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\title{Succinct de Bruijn Graphs}
+%\author{Alex Bowe\\
+%\texttt{alex@nii.ac.jp} \\ \\
+%Ph.D. Thesis\\ \\
+%\textbf{Supervisors:} Takeaki Uno, Kunihiko Sadakane\\ \\
+%School of Multidisciplinary Sciences \\
+%Department of Informatics \\
+%National Institute of Informatics \\
+%Chiyoda-ku, Tokyo, Japan}
+
+%\date{\today}
+
+%\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% REMOVE ABOVE IF YOU DO NOT WANT OLD COVER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\begin{abstract}
 %\input{chapters/abstract} \\ \\
@@ -192,7 +236,7 @@ Chiyoda-ku, Tokyo, Japan}
 %\end{abstract}
 
 %\include{chapters/LicenseDisclaimer}
-
+\pagenumbering{arabic}
 \setcounter{tocdepth}{1}
 \newpage
 \tableofcontents
