@@ -27,12 +27,10 @@ these reads, and finally finds the consensus genome.
 These algorithms can be categorized into two types, due to the graph used in 
 the overlap phase. 
 
-Most old-time assembly algorithms (especially for the long Sanger reads) 
-first construct a graph called the {\it overlap graph} 
-after finding the overlapping pairs of reads, 
-where each node represents a read and edges are constructed between nodes 
-{\it iff} the corresponding two reads have an overlap of enough 
+Most old-time assembly algorithms (especially for the long Sanger reads) first construct a graph called the {\it overlap graph} after finding the overlapping pairs of reads, where each node represents a read and edges are constructed between nodes {\it iff} the corresponding two reads have an overlap of enough 
 length~\cite{BatJaf02,HuaYan05,MyeSut00}. 
+%\nm{{\it iff}}{if and only if}
+\nomenclature[E, 05]{{\it iff}}{"If and only if".}
 But this strategy is difficult to apply against the huge data from more recent 
 epoch-making next-generation sequencers (NGSs). 
 The NGS machines can sequence vast amount of genome data. 
@@ -70,9 +68,12 @@ The other data structure is by Ye et al.~\cite{YeMa12}, which
 stores only a subset of nodes of the de Bruijn graph to save memory,
 but it is not actually the de Bruijn graph.
 
-In this paper, we propose a new succinct representation of a de Bruijn graph
-which only requires $m(2+\log \sigma)$ bit to store\footnote{The base of logarithm is $2$.}, where
-$\sigma$ is the alphabet size ({\it i.e.}, $\sigma = 4$ in the case of DNA).
+In this paper, we propose a new succinct representation of a de Bruijn graph which only requires $m(2+\log \sigma)$ bit to store\footnote{The base of logarithm is $2$.}, where $\sigma$ is the alphabet size ({\it i.e.}, $\sigma = 4$ in the case of DNA).
+%\nm{$\sigma$ }{The alphabet size}
+
+
+%\nm{$\log$}{The base of logarithm is $2$.}
+
 The size of this representation is not affected by the value of $k$ and is
 much smaller than either of the two previous methods.
 Moreover we will present the algorithm to construct the data structure on-line.
@@ -137,7 +138,9 @@ We can also store a set of $M$ strings $T_1,\ldots,T_M$ as follows.
 We append a terminator $\$_i$ to the tail of each string $T_i$,
 and concatenate all the strings.  Then we add $k$ characters $\$_0$ at the head.
 Figure~\ref{p1-fig:debruijn} shows an example.
-
+%\nm{$\$_i$}{a terminator to the tail of each string $T_i$}
+\nomenclature[B, 01]{$\$$}{A symbol to terminate strings.}
+\nomenclature[B, 02]{$\$_i$}{A symbol to terminate string $T_i$.}
 
 %dummy node���ǉ�����
 
@@ -153,12 +156,15 @@ Figure~\ref{p1-fig:debruijn} shows an example.
 
 \subsection{Basic succinct data structures}\label{p1-sec:rank}
 
-Let $T = T[1] T[2] \cdots T[N]$ be a string of length $N$ on alphabet ${\cal A}$,
-that is, $T[i] \in {\cal A}$ for any $i=1,\ldots,N$.
-Let $\sigma = |{\cal A}|$ denote the alphabet size.
-We can store $T$ in $N \lceil \log_2 \sigma \rceil$ bits.  The space does not
-depend on the word size of CPU.  We can retrieve any character $T[i]$ in constant
-time using bit operations on words.
+Let $T = T[1] T[2] \cdots T[N]$ be a string of length $N$ on alphabet ${\cal A}$, that is, $T[i] \in {\cal A}$ for any $i=1,\ldots,N$. Let $\sigma = |{\cal A}|$ denote the alphabet size. We can store $T$ in $N \lceil \log_2 \sigma \rceil$ bits.  The space does not depend on the word size of CPU.  We can retrieve any character $T[i]$ in constant time using bit operations on words.
+%\nm{$T = T[1] T[2] \cdots T[N]$}{a string of length $N$}
+\nomenclature[B, 03]{$T = T[1] T[2] \cdots T[N]$}{A string $T$ of length $N$.}
+\nomenclature[B, 05]{$T[i]$}{The symbol at position $i$ in $T$.}
+\nomenclature[B, 06]{$T[i..j]$}{The substring $T[i]T[i+1]...T[j]$, where $1 \le i\le j \le N$.}
+%\nm{${\rank}_c(T,i)$}{the number of $c$'s in $T[1] \cdots T[i]$}
+\nomenclature[B, 07]{${\rank}_c(T,i)$}{The number of $c$s in $T[1] \cdots T[i]$.}
+%\nm{${\select}_c(T,j)$}{the position of $j$-th $c$ in $T$}
+\nomenclature[B, 08]{${\select}_c(T,i)$}{The position of $i$-th $c$ in $T$.}
 
 The most basic succinct data structure is the one for computing {\rank}, {\select}, and {\access}
 values on strings, which are defined as follows.
@@ -178,11 +184,7 @@ for any $\sigma_1 \le \sigma_2$, $t_r(N,\sigma_1) \le t_r(N,\sigma_2)$.
 Let $t_b(N,\Sigma)$ denote the maximum of 
 $t_r(N,\sigma),t_s(N,\sigma),t_a(N,\sigma)$.
 
-For convenience, we define ${\pred}_c(T,i) = {\select}_c(T, {\rank}_c(T, i))$
-which is the position of the first occurrence of $c$ when we scan $T$ from the position $i$ to the head,
-and ${\succ}_c(T,i) = {\select}_c(T, {\rank}_c(T, i-1)+1)$
-which is the position of the first occurrence of $c$ when we scan $T$ from the position $i$ to the end.
-If $T[i]$ is the first (last) occurrence of $c$, {\pred} (\succ) returns $0$ ($N+1$).
+For convenience, we define ${\pred}_c(T,i) = {\select}_c(T, {\rank}_c(T, i))$ which is the position of the first occurrence of $c$ when we scan $T$ from the position $i$ to the head, and ${\succ}_c(T,i) = {\select}_c(T, {\rank}_c(T, i-1)+1)$ which is the position of the first occurrence of $c$ when we scan $T$ from the position $i$ to the end. If $T[i]$ is the first (last) occurrence of $c$, {\pred} (\succ) returns $0$ ($N+1$).
 
 %From the definition it holds that
 %${\select}_c(T, {\rank}_c(T, i)) \le i$ for any $1 \le i \le n$ and
@@ -242,12 +244,14 @@ there is an edge from $w$ and $v$
 and $w_1 = c$.  If no such node exists, it returns $-1$.
 \item ${\search}(s)$ returns the index $i$ of the node whose label is the string $s$ of length $k$.
 %Precisely, $i$ such that ${\last}[i] = 1$ and ${\Node}[i] = s$.
+%\nm{${\search}(s)$}{returns the index $i$ of the node whose label is the string $s$}
+
 \end{itemize}
 
-We define ${\cal A}^-$ as any set of size $|{\cal A}|$ such that ${\cal A}^- \cap {\cal A} = \emptyset$.
-Let $c^-$ denote an element of ${\cal A}^-$ corresponding to an element $c \in {\cal A}$.
-We also define a function $u$ as $u(c^-) = c$ for any $c^- \in {\cal A}^-$
-and $u(c) = c$ for any $c \in {\cal A}$.  We assume that the function is evaluated in constant time.
+We define ${\cal A}^-$ as any set of size $|{\cal A}|$ such that ${\cal A}^- \cap {\cal A} = \emptyset$. Let $c^-$ denote an element of ${\cal A}^-$ corresponding to an element $c \in {\cal A}$. 
+
+We also define a function $u$ as $u(c^-) = c$ for any $c^- \in {\cal A}^-$ and $u(c) = c$ for any $c \in {\cal A}$.  We assume that the function is evaluated in constant time.
+%\nm{$\cap$}{intersection}
 
 \subsection{The succinct representation}
 
@@ -260,12 +264,10 @@ The representation consists of the following components:
 An example is shown in Figure~\ref{p1-fig:succinctdebruijn}.
 
 The string $W$ is defined as follows.
-Each character $W[i]$ represents the label of an edge of $G$.
-Each edge $u \rightarrow v$ of $G$ is associated with the node label of $u$.
-Those edge labels are sorted in the lexicographic order of reversals of associated node labels.
-Ties are broken by edge labels.
-Let ${\Node}[i]$ denote the node label for $W[i]$.  This is not explicitly stored.
-
+Each character $W[i]$ represents the label of an edge of $G$. Each edge $u \rightarrow v$ of $G$ is associated with the node label of $u$. Those edge labels are sorted in the lexicographic order of reversals of associated node labels. Ties are broken by edge labels. Let ${\Node}[i]$ denote the node label for $W[i]$.  This is not explicitly stored.
+%\nm{$u \rightarrow v$}{an edge from node u to node v}
+\nomenclature[C, 09]{$u \rightarrow v$}{A directed edge from node $u$ to node $v$.}
+\nomenclature[C, 09]{$u \xrightarrow{x} v$}{A directed edge from node $u$ to node $v$ with label $x$.}
 The string ${\last}$ is defined as
 ${\last}[i] = 1$ if $i = n$ or ${\Node}[i]$ is different from ${\Node}[i+1]$,
 or ${\last}[i] = 0$ otherwise.  From this definition,
@@ -280,8 +282,8 @@ The array $F$ stores cumulative frequencies of the last characters of node label
 Namely, for any $c \in {\cal A}$, 
 %$F[c] = |\{i \mid 1 \le i \le m, \mbox{the last character of ${\Node}[i]$ is
 %smaller than $c$}  \}|$
-$F[c] = |\{i \mid 1 \le i \le m, C(i) < c  \}|$
-where $C(i)$ denotes the last character of ${\Node}[i]$.
+$F[c] = |\{i \mid 1 \le i \le m, C(i) < c  \}|$ where $C(i)$ denotes the last character of ${\Node}[i]$.
+%\nm{$C(i)$}{the last character of ${\Node}[i]$}
 Because $F[\$_i] = i$ for $i = 0,1,\ldots,M$, we need not store them.
 
 The array $F$ is represented in $\Order(\sigma \log m)$ bits.

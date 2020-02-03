@@ -64,8 +64,11 @@ It is common for modern assemblers to build multiple de Bruijn graphs. This is b
 \end{figure}
 
 Finally, in population genomics, biologists assemble multiple genomes in order to study the variations, among, for example, 10,000 vertebrate genomes~\citep{Haussler:2009}. To avoid constructing multiple graphs, Iqbal et al. proposed the Colored de Bruijn Graph~\cite{ICTFM12}. This graph capitalizes on the fact that DNA is rarely unique to an individual. It does this by first constructing a de Bruijn Graph of the entire populations NGS reads, and assigning each individual a unique \emph{color}, which annotates the vertices and edges (see Figure \ref{figure:cdbg}). In this thesis, we further augment our succinct de Bruijn Graph to efficiently store these colors. When tested with four plant genomes, Iqbal’s structure required 101 GB RAM, while ours only requires 4 GB of RAM. Furthermore, our structure was able to store all known E. Coli genomes in 42 GB, where Iqbal’s was not able to complete, but is estimated to require 3 TB of RAM. We also demonstrate the use of our structure in creating a database of all Antimicrobial Resistance Genes, requiring 245 GB of RAM (an estimated 18 TB with Iqbal’s structure), for rapidly locating resilient bacterial outbreaks in food supply chains.
-
-
+%\nm{GB}{Giga Byte}
+%\nm{TB}{Tera Byte}
+\nomenclature[E, 01]{GB}{Gigabyte}
+\nomenclature[E, 02]{TB}{Terabyte}
+ 
 %TODO: move to conclusion
 %These three papers demonstrate that the burrows-wheeler approach is efficient, but can also be augmented to support extra queries that are commonplace in many modern assemblers. Due to the wealth of research on Burrows-Wheeler transforms and Suffix Arrays on which the data
 %structures in this thesis are based, it is likely that the set of supported operations will continue to grow as applications are found.
@@ -93,17 +96,30 @@ and $\Order(k)$ time, respectively.
 The data structure is constructed in $\Order(Nk \log m/\log\log m)$
 time using no additional space.
 
+\nomenclature[D, 01]{$\Order(g(x))$}{Big-O notation}
+\nomenclature[D, 02]{$\order(g(x))$}{Little-o notation}
+\nomenclature[D, 03]{NP-hard}{Non-deterministic Polynomial time hardness.}
+
 \mypaper{Paper II: Variable-Order de Bruijn Graphs}
 {Christina Boucher, Alex Bowe, Travis Gagie, Simon J.~Puglisi, and Kunihiko Sadakane.\\
 In \textit{Proceedings of the 2015 Data Compression Conference}, Snowbird, Utah, pages 383--392. IEEE, 2015.}
 
 \noindent
-The de Bruijn graph $G_K$ of a set of strings $S$ is a key data structure in 
-genome assembly that represents overlaps between all the $K$-length substrings 
-of $S$. Construction and navigation of the graph is a space and time bottleneck 
+The de Bruijn graph $G_K$ of a set of strings $S$ is a key data structure in genome assembly that represents overlaps between all the $K$-length substrings of $S$. Construction and navigation of the graph is a space and time bottleneck 
 in practice and the main hurdle for assembling large genomes. 
-This problem is compounded because state-of-the-art assemblers do not build the de Bruijn graph for a single order (value of $K$) but for multiple values of $K$: they build $d$ de Bruijn graphs, each with a specific order, i.e., $G_{K_1}, G_{K_2}, \ldots, G_{K_d}$.  
-This paradigm increases the quality of the assembly produced, at the cost of greatly increases runtime, due to constructing $d$ graphs instead of one.
+This problem is compounded because state-of-the-art assemblers do not build the de Bruijn graph for a single order (value of $K$) but for multiple values of $K$: they build $d$ de Bruijn graphs, each with a specific order, i.e., $G_{K_1}, G_{K_2}, \ldots, G_{K_d}$. This paradigm increases the quality of the assembly produced, at the cost of greatly increases runtime, due to constructing $d$ graphs instead of one.
+
+\nomenclature[A, 01]{$ \{ x, y, z\} $}{Unordered set containing $x, y, z$.}
+\nomenclature[A, 02]{$ x \in X$}{$x$ is an element in set $X$.}
+\nomenclature[A, 03]{$A \cap B$}{The intersection (common elements) of sets $A$ and $B$.}
+\nomenclature[A, 04]{$|X|$}{The number of elements in set $X$.}
+\nomenclature[A, 05]{$ \{ x : x \in X, predicate(x)\} $}{An unordered set constructed using each element $x$ from set $X$, where $predicate(x)$ is true.}
+\nomenclature[A, 06]{$ \Sigma $}{An alphabet (a set of symbols used to create strings).}
+\nomenclature[A, 07]{$ \sigma $}{The size of the alphabet $\Sigma$.}
+%\nomenclature[A, 07]{$ \sigma $}{$\sigma = |\Sigma|$. The size of the alphabet.}
+
+\nomenclature[C, 01]{$G_K$}{De Bruijn graph of order $k$, having $(k+1)$-mers as edges.}
+
 %A basic question when using de  Bruijn graph is how to choose the order of the graph, $K$, such that most nodes  have small but positive numbers of outgoing edges.
 %In an ideal scenario, multiple orders (values of $K$) would be used for the graph construction.  In regions where there exists larger repeats  However, the optimal order (value of $K$) for the de Bruijn graph can be difficult to determine since it may vary across the genome.
 %Because of genomic repetition  and other vagaries of the DNA sequencing process, however, the optimal order  can be difficult to determine, and so current assemblers build several  graphs, each of different order, which drastically increases assembly time. 

@@ -47,6 +47,36 @@
   linkcolor=black,
   urlcolor=black
 }
+
+%%%
+\usepackage{mathtools}
+\usepackage{nomencl}
+
+\renewcommand{\nomname}{List of Symbols}
+
+%\newcommand{\nm}{\nomenclature[]{#1}{#2}}
+
+
+%% This will add the subgroups
+%----------------------------------------------
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+	\item[\bfseries
+	\ifstrequal{#1}{A}{Sets}{%
+		\ifstrequal{#1}{B}{Strings}{%
+			\ifstrequal{#1}{C}{Graphs}{
+				\ifstrequal{#1}{D}{\hspace*{-0.12in} Complexity}{
+					\ifstrequal{#1}{E}{\hspace*{-0.2in} Other Symbols}{}}}}}%
+	]}
+%----------------------------------------------
+
+%% This will add the units
+%----------------------------------------------
+%\newcommand{\nomunit}[1]{%
+	%\renewcommand{\nomentryend}{\hspace*{\fill}#1}}
+%----------------------------------------------
+\makenomenclature
+
 %\textwidth16cm
 %\oddsidemargin0mm
 %\evensidemargin\oddsidemargin
@@ -240,6 +270,9 @@ March 2020}
 \setcounter{tocdepth}{1}
 \newpage
 \tableofcontents
+\newpage
+
+\printnomenclature[5cm]
 \newpage
 
 \include{chapters/introduction}
